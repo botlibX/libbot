@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "botlib"
+description = "library to program bots"
+version = "1000"
+authors = [
+    {name = "Bart Thate", email = "bthate@dds.nl" },
+]
+readme = "README.rst"
+license = { text="Public Domain"}
+classifiers = [ 
+               'Development Status :: 3 - Alpha',
+               'License :: Public Domain',
+               'Operating System :: Unix',
+               'Programming Language :: Python',
+               'Topic :: Utilities'
+              ]
+
+
+[project.urls]
+"home" = "https://pypi.org/project/botlib"
+"bugs" = "https://github.com/botlib1/botlib/issues"
+"source" = "https://github.com/botlib1/botlib"
+
+
+[tool.setuptools]
+packages = [
+            "bot",
+            "bot.modules"
+           ]
+script-files = ["bin/bot"]

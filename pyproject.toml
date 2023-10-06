@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "botlib"
+name = "libbot"
 description = "library to program bots"
-version = "1000"
+version = "1"
 authors = [
-    {name = "Bart Thate", email = "bthate@dds.nl" },
+    {name = "botlib", email = "botlib@proton.met" },
 ]
 readme = "README.rst"
 license = { text="Public Domain"}
@@ -22,9 +22,9 @@ classifiers = [
 
 
 [project.urls]
-"home" = "https://pypi.org/project/botlib"
-"bugs" = "https://github.com/botlib1/botlib/issues"
-"source" = "https://github.com/botlib1/botlib"
+"home" = "https://pypi.org/project/libbot"
+"bugs" = "https://github.com/pylibbot/libbot/issues"
+"source" = "https://github.com/pylibbot/libbot"
 
 
 [tool.setuptools]

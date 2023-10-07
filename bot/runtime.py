@@ -24,7 +24,7 @@ from .utility import spl
 def __dir__():
     return (
             'Broker',
-            'Broadcast',
+            'BroadCast',
             'Event',
             'Handler',
             'command',

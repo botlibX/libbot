@@ -37,6 +37,9 @@ bot.runtime.output = print
 
 class CLI(Client):
 
+    def announce(self, txt):
+        pass
+
     def raw(self, txt):
         print(txt)
         sys.stdout.flush()

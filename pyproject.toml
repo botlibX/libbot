@@ -26,10 +26,11 @@ classifiers = [
 "bugs" = "https://github.com/pylibbot/libbot/issues"
 "source" = "https://github.com/pylibbot/libbot"
 
+[project.scripts]
+"bot" = "bot.runtime:wrapped"
 
 [tool.setuptools]
 packages = [
             "bot",
             "bot.modules"
            ]
-script-files = ["bin/bot"]

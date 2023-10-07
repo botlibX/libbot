@@ -1,1 +1,0 @@
-grep -R --exclude=README.rst --exclude-dir=bin* --exclude-dir=test* "print(" .

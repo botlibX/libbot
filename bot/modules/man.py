@@ -5,17 +5,17 @@
 """NAME
 
 
-    LBOT - the complete
+    LIBBOT - library to program bots
 
 
 DESCRIPTION
 
 
-    LBOT is a python3 IRC bot intended to be programmable in a
+    LIBBOT is a python3 IRC bot intended to be programmable in a
     static, only code, no popen, no user imports and no reading
     modules from a directory, way. 
 
-    LBOT provides a demo bot, it can connect to IRC, fetch and
+    LIBBOT provides a demo bot, it can connect to IRC, fetch and
     display RSS feeds, take todo notes, keep a shopping list
     and log text.
 
@@ -23,15 +23,15 @@ DESCRIPTION
 SYNOPSIS
 
 
-    lbot <cmd> [key=val] 
-    lbot <cmd> [key==val]
-    lbot [-c] [-d] [-v] [-i]
+    bot <cmd> [key=val] 
+    bot <cmd> [key==val]
+    bot [-c] [-d] [-v] [-i]
 
 
 INSTALL
 
 
-    $ pipx install lbot
+    $ pipx install bot
 
 
 USAGE
@@ -39,38 +39,38 @@ USAGE
 
     list of commands
 
-    $ lbot cmd
+    $ bot cmd
     cmd,err,flt,sts,thr,upt
 
     start a console
 
-    $ lbot -c
+    $ bot -c
     >
 
     start additional modules
 
-    $ lbot -c mod=<mod1,mod2>
+    $ bot -c mod=<mod1,mod2>
     >
 
     list of modules
 
-    $ lbot mod
+    $ bot mod
     bsc,err,flt,irc,log,man,mod,rss,shp,
     sts,tdo,thr,udp
 
     to start irc, add mod=irc when
     starting
 
-    $ lbot -ci mod=irc
+    $ bot -ci mod=irc
 
     to start rss, also add mod=rss
     when starting
 
-    $ lbot -ci mod=irc,rss
+    $ bot -ci mod=irc,rss
 
     start as daemon
 
-    $ lbot -d mod=irc,rss
+    $ bot -d mod=irc,rss
     $ 
 
 
@@ -79,21 +79,21 @@ CONFIGURATION
 
     irc
 
-    $ lbot cfg server=<server>
-    $ lbot cfg channel=<channel>
-    $ lbot cfg nick=<nick>
+    $ bot cfg server=<server>
+    $ bot cfg channel=<channel>
+    $ bot cfg nick=<nick>
 
     sasl
 
-    $ lbot pwd <nsvnick> <nspass>
-    $ lbot cfg password=<frompwd>
+    $ bot pwd <nsvnick> <nspass>
+    $ bot cfg password=<frompwd>
 
     rss
 
-    $ lbot rss <url>
-    $ lbot dpl <url> <item1,item2>
-    $ lbot rem <url>
-    $ lbot nme <url< <name>
+    $ bot rss <url>
+    $ bot dpl <url> <item1,item2>
+    $ bot rem <url>
+    $ bot nme <url< <name>
 
 
 COMMANDS
@@ -132,9 +132,9 @@ SYSTEMD
     Type=forking
     User=<user>
     Group=<uer>
-    PIDFile=lbot.pid
-    WorkingDirectory=/home/<user>/.lbot
-    ExecStart=/home/<user>/.local/pipx/venvs/lbot/bin/lbot -d mod=irc,rs
+    PIDFile=bot.pid
+    WorkingDirectory=/home/<user>/.bot
+    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d mod=irc,rss
     RemainAfterExit=yes
 
     [Install]
@@ -144,8 +144,8 @@ SYSTEMD
 FILES
 
 
-    ~/.local/bin/lbot
-    ~/.local/pipx/venvs/lbot/
+    ~/.local/bin/bot
+    ~/.local/pipx/venvs/bot/
 
 
 AUTHOR
@@ -157,7 +157,7 @@ AUTHOR
 COPYRIGHT
 
 
-    LBOT is placed in the Public Domain.
+    BOT is placed in the Public Domain.
 
 
 """

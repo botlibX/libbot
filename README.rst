@@ -133,6 +133,8 @@ SYSTEMD
 
 ::
 
+    replace <user> with the username giving the pipx command.
+
     [Unit]
     Description=library to program bots
     Requires=network.target
@@ -140,16 +142,17 @@ SYSTEMD
 
     [Service]
     DynamicUser=True
-    Type=fork
-    User=botfather
-    Group=botfather
+    Type=forking
+    User=<user>
+    Group=<uer>
     PIDFile=bot.pid
-    WorkingDirectory=/home/botfather/.bot
-    ExecStart=/home/botfather/.local/pipx/venvs/libbot/bin/bot mod=irc,rss -d
+    WorkingDirectory=/home/<user>/.bot
+    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d mod=irc,rs
     RemainAfterExit=yes
 
     [Install]
     WantedBy=multi-user.target
+
 
 
 FILES

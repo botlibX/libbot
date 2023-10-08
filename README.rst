@@ -55,30 +55,15 @@ USAGE
     $ bot -c
     >
 
-    start additional modules
-
-    $ bot -c mod=<mod1,mod2>
-    >
-
     list of modules
 
     $ bot mod
     bsc,err,flt,irc,log,mod,rss,shp,
     sts,tdo,thr,udp
 
-    to start irc, add mod=irc when
-    starting
-
-    $ bot -ci mod=irc
-
-    to start rss, also add mod=rss
-    when starting
-
-    $ bot -ci mod=irc,rss
-
     start as daemon
 
-    $ bot -d mod=irc,rss
+    $ bot -d
     $ 
 
 

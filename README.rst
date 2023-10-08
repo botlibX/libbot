@@ -132,7 +132,7 @@ SYSTEMD
     Group=<uer>
     PIDFile=bot.pid
     WorkingDirectory=/home/<user>/.bot
-    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d mod=irc,rs
+    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d
     RemainAfterExit=yes
 
     [Install]
@@ -152,7 +152,7 @@ AUTHOR
 
 ::
 
-    botfather <botlib@proton.me>
+    botlib <botlib@proton.me>
 
 
 COPYRIGHT

@@ -8,7 +8,7 @@ name = "libbot"
 description = "library to program bots"
 version = "4"
 authors = [
-    {name = "botlib", email = "botlib@proton.met" },
+    {name = "botlib", email = "botlib@proton.me" },
 ]
 readme = "README.rst"
 license = { text="Public Domain"}
@@ -23,8 +23,8 @@ classifiers = [
 
 [project.urls]
 "home" = "https://pypi.org/project/libbot"
-"bugs" = "https://github.com/pylibbot/libbot/issues"
-"source" = "https://github.com/pylibbot/libbot"
+"bugs" = "https://github.com/botlibx/libbot/issues"
+"source" = "https://github.com/botlibx/libbot"
 
 [project.scripts]
 "bot" = "bot.runtime:wrapped"

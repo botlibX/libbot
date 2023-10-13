@@ -121,22 +121,21 @@ COMMANDS
 SYSTEMD
 
 
-    replace <user> with the username giving the pipx command.
+    using the pipx installation, replace "<user>" with the user running pipx
+
 
     [Unit]
-    Description=the complete
+    Description=library to program bots
     Requires=network.target
     After=network.target
 
     [Service]
     DynamicUser=True
-    Type=forking
+    Type=simple
     User=<user>
-    Group=<uer>
-    PIDFile=bot.pid
+    Group=<user>
     WorkingDirectory=/home/<user>/.bot
-    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d mod=irc,rss
-    RemainAfterExit=yes
+    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/python3 -m bot -s
 
     [Install]
     WantedBy=multi-user.target

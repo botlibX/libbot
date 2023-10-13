@@ -5,112 +5,100 @@
 
 """NAME
 
-::
 
-    SBN - Skull, Bones and Number (OTP-CR-117/19)
-
-
-SYNOPSIS
-
-::
-
-    sbn <cmd> [key=val] 
-    sbn <cmd> [key==val]
-    sbn [-c] [-d] [-v]
+    LIBBOT - library to program bots
 
 
 DESCRIPTION
 
-::
+
+    LIBBOT is a python3 IRC bot intended to be programmable in a
+    static, only code, no popen, no user imports and no reading
+    modules from a directory, way. 
+
+    LIBBOT provides a demo bot, it can connect to IRC, fetch and
+    display RSS feeds, take todo notes, keep a shopping list
+    and log text.
 
 
-    SBN is a python3 IRC bot is intended to be programmable  in a
-    static, only code, no popen, no user imports and no reading modules from
-    a directory, way. It can show genocide and suicide stats of king netherlands
-    his genocide into a IRC channel, display rss feeds and log simple text
-    messages.
+SYNOPSIS
 
-    SBN contains correspondence <writings> with the International Criminal Court, 
-    asking for arrest of the king of the  netherlands, for the genocide he is
-    committing with his new treatement laws. Current status is "no basis to
-    proceed" judgement of the prosecutor which requires a basis to prosecute
-    <reconsider> to have the king actually arrested.
+
+    bot <cmd> [key=val] 
+    bot <cmd> [key==val]
+    bot [-c] [-d] [-v] [-i]
 
 
 INSTALL
 
 
-::
-
-    $ pipx install sbn
+    $ pipx install bot
 
 
 USAGE
 
-::
 
-    use the following alias for easier typing
+    list of commands
 
-    $ alias sbn="python3 -m sbn"
-
-
-    without any argument the bot does nothing
-
-    $ sbn
-    $
-
-    giving an argument makes the bot check for a command
-
-    see list of commands
-
-    $ sbn cmd
-    cfg,cmd,dlt,dne,dpl,log,man,met,mod,mre,nme,now,pwd
-    rem,req,rss,sts,tdo,thr
+    $ bot cmd
+    cmd,err,flt,sts,thr,upt
 
     start a console
 
-    $ sbn -c
+    $ bot -c
+    >
+
+    start additional modules
+
+    $ bot -c mod=<mod1,mod2>
     >
 
     list of modules
 
-    $ sbn mod
-    cmd,err,flt,fnd,irc,log,mdl,mod,
-    req, rss,slg,sts,tdo,thr,upt,ver
+    $ bot mod
+    bsc,err,flt,irc,log,man,mod,rss,shp,
+    sts,tdo,thr,udp
+
+    to start irc, add mod=irc when
+    starting
+
+    $ bot -ci mod=irc
+
+    to start rss, also add mod=rss
+    when starting
+
+    $ bot -ci mod=irc,rss
 
     start as daemon
 
-    $ sbn -d
+    $ bot -d mod=irc,rss
     $ 
 
 
 CONFIGURATION
 
 
-::
-
     irc
 
-    $ sbn cfg server=<server>
-    $ sbn cfg channel=<channel>
-    $ sbn cfg nick=<nick>
+    $ bot cfg server=<server>
+    $ bot cfg channel=<channel>
+    $ bot cfg nick=<nick>
 
     sasl
 
-    $ sbn pwd <nsvnick> <nspass>
-    $ sbn cfg password=<frompwd>
+    $ bot pwd <nsvnick> <nspass>
+    $ bot cfg password=<frompwd>
 
     rss
 
-    $ sbn rss <url>
-    $ sbn dpl <url> <item1,item2>
-    $ sbn rem <url>
-    $ sbn nme <url< <name>
+    $ bot rss <url>
+    $ bot dpl <url> <item1,item2>
+    $ bot rem <url>
+    $ bot nme <url< <name>
 
 
 COMMANDS
 
-::
 
     cmd - commands
     cfg - irc configuration
@@ -120,40 +108,35 @@ COMMANDS
     fnd - find objects 
     flt - instances registered
     log - log some text
-    mdl - genocide model
     met - add a user
     mre - displays cached output
     nck - changes nick on irc
-    now - genocide stats
     pwd - sasl nickserv name/pass
     rem - removes a rss feed
-    req - reconsider
     rss - add a feed
     slg - slogan
     thr - show the running threads
-    tpc - genocide stats into topic
 
 
 SYSTEMD
 
 
-::
-
-    using the pipx installation, replace "<user>" with the user running pipx
-
+    replace <user> with the username giving the pipx command.
 
     [Unit]
-    Description=Skull, Bones and Number (OTP-CR-117/19)
+    Description=the complete
     Requires=network.target
     After=network.target
 
     [Service]
     DynamicUser=True
-    Type=simple
+    Type=forking
     User=<user>
-    Group=<user>
-    WorkingDirectory=/home/<user>/.sbn
-    ExecStart=/home/<user>/.local/pipx/venvs/sbn/bin/python3 -m sbn -s
+    Group=<uer>
+    PIDFile=bot.pid
+    WorkingDirectory=/home/<user>/.bot
+    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d mod=irc,rss
+    RemainAfterExit=yes
 
     [Install]
     WantedBy=multi-user.target
@@ -161,25 +144,21 @@ SYSTEMD
 
 FILES
 
-::
 
-    ~/.local/bin/sbn
-    ~/.local/pipx/venvs/sbn/
+    ~/.local/bin/bot
+    ~/.local/pipx/venvs/bot/
 
 
 AUTHOR
 
 
-::
-
-    Bart Thate <bthate@dds.nl>
+    botlib <botlib@proton.me>
 
 
 COPYRIGHT
 
-::
 
-    SBN is Public Domain.
+    BOT is placed in the Public Domain.
 
 
 """

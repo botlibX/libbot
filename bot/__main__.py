@@ -12,6 +12,7 @@ import readline
 import sys
 import termios
 import time
+import threading
 import traceback
 
 
@@ -25,7 +26,16 @@ from . import handler
 from . import modules
 
 
-Storage.workdir = os.path.expanduser("~/.bot")
+NAME = __file__.split(os.sep)[-2]
+
+
+Storage.workdir = os.path.expanduser(f"~/.{NAME}")
+
+
+PIDFILE = os.path.join(Storage.workdir, "sbn.pid")
+
+
+waitpid = threading.Event()
 
 
 def cprint(txt):
@@ -62,13 +72,21 @@ def daemon():
     if pid != 0:
         os._exit(0)
     os.setsid()
-    os.umask(0)
+    pid2 = os.fork()
+    if pid2 != 0:
+        os._exit(0)
     with open('/dev/null', 'r', encoding="utf-8") as sis:
         os.dup2(sis.fileno(), sys.stdin.fileno())
     with open('/dev/null', 'a+', encoding="utf-8") as sos:
         os.dup2(sos.fileno(), sys.stdout.fileno())
     with open('/dev/null', 'a+', encoding="utf-8") as ses:
         os.dup2(ses.fileno(), sys.stderr.fileno())
+    os.umask(0)
+    os.chdir("/")
+    if os.path.exists(PIDFILE):
+        os.unlink(PIDFILE)
+    with open(PIDFILE, "w") as fd:
+        fd.write(str(os.getpid()))
 
 
 def wrap(func) -> None:
@@ -93,13 +111,14 @@ def main():
     Cfg.mod = ",".join(modules.__dir__())
     if "d" in Cfg.opts:
         daemon()
-        cli = CLI()
+    if "d" in Cfg.opts or "s" in Cfg.opts:
         scan(modules, Cfg.mod, True)
-        cli.forever()
+        while 1:
+            time.sleep(1.0)
     elif "c" in Cfg.opts:
         if 'v' in Cfg.opts:
             dtime = time.ctime(time.time()).replace("  ", " ")
-            print(f"BOT started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
+            print(f"{NAME.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
         scan(modules, Cfg.mod, "i" not in Cfg.opts, True)
         csl = Console()
         csl.start()

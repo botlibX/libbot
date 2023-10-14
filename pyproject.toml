@@ -31,4 +31,8 @@ packages = [
             "bot",
             "bot.modules"
            ]
-script-files = ["bin/bot"]
+script-files = [
+                "bin/bot",
+                "bin/botd",
+                "bin/botcmd"
+               ]

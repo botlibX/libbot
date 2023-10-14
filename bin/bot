@@ -29,7 +29,7 @@ from bot import handler
 from bot import modules
 
 
-NAME = __file__.split(os.sep)[-2].lower()
+NAME = __file__.split(os.sep)[-1].lower()
 Storage.workdir = os.path.expanduser(f"~/.{NAME}")
 PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
 USER = getpass.getuser()

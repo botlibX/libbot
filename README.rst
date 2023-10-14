@@ -118,7 +118,7 @@ SYSTEMD
 
 ::
 
-    using the pipx installation, replace "<user>" with the user running pipx
+    replace "<user>" with the user running pipx
 
 
     [Unit]
@@ -132,7 +132,7 @@ SYSTEMD
     User=<user>
     Group=<user>
     WorkingDirectory=/home/<user>/.bot
-    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/python3 -m bot -s
+    ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/botd
 
     [Install]
     WantedBy=multi-user.target

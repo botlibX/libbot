@@ -168,6 +168,7 @@ class Handler(Object):
     cmds = {}
 
     def __init__(self):
+        Object.__init__(self)
         self.cbs = Object()
         self.queue = queue.Queue()
         self.stopped = threading.Event()

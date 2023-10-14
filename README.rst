@@ -16,7 +16,8 @@ DESCRIPTION
 
     LIBBOT provides a demo bot, it can connect to IRC, fetch and
     display RSS feeds, take todo notes, keep a shopping list
-    and log text.
+    and log text. You can also copy/past the service file and run
+    it under systemd for 24/7 presence in a IRC channel.
 
 
 SYNOPSIS
@@ -141,7 +142,10 @@ FILES
 
 ::
 
+    ~/.bot
     ~/.local/bin/bot
+    ~/.local/bin/botcmd
+    ~/.local/bin/botd
     ~/.local/pipx/venvs/libbot/
 
 

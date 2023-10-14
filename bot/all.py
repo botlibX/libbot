@@ -64,7 +64,6 @@ def __dir__():
              'lock',
              'log',
              'man',
-             'mdl',
              'methods',
              'mod',
              'mods',
@@ -74,7 +73,6 @@ def __dir__():
              'output',
              'parse',
              'read',
-             'req',
              'rss',
              'scan',
              'search', 
@@ -91,6 +89,3 @@ def __dir__():
              'values',
              'write'
             )
-
-
-__all__ = __dir__()

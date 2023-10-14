@@ -55,7 +55,7 @@ def debug(txt):
 output = cprint
 
 
-class Broker:
+class Broker(Object):
 
     objs = []
 
@@ -78,7 +78,7 @@ class Broker:
             pass
 
 
-class BroadCast:
+class BroadCast(Object):
 
     @staticmethod
     def announce(txt):
@@ -105,7 +105,7 @@ class Censor(Object):
         return False
 
 
-class Errors:
+class Errors(Object):
 
     errors = []
 
@@ -163,7 +163,7 @@ class Event(Default):
             self._thr.join()
 
 
-class Handler:
+class Handler(Object):
 
     cmds = {}
 

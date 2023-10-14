@@ -1,17 +1,15 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0116
+# pylint: disable=C0116,W0212
 
 
 "utilities"
 
 
-import getpass
 import os
 import pathlib
 import pwd
 import sys
-import termios
 
 
 def cdir(pth) -> None:
@@ -39,8 +37,8 @@ def daemon(pidfile):
     os.chdir("/")
     if os.path.exists(pidfile):
         os.unlink(pidfile)
-    with open(pidfile, "w") as fd:
-        fd.write(str(os.getpid()))
+    with open(pidfile, "w", encoding="utf-8") as fds:
+        fds.write(str(os.getpid()))
 
 
 

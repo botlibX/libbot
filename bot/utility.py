@@ -95,12 +95,9 @@ def mods(path):
 
 
 def privileges(username):
-    #if os.getuid() != 0:
-    #    return
     pwnam = pwd.getpwnam(username)
     os.setgid(pwnam.pw_gid)
     os.setuid(pwnam.pw_uid)
-    #os.setgroups([])
 
 
 def spl(txt) -> []:

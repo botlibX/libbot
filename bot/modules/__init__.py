@@ -11,7 +11,7 @@ import os
 import sys
 
 
-from . import cmd, irc, log, man, mod, rss, sts, tdo, thr
+from . import cmd, irc, log, mod, rss, sts, tdo, thr
 
 
 def __dir__():
@@ -19,7 +19,6 @@ def __dir__():
             'cmd',
             'irc',
             'log',
-            'man',
             'mod',
             'rss',
             'sts',

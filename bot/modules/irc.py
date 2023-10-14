@@ -18,8 +18,8 @@ import time
 import _thread
 
 
-from ..handler import Broker, Cfg, Client, Errors, Event
-from ..handler import command, output
+from ..handler import Broker, Censor, Client, Errors, Event
+from ..handler import command, debug
 from ..methods import edit, fmt, parse
 from ..objects import Default, Object, keys
 from ..storage import find, fntime, last, sync
@@ -28,16 +28,12 @@ from ..utility import laps
 
 
 NAME = __file__.split(os.sep)[-3]
+
+
+Censor.words = ["PING", "PONG", "PRIVMSG"]
+
+
 saylock = _thread.allocate_lock()
-
-
-def debug(txt):
-    if output is None:
-        return
-    if Censor.skip(txt):
-        return
-    if "v" in Cfg.opts:
-        output(txt)
 
 
 def init():
@@ -97,19 +93,6 @@ class Cache(Object):
         return 0
 
 
-class Censor(Object):
-
-    words = []
-
-    @staticmethod
-    def skip(txt) -> bool:
-        for skp in Censor.words:
-            if skp in str(txt):
-                return True
-        return False
-
-
-Censor.words = ["PING", "PONG", "PRIVMSG"]
 
 
 class TextWrap(textwrap.TextWrapper):

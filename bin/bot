@@ -19,9 +19,6 @@ import threading
 import traceback
 
 
-sys.path.insert(0, os.getcwd())
-
-
 from bot.methods import parse
 from bot.handler import Broker, Cfg, Client, Errors, Event, command, debug, scan
 from bot.storage import Storage

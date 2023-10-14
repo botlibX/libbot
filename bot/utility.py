@@ -21,14 +21,14 @@ def cdir(pth) -> None:
     os.makedirs(pth, exist_ok=True)
 
 
-def daemon():
+def daemon(pidfile):
     pid = os.fork()
     if pid != 0:
         os._exit(0)
     os.setsid()
-    #pid2 = os.fork()
-    #if pid2 != 0:
-    #    os._exit(0)
+    pid2 = os.fork()
+    if pid2 != 0:
+        os._exit(0)
     with open('/dev/null', 'r', encoding="utf-8") as sis:
         os.dup2(sis.fileno(), sys.stdin.fileno())
     with open('/dev/null', 'a+', encoding="utf-8") as sos:
@@ -37,9 +37,9 @@ def daemon():
         os.dup2(ses.fileno(), sys.stderr.fileno())
     os.umask(0)
     os.chdir("/")
-    if os.path.exists(PIDFILE):
-        os.unlink(PIDFILE)
-    with open(PIDFILE, "w") as fd:
+    if os.path.exists(pidfile):
+        os.unlink(pidfile)
+    with open(pidfile, "w") as fd:
         fd.write(str(os.getpid()))
 
 

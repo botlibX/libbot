@@ -127,7 +127,6 @@ SYSTEMD
     After=network.target
 
     [Service]
-    DynamicUser=True
     Type=simple
     User=<user>
     Group=<user>

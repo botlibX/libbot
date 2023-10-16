@@ -131,6 +131,7 @@ SYSTEMD
     Group=<user>
     WorkingDirectory=/home/<user>/.bot
     ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/botd
+    RemainAfterExit=yes
 
     [Install]
     WantedBy=multi-user.target

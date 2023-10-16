@@ -42,10 +42,6 @@ USAGE
 
 ::
 
-    for easy typing use an alias
-
-    $ alias bot="python3 -m bot"
-
     list of commands
 
     $ bot cmd
@@ -66,6 +62,8 @@ USAGE
 
     $ bot -d
     $ 
+
+    add -v if you want to have verbose logging
 
 
 CONFIGURATION

@@ -25,8 +25,6 @@ from bot import modules
 ALL             = ",".join(modules.__dir__())
 NAME		= "bot"
 USER 		= getpass.getuser()
-
-
 Storage.workdir = os.path.expanduser(f"~/.{NAME}")
 PIDFILE         = os.path.join(Storage.workdir, f"{NAME}.pid")
 

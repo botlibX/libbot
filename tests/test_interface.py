@@ -62,21 +62,6 @@ class A(Object):
 
 DICT = {}
 
-DIFF = [
-        '__default__',
-        '__dict__',
-        '__fnm__',
-        '__getattr__',
-        '__module__',
-        '__slots__',
-        '__test__',
-        '_pytestfixturefunction'
-       ]
-DIFF = [
-        '__dict__',
-        '__module__',
-        '__weakref__'
-       ]
 
 DIFF = [
         '__dict__',

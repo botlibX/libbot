@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,W0105,E0402,C0411,R0903
+# pylint: disable=C0115,C0116,W0105,E0402,C0411,R0903,W0201
 
 
 "rich site syndicate"
@@ -8,7 +8,6 @@
 
 import html.parser
 import re
-import threading
 import time
 import urllib
 import urllib.request
@@ -22,7 +21,7 @@ from urllib.parse import quote_plus, urlencode
 from ..methods import fmt
 from ..objects import Default, Object, update
 from ..handler import BroadCast
-from ..storage import Storage, find, fntime, last, sync
+from ..storage import find, fntime, last, sync
 from ..threads import Repeater, launch
 from ..utility import laps
 
@@ -44,25 +43,11 @@ class Feed(Default):
     pass
 
 
-Storage.add(Feed)
-
-
 class Rss(Default):
 
     def __init__(self):
         Default.__init__(self)
         self.display_list = 'title,link,author'
-        self.name = ''
-        self.rss = ''
-
-    def len(self):
-        return len(self.__dict__)
-
-    def size(self):
-        return len(self.__dict__)
-
-
-Storage.add(Rss)
 
 
 class Seen(Default):
@@ -72,17 +57,10 @@ class Seen(Default):
         self.urls = []
 
 
-Storage.add(Seen)
-
-
 class Fetcher(Object):
 
     dosave = False
     seen = Seen()
-
-    def __init__(self):
-        super().__init__()
-        self.connected = threading.Event()
 
     @staticmethod
     def display(obj):

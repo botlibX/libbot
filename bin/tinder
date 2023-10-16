@@ -53,9 +53,6 @@ paylock = _thread.allocate_lock()
 outlock = _thread.allocate_lock()
 
 
-bot.handler.output = print
-
-
 errors = []
 events = []
 

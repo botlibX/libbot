@@ -34,7 +34,7 @@ class Cfg(Object):
 class UDP(Object):
 
     def __init__(self):
-        super().__init__()
+        Object.__init__(self)
         self.stopped = False
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

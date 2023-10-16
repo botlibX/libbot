@@ -26,6 +26,7 @@ classifiers = [
 "bugs" = "https://github.com/botlibx/libbot/issues"
 "source" = "https://github.com/botlibx/libbot"
 
+
 [tool.setuptools]
 packages = [
             "bot",

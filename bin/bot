@@ -13,6 +13,7 @@ import importlib
 import os
 import pwd
 import readline
+import shutil
 import sys
 import termios
 import time
@@ -74,6 +75,14 @@ class Console(CLI):
 
     def poll(self) -> Event:
         return self.event(input("> "))
+
+def skl(event):
+    import bot
+    base = bot.__path__[0]
+    pth1 = os.path.join(base, "..", "modules")
+    pth2 = Storage.mods()
+    shutil.copytree(pth1, pth2, dirs_exist_ok=True)
+    event.reply(f"skel {pth2}")
 
 
 def ver(event):
@@ -153,6 +162,7 @@ def main():
         csl.forever()
     else:
         cli = CLI()
+        cli.add(skl)
         cli.add(ver)
         scan(Storage.mods(), Cfg.mod)
         evt = cli.event(Cfg.otxt)

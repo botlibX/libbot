@@ -36,6 +36,8 @@ INSTALL
 ::
 
     $ pipx install libbot
+    $ bot skl
+
 
 USAGE
 

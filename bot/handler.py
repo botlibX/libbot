@@ -8,130 +8,17 @@
 
 
 import inspect
-import io
 import queue
-import sys
 import threading
-import traceback
 import _thread
 
 
+from .brokers import Broker, BroadCast
+from .errored import Errors
 from .objects import Default, Object
 from .storage import Storage
 from .threads import launch
 from .utility import spl
-
-
-def __dir__():
-    return (
-            'Broker',
-            'BroadCast',
-            'Event',
-            'Handler',
-            'command',
-            'mods',
-            'parse',
-            'scan'
-           )
-
-
-Cfg = Default()
-
-
-def cprint(txt):
-    print(txt)
-    sys.stdout.flush()
-
-
-def debug(txt):
-    if output is None:
-        return
-    if Censor.skip(txt):
-        return
-    if "v" in Cfg.opts:
-        output(txt)
-
-
-output = cprint
-
-
-class Broker(Object):
-
-    objs = []
-
-    @staticmethod
-    def add(obj) -> None:
-        Broker.objs.append(obj)
-
-    @staticmethod
-    def byorig(orig):
-        for obj in Broker.objs:
-            if object.__repr__(obj) == orig:
-                return obj
-        return None
-
-    @staticmethod
-    def remove(obj) -> None:
-        try:
-            Broker.objs.remove(obj)
-        except ValueError:
-            pass
-
-
-class BroadCast(Object):
-
-    @staticmethod
-    def announce(txt):
-        for obj in Broker.objs:
-            obj.announce(txt)
-
-    @staticmethod
-    def say(orig, channel, txt):
-        bot = Broker.byorig(orig)
-        if not bot:
-            return
-        bot.dosay(channel, txt)
-
-
-class Censor(Object):
-
-    words = []
-
-    @staticmethod
-    def skip(txt) -> bool:
-        for skp in Censor.words:
-            if skp in str(txt):
-                return True
-        return False
-
-
-class Errors(Object):
-
-    errors = []
-
-    @staticmethod
-    def format(exc):
-        res = ""
-        stream = io.StringIO(
-                             traceback.print_exception(
-                                                       type(exc),
-                                                       exc,
-                                                       exc.__traceback__
-                                                      )
-                            )
-        for line in stream.readlines():
-            res += line + "\n"
-        return res
-
-    @staticmethod
-    def handle(exc):
-        if output:
-            output(Errors.format(exc))
-
-    @staticmethod
-    def show():
-        for exc in Errors.errors:
-            Errors.handle(exc)
 
 
 class Event(Default):

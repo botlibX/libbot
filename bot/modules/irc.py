@@ -18,8 +18,9 @@ import time
 import _thread
 
 
-from ..handler import Broker, Censor, Client, Errors, Event
-from ..handler import command, debug
+from ..brokers import Broker
+from ..errored import Censor, Errors, debug
+from ..handler import Client, Event, command
 from ..methods import edit, fmt, parse
 from ..objects import Default, Object, keys
 from ..storage import find, fntime, last, sync

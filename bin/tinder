@@ -23,7 +23,10 @@ import _thread
 WORKDIR = os.path.expanduser("~")
 
 
-from bot.handler import Cfg, Broker, Client, Handler, command, output, scan
+from bot.brokers import Broker
+from bot.configs import Cfg
+from bot.errored import output
+from bot.handler import Client, Handler, command, scan
 from bot.methods import parse
 from bot.objects import Default, Object, keys
 from bot.storage import Storage
@@ -31,12 +34,15 @@ from bot.threads import launch
 from bot.utility import laps, mods, spl
 
 
-import bot.modules as modules
-import bot.handler
+from bot import errored, handler, modules
 
 
 DATE = time.ctime(time.time()).replace("  ", " ")
 STARTTIME = time.time()
+
+
+
+errored.output = print
 
 
 Cfg.debug = True

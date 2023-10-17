@@ -19,12 +19,19 @@ import threading
 import traceback
 
 
+sys.path.insert(0, os.getcwd())
+
+
+from bot.brokers import Broker
+from bot.configs import Cfg
+from bot.errored import Errors, debug, output
 from bot.methods import parse
-from bot.handler import Broker, Cfg, Client, Errors, Event, command, debug, scan
+from bot.handler import Client, Event, command, scan
 from bot.storage import Storage
 from bot.utility import daemon, mods, privileges
 
 
+from bot import errored
 from bot import handler
 from bot import modules
 
@@ -33,6 +40,15 @@ NAME = __file__.split(os.sep)[-1].lower()
 Storage.workdir = os.path.expanduser(f"~/.{NAME}")
 PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
 USER = getpass.getuser()
+VERSION = 20
+
+
+def cprint(txt):
+    print(txt)
+    sys.stdout.flush()
+
+
+errored.output = cprint
 
 
 class CLI(Client):
@@ -54,6 +70,10 @@ class Console(CLI):
 
     def poll(self) -> Event:
         return self.event(input("> "))
+
+
+def ver(event):
+    event.reply(f"{NAME.upper()} {VERSION}")
 
 
 def wrap(func) -> None:
@@ -89,10 +109,12 @@ def main():
         debug(f"{NAME.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
         scan(modules, Cfg.mod, "i" not in Cfg.opts, True)
         csl = Console()
+        csl.add(ver)
         csl.start()
         csl.forever()
     else:
         cli = CLI()
+        cli.add(ver)
         scan(modules, Cfg.mod)
         evt = cli.event(Cfg.otxt)
         parse(evt)

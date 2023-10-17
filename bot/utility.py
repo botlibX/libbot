@@ -13,8 +13,6 @@ import sys
 
 
 def cdir(pth) -> None:
-    if not pth.endswith(os.sep):
-        pth = os.path.dirname(pth)
     pth = pathlib.Path(pth)
     os.makedirs(pth, exist_ok=True)
 

@@ -37,7 +37,6 @@ from bot import errored
 from bot import handler
 
 
-MODS = "modules"
 NAME = __file__.split(os.sep)[-1].lower()
 Storage.workdir = os.path.expanduser(f"~/.{NAME}")
 PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
@@ -130,19 +129,24 @@ def wrap(func) -> None:
 
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
-    Cfg.mod = ",".join([ x[:-3] for x in os.listdir(MODS) if not x.startswith("__")])
+    Cfg.mod = ",".join(
+                       [
+                        x[:-3] for x in os.listdir(Storage.mods())
+                        if not x.startswith("__")
+                       ]
+                      )
     if "d" in Cfg.opts:
         daemon()
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(getpass.getuser())
         debug(f"dropped to {USER} privileges")
-        scan(MODS, Cfg.mod, True)
+        scan(Storage.mods(), Cfg.mod, True)
         while 1:
             time.sleep(1.0)
     elif "c" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
         debug(f"{NAME.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
-        scan(MODS, Cfg.mod, "i" not in Cfg.opts, True)
+        scan(Storage.mods(), Cfg.mod, True, True)
         csl = Console()
         csl.add(ver)
         csl.start()
@@ -150,7 +154,7 @@ def main():
     else:
         cli = CLI()
         cli.add(ver)
-        scan(MODS, Cfg.mod)
+        scan(Storage.mods(), Cfg.mod)
         evt = cli.event(Cfg.otxt)
         parse(evt)
         command(evt)

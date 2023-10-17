@@ -55,6 +55,12 @@ class Storage:
         return res
 
     @staticmethod
+    def mods():
+        pth =  Storage.path("modules")
+        cdir(pth)
+        return pth
+
+    @staticmethod
     def path(pth):
         if not pth:
             pth = ""
@@ -65,7 +71,8 @@ class Storage:
     @staticmethod
     def store(pth=""):
         pth = os.path.join(Storage.workdir, "store", pth)
-        cdir(pth)
+        pth2 = os.path.dirname(pth)
+        cdir(pth2)
         return pth
 
     @staticmethod

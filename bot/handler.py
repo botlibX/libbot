@@ -172,3 +172,32 @@ def scan(pkg, modnames="", initer=False, dowait=False) -> []:
         for thread in threads:
             thread.join()
     return inited
+
+
+def scandir(path, modnames="", initer=False, dowait=False) -> []:
+    if not os.path.exists(path):
+        return []
+    inited  = []
+    scanned = []
+    threads = []
+    fnames  = os.listdir(path)
+    for modname in spl(modnames):
+        if modname not in fnames:
+            continue
+        module = importlib.import_module(f"modules.{modname}")
+        if not module:
+            continue
+        scanned.append(modname)
+        Handler.scan(module)
+        Storage.scan(module)
+        if initer:
+            try:
+                module.init
+            except AttributeError:
+                continue
+            inited.append(modname)
+            threads.append(launch(module.init, name=f"init {modname}"))
+    if dowait:
+        for thread in threads:
+            thread.join()
+    return inited

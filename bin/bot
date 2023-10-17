@@ -36,6 +36,7 @@ from bot.utility import daemon, mods, privileges, spl
 
 from bot import errored
 from bot import handler
+from bot import modules
 
 
 NAME = __file__.split(os.sep)[-1].lower()
@@ -76,14 +77,6 @@ class Console(CLI):
     def poll(self) -> Event:
         return self.event(input("> "))
 
-def skl(event):
-    import bot
-    base = bot.__path__[0]
-    pth1 = os.path.join(base, "..", "modules")
-    pth2 = Storage.mods()
-    shutil.copytree(pth1, pth2, dirs_exist_ok=True)
-    event.reply(f"skel {pth2}")
-
 
 def ver(event):
     event.reply(f"{NAME.upper()} {VERSION}")
@@ -96,6 +89,7 @@ def scan(path, modnames="", initer=False, dowait=False) -> []:
     scanned = []
     threads = []
     fnames  = [x[:-3] for x  in os.listdir(path) if (x.endswith('py') and not x.startswith("__"))]
+    sys.path.insert(0, os.path.dirname(path))
     pname = path.split(os.sep)[-1]
     for mname in fnames:
         if mname not in modnames:
@@ -137,7 +131,9 @@ def wrap(func) -> None:
 
 
 def main():
+    mods = modules.__path__[0]
     parse(Cfg, " ".join(sys.argv[1:]))
+    
     Cfg.mod = ",".join(
                        [
                         x[:-3] for x in os.listdir(Storage.mods())
@@ -149,20 +145,19 @@ def main():
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(getpass.getuser())
         debug(f"dropped to {USER} privileges")
-        scan(Storage.mods(), Cfg.mod, True)
+        scan(mods, Cfg.mod, True)
         while 1:
             time.sleep(1.0)
     elif "c" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
         debug(f"{NAME.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
-        scan(Storage.mods(), Cfg.mod, True, True)
+        scan(mods, Cfg.mod, True, True)
         csl = Console()
         csl.add(ver)
         csl.start()
         csl.forever()
     else:
         cli = CLI()
-        cli.add(skl)
         cli.add(ver)
         scan(Storage.mods(), Cfg.mod)
         evt = cli.event(Cfg.otxt)

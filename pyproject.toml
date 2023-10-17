@@ -30,6 +30,7 @@ classifiers = [
 [tool.setuptools]
 packages = [
             "bot",
+            "bot.modules"
            ]
 script-files = [
                 "bin/bot",
@@ -39,8 +40,8 @@ script-files = [
 zip-safe=true
 
 [tool.setuptools.data-files]
-"libbot" = ["README.rst",]
-"libbot/modules" = [
+"share/doc/libbot" = ["README.rst",]
+"share/libbot/modules" = [
                   'modules/cmd.py',
                   'modules/fnd.py',
                   'modules/irc.py',

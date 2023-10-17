@@ -36,20 +36,32 @@ INSTALL
 ::
 
     $ pipx install libbot
-    $ bot skl
 
 
 USAGE
 
-
 ::
 
-    list of commands
+    modules are store in ~/.bot/modules
+    module examples are stored in share/libbot/modules
+
+    run skel to populate the modules directory
+
+    $ bot skl
+    $
+
+    default action is doing nothing
+
+    $ bot
+    $
+
+    first argument is a command
 
     $ bot cmd
-    cmd,err,flt,sts,thr,upt
+    cfg,cmd,dlt,dne,dpl,fnd,log,met,mod,mre,
+    nme,pwd,rem,rss,skl,sts,tdo,thr,udp,ver
 
-    start a console
+    starting a console requires an option
 
     $ bot -c
     >

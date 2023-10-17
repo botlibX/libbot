@@ -41,3 +41,15 @@ zip-safe=true
 
 [tool.setuptools.data-files]
 "share/doc/libbot" = ["README.rst",]
+"share/libbot" = [
+                  'modules/cmd.py',
+                  'modules/fnd',
+                  'modules/irc.py',
+                  'modules/log.py',
+                  'modules/mod.py',
+                  'modules/rss.py',
+                  'modules/sts.py',
+                  'modules/tdo.py',
+                  'modules/thr.py',
+                  'modules/udp.py'
+                 ]

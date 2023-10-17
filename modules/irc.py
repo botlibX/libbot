@@ -11,6 +11,7 @@ import base64
 import os
 import queue
 import socket
+import sys
 import ssl
 import textwrap
 import threading
@@ -18,17 +19,18 @@ import time
 import _thread
 
 
-from ..brokers import Broker
-from ..errored import Censor, Errors, debug
-from ..handler import Client, Event, command
-from ..methods import edit, fmt, parse
-from ..objects import Default, Object, keys
-from ..storage import find, fntime, last, sync
-from ..threads import launch
-from ..utility import laps
+from bot.brokers import Broker
+from bot.configs import Cfg
+from bot.errored import Censor, Errors, debug
+from bot.handler import Client, Event, command
+from bot.methods import edit, fmt, parse
+from bot.objects import Default, Object, keys
+from bot.storage import find, fntime, last, sync
+from bot.threads import launch
+from bot.utility import laps
 
 
-NAME = __file__.split(os.sep)[-3]
+NAME = Cfg.name or sys.argv[0].split(os.sep)[-1]
 
 
 Censor.words = ["PING", "PONG", "PRIVMSG"]

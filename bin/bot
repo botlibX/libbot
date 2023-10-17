@@ -33,7 +33,12 @@ from bot.utility import daemon, mods, privileges
 
 from bot import errored
 from bot import handler
-from bot import modules
+
+
+try:
+    import modules
+except:
+    modules = None
 
 
 NAME = __file__.split(os.sep)[-1].lower()
@@ -41,6 +46,9 @@ Storage.workdir = os.path.expanduser(f"~/.{NAME}")
 PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
 USER = getpass.getuser()
 VERSION = 20
+
+
+Cfg.name = NAME
 
 
 def cprint(txt):

@@ -9,9 +9,9 @@
 import time
 
 
-from ..objects import Object
-from ..storage import find, fntime, sync
-from ..utility import laps
+from bot.objects import Object
+from bot.storage import find, fntime, sync
+from bot.utility import laps
 
 
 class Todo(Object):

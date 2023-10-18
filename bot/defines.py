@@ -6,29 +6,34 @@
 "interface"
 
 
-from . import handler, methods, objects, storage, threads, utility
-from . import modules
+from . import brokers, censors, clients, handler, message, methods, objects
+from . import repeats, storage, threads, timings, utility
 
 
+from .brokers import *
+from .censors import *
+from .clients import *
+from .errored import *
 from .handler import *
+from .message import *
 from .methods import *
 from .objects import *
+from .repeats import *
 from .storage import *
 from .threads import *
+from .timings import *
 from .utility import *
-from .modules import *
 
 
 def __dir__():
     return (
-            'BroadCast',
             'Broker',
             'Cfg',
             'Client',
             'Default',
             'Errors',
-            'Event',
             'Handler',
+            'Message',
             'Object',
             'ObjectDecoder',
             'ObjectEncoder',
@@ -37,10 +42,8 @@ def __dir__():
             'Thread',
             'Timer',
             'cdir',
-            'cmd',
             'command',
             'construct',
-            'cprint',
             'dump',
             'dumps',
             'edit',
@@ -50,10 +53,8 @@ def __dir__():
             'fns',
             'fntime',
             'fqn',
-            'handler',
             'hook',
             'ident',
-            'irc',
             'items',
             'keys',
             'laps',
@@ -62,30 +63,19 @@ def __dir__():
             'load',
             'loads',
             'lock',
-            'log',
-            'man',
-            'methods',
-            'mod',
             'mods',
-            'modules',
             'name',
-            'objects',
             'output',
             'parse',
             'read',
             'rss',
             'scan',
             'search', 
+            'shutdown',
             'spl',
-            'storage',
             'strip',
-            'sts',
             'sync',
-            'tdo',
-            'thr',
-            'threads',
             'update',
-            'utility',
             'values',
             'write'
            )

@@ -19,18 +19,13 @@ import time
 import _thread
 
 
-from bot.brokers import Broker
-from bot.configs import Cfg
-from bot.errored import Censor, Errors, debug
-from bot.handler import Client, Event, command
-from bot.methods import edit, fmt, parse
-from bot.objects import Default, Object, keys
-from bot.storage import find, fntime, last, sync
-from bot.threads import launch
-from bot.utility import laps
+from ..defines import Broker, Censor, Cfg, Client, Errors, Message, Object
+from ..defines import Default
+from ..defines import command, debug, edit, fmt, keys, parse
+from ..defines import find, fntime, launch, last, laps, sync
 
 
-NAME = Cfg.name or sys.argv[0].split(os.sep)[-1]
+NAME = Cfg.name or sys.argv[0].rsplit(os.sep, maxsplit=1)[-1]
 
 
 Censor.words = ["PING", "PONG", "PRIVMSG"]
@@ -337,7 +332,7 @@ class IRC(Client, Output):
         rawstr = rawstr.replace('\u0001', '')
         rawstr = rawstr.replace('\001', '')
         debug(txt)
-        obj = Event()
+        obj = Message()
         obj.args = []
         obj.rawstr = rawstr
         obj.command = ''
@@ -548,7 +543,6 @@ def cb_ready(evt):
     bot = byorig(evt.orig)
     if bot:
         bot.events.ready.set()
-    debug(f"ready {evt.orig[1:].split()[0]}")
 
 
 def cb_001(evt):

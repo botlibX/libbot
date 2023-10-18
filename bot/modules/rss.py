@@ -18,12 +18,9 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot.methods import fmt
-from bot.objects import Default, Object, update
-from bot.handler import BroadCast
-from bot.storage import find, fntime, last, sync
-from bot.threads import Repeater, launch
-from bot.utility import laps
+from ..defines import Broker, Default, Object, Repeater
+from ..defines import find, fmt, fntime, laps, last, launch
+from ..defines import sync, update
 
 
 DEBUG = False
@@ -112,7 +109,7 @@ class Fetcher(Object):
             txt = f'[{feedname}] '
         for obj in res:
             txt2 = txt + self.display(obj)
-            BroadCast.announce(txt2.rstrip())
+            Broker.announce(txt2.rstrip())
         return counter
 
     def run(self):

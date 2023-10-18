@@ -12,11 +12,12 @@ import time
 import types
 
 
+from .errored import Errors
+
+
 def __dir__():
     return (
             'Thread',
-            'Repeater',
-            'Timer',
             'launch',
             'name'
            )
@@ -46,7 +47,11 @@ class Thread(threading.Thread):
 
     def run(self):
         func, args = self.queue.get()
-        self._result = func(*args)
+        try:
+            self._result = func(*args)
+        except Exception as ex:
+            exc = ex.with_traceback(ex.__traceback__)
+            Errors.errors.append(exc)
 
 
 def launch(func, *args, **kwargs):
@@ -69,43 +74,3 @@ def name(obj) -> str:
     if '__name__' in dir(obj):
         return f'{obj.__class__.__name__}.{obj.__name__}'
     return None
-
-
-class Timer:
-
-    def __init__(self, sleep, func, *args, thrname=None):
-        super().__init__()
-        self.args = args
-        self.func = func
-        self.sleep = sleep
-        self.name = thrname or str(self.func).split()[2]
-        self.state = {}
-        self.timer = None
-
-    def run(self) -> None:
-        self.state["latest"] = time.time()
-        launch(self.func, *self.args)
-
-    def start(self) -> None:
-        timer = threading.Timer(self.sleep, self.run)
-        timer.name = self.name
-        timer.daemon = True
-        timer.sleep = self.sleep
-        timer.state = self.state
-        timer.state["starttime"] = time.time()
-        timer.state["latest"] = time.time()
-        timer.func = self.func
-        timer.start()
-        self.timer = timer
-
-    def stop(self) -> None:
-        if self.timer:
-            self.timer.cancel()
-
-
-class Repeater(Timer):
-
-    def run(self):
-        thr = launch(self.start)
-        super().run()
-        return thr

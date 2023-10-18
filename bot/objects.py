@@ -12,7 +12,6 @@ import _thread
 
 def __dir__():
     return (
-            'Default',
             'Object',
             'construct',
             'items',
@@ -28,6 +27,8 @@ lock = _thread.allocate_lock()
 
 
 class Object:
+
+    "no methods"
 
     __slots__ = ('__dict__', '__fnm__')
 
@@ -51,18 +52,6 @@ class Object:
 
     def __setitem__(self, key, value):
         return self.__dict__.__setitem__(key, value)
-
-
-class Default(Object):
-
-    __slots__ = ("__default__",)
-
-    def __init__(self):
-        Object.__init__(self)
-        self.__default__ = ""
-
-    def __getattr__(self, key):
-        return self.__dict__.get(key, self.__default__)
 
 
 def construct(obj, *args, **kwargs) -> None:

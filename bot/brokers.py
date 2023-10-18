@@ -1,13 +1,18 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=E0402,C0115,C0116,W0718,W0702,W0212,C0411,W0613,R0903,E1102
-# pylint: disable=C0103,W0125,W0126
+# pylint: disable=C0115,C0116,E0402
 
 
-"handling out objects"
+"object management"
 
 
 from .objects import Object
+
+
+def __dir__():
+    return (
+            'Broker',
+           )
 
 
 class Broker(Object):
@@ -19,7 +24,12 @@ class Broker(Object):
         Broker.objs.append(obj)
 
     @staticmethod
-    def byorig(orig):
+    def announce(txt) -> None:
+        for obj in Broker.objs:
+            obj.announce(txt)
+
+    @staticmethod
+    def byorig(orig) -> Object:
         for obj in Broker.objs:
             if object.__repr__(obj) == orig:
                 return obj
@@ -32,16 +42,8 @@ class Broker(Object):
         except ValueError:
             pass
 
-
-class BroadCast(Object):
-
     @staticmethod
-    def announce(txt):
-        for obj in Broker.objs:
-            obj.announce(txt)
-
-    @staticmethod
-    def say(orig, channel, txt):
+    def say(orig, channel, txt) -> None:
         bot = Broker.byorig(orig)
         if not bot:
             return

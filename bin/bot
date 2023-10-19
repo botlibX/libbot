@@ -41,7 +41,7 @@ Storage.workdir = os.path.expanduser(f"~/.{NAME}")
 
 PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
 USER = getpass.getuser()
-VERSION = 20
+VERSION = 21
 
 
 Cfg.name = NAME

@@ -51,7 +51,6 @@ def daemon(pidfile):
         fds.write(str(os.getpid()))
 
 
-
 def laps(seconds, short=True) -> str:
     txt = ""
     nsec = float(seconds)

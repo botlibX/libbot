@@ -30,7 +30,8 @@ classifiers = [
 [tool.setuptools]
 packages = [
             "bot",
-            "botmod"
+            "bot.lib",
+            "bot.mod"
            ]
 script-files = [
                 "bin/bot",

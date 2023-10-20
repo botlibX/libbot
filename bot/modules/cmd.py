@@ -6,7 +6,7 @@
 "list of commands"
 
 
-from bot.lib.handler import Handler
+from bot.handler import Handler
 
 
 def cmd(event):

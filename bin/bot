@@ -27,22 +27,14 @@ sys.path.insert(0, os.getcwd())
 from bot.defines import Broker, Cfg, Client, Errors, Handler, Message, Storage
 from bot.defines import command, cprint, debug, parse, scan
 from bot.defines import daemon, launch, mods, name, privileges, shutdown, spl
+from bot.defines import censors
 
 
-import bot.censors
+import bot.modules as modules
 
-try:
-    import botmod as modules
-except:
-    modules = None
-    
 
 NAME = __file__.split(os.sep)[-1].lower()
-
-
 Storage.workdir = os.path.expanduser(f"~/.{NAME}")
-
-
 PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
 USER = getpass.getuser()
 VERSION = 21
@@ -51,7 +43,7 @@ VERSION = 21
 Cfg.name = NAME
 
 
-bot.censors.output = print
+censors.output = print
 
 
 class CLI(Client):
@@ -97,7 +89,8 @@ def wrap(func) -> None:
 
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
-    Cfg.mod = ",".join(modules.__dir__())
+    if modules:
+        Cfg.mod = ",".join(modules.__dir__())
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:

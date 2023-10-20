@@ -6,7 +6,7 @@
 "status of bots"
 
 
-from bot.lib import Broker, Errors
+from bot.defines import Broker, Errors
 
 
 def sts(event):

@@ -25,7 +25,7 @@ from ..defines import command, debug, edit, fmt, keys, parse
 from ..defines import find, fntime, launch, last, laps, sync
 
 
-NAME = Cfg.name or sys.argv[0].rsplit(os.sep, maxsplit=1)[-1]
+NAME = Cfg.name or __file__.split(os.sep)[-3]
 
 
 Censor.words = ["PING", "PONG", "PRIVMSG"]

@@ -11,7 +11,6 @@ import base64
 import os
 import queue
 import socket
-import sys
 import ssl
 import textwrap
 import threading
@@ -559,7 +558,7 @@ def cb_notice(evt):
 
 def cb_privmsg(evt):
     bot = byorig(evt.orig)
-    if bot.cfg.nocommands:
+    if not Cfg.commands:
         return
     if evt.txt:
         if evt.txt[0] in ['!',]:

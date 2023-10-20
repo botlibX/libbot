@@ -18,7 +18,9 @@ from .handler import *
 from .message import *
 from .methods import *
 from .objects import *
+from .parsers import *
 from .repeats import *
+from .scanner import *
 from .storage import *
 from .threads import *
 from .timings import *

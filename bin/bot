@@ -94,6 +94,8 @@ def wrap(func) -> None:
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     Cfg.mod = ",".join(modules.__dir__())
+    if "n" in Cfg.opts:
+        Cfg.commands = False
     if "d" in Cfg.opts:
         daemon()
     if "d" in Cfg.opts or "s" in Cfg.opts:

@@ -15,16 +15,13 @@ import _thread
 from .errored import Errors
 from .message import Message
 from .objects import Object
-from .storage import Storage
 from .threads import launch
-from .utility import spl
 
 
 def __dir__():
     return (
             'Handler',
-            'command',
-            'scan'
+            'command'
            )
 
 
@@ -102,26 +99,3 @@ def command(evt):
         exc = ex.with_traceback(ex.__traceback__)
         Errors.errors.append(exc)
     evt.ready()
-
-
-def scan(pkg, modnames="", initer=False) -> []:
-    if not pkg:
-        return []
-    inited = []
-    scanned = []
-    threads = []
-    for modname in spl(modnames):
-        module = getattr(pkg, modname, None)
-        if not module:
-            continue
-        scanned.append(modname)
-        Handler.scan(module)
-        Storage.scan(module)
-        if initer:
-            try:
-                module.init
-            except AttributeError:
-                continue
-            inited.append(modname)
-            threads.append(launch(module.init, name=f"init {modname}"))
-    return threads

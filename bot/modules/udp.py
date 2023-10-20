@@ -13,7 +13,7 @@ import threading
 import time
 
 
-from bot.defines import Broker, Object, launch
+from bot import Broker, Object, launch
 
 
 def init():

@@ -6,6 +6,9 @@
 "scanning"
 
 
+import os
+
+
 from .handler import Handler
 from .storage import Storage
 from .threads import launch
@@ -21,6 +24,7 @@ def __dir__():
 def scan(pkg, modnames="", initer=False) -> []:
     if not pkg:
         return []
+    inited = []
     scanned = []
     threads = []
     for modname in spl(modnames):
@@ -35,5 +39,6 @@ def scan(pkg, modnames="", initer=False) -> []:
                 module.init
             except AttributeError:
                 continue
+            inited.append(modname)
             threads.append(launch(module.init, name=f"init {modname}"))
     return threads

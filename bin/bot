@@ -30,8 +30,12 @@ from bot.defines import daemon, launch, mods, name, privileges, shutdown, spl
 
 
 import bot.censors
-import bot.modules as modules
 
+try:
+    import botmod as modules
+except:
+    modules = None
+    
 
 NAME = __file__.split(os.sep)[-1].lower()
 

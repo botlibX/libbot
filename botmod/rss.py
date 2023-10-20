@@ -18,9 +18,9 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from ..defines import Broker, Default, Object, Repeater
-from ..defines import find, fmt, fntime, laps, last, launch
-from ..defines import sync, update
+from bot.defines import Broker, Default, Object, Repeater
+from bot.defines import find, fmt, fntime, laps, last, launch
+from bot.defines import sync, update
 
 
 DEBUG = False

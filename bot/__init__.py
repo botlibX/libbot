@@ -3,7 +3,7 @@
 # pylint: disable=W0611,W0614,W0401,E0402,E0611
 
 
-"interface"
+"the python3 bot namespace"
 
 
 from . import brokers, censors, clients, handler, message, methods, objects
@@ -18,7 +18,6 @@ from .handler import *
 from .message import *
 from .methods import *
 from .objects import *
-from .parsers import *
 from .repeats import *
 from .scanner import *
 from .storage import *

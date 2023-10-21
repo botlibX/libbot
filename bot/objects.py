@@ -12,6 +12,7 @@ import _thread
 
 def __dir__():
     return (
+            'Default',
             'Object',
             'construct',
             'items',
@@ -181,3 +182,15 @@ def write(obj, pth) -> None:
     with lock:
         with open(pth, 'w', encoding='utf-8') as ofile:
             dump(obj, ofile)
+
+
+class Default(Object):
+
+    __slots__ = ("__default__",)
+
+    def __init__(self):
+        Object.__init__(self)
+        self.__default__ = ""
+
+    def __getattr__(self, key):
+        return self.__dict__.get(key, self.__default__)

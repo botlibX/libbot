@@ -14,6 +14,7 @@ from .brokers import *
 from .censors import *
 from .clients import *
 from .errored import *
+from .finding import *
 from .handler import *
 from .message import *
 from .methods import *

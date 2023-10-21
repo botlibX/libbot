@@ -12,8 +12,8 @@ import threading
 import _thread
 
 
-from .errors import Errors
-from .events import Event
+from .error  import Errors
+from .event  import Event
 from .object import Object
 from .thread import launch
 

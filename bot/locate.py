@@ -12,7 +12,7 @@ import time
 
 from .method import fqn, search
 from .object import Object, update
-from .stores import Storage, fetch
+from .store  import Storage, fetch
 from .extras import strip
 
 

@@ -24,8 +24,8 @@ import traceback
 from . import Broker, Cfg, Client, Errors, Event, Handler, Storage
 from . import command, cprint, debug, parse, scan
 from . import daemon, laps, launch, mods, name, privileges, shutdown, spl
-from . import errors
-from . import module
+from . import error
+from . import modules
 
 
 NAME = __file__.split(os.sep)[-1].lower()
@@ -39,7 +39,7 @@ VERSION = 21
 Cfg.name = NAME
 
 
-errors.output = print
+error.output = print
 
 
 class CLI(Client):
@@ -88,7 +88,7 @@ def wrap(func) -> None:
 
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
-    Cfg.mod = ",".join(module.__dir__())
+    Cfg.mod = ",".join(modules.__dir__())
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
@@ -96,26 +96,27 @@ def main():
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(getpass.getuser())
         debug(f"dropped to {USER} privileges")
-        scan(module, Cfg.mod, True)
+        scan(modules, Cfg.mod, True)
         while 1:
             time.sleep(1.0)
     elif "c" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
         if "v" in Cfg.opts:
             cprint(f"{NAME.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
-        thrs = scan(module, Cfg.mod, "x" not in Cfg.opts)
+        thrs = scan(modules, Cfg.mod, "x" not in Cfg.opts)
         if "w" in Cfg.opts:
             for thr in thrs:
                 thr.join()
                 cprint(f"ready {thr.name}")
         csl = Console()
         csl.add(ver)
+        csl.add(upt)
         csl.start()
         csl.forever()
     else:
         cli = CLI()
         cli.add(ver)
-        scan(module, Cfg.mod)
+        scan(modules, Cfg.mod)
         evt = cli.event(Cfg.otxt)
         parse(evt)
         command(evt)

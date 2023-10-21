@@ -6,27 +6,25 @@
 "the python3 bot namespace"
 
 
-from . import broker, client, errors, events, handle, method, object
-from . import config, parser, repeat, stores, thread, timers, extras
+from . import broker, client, error, event, handler, method, object
+from . import config, parser, runner, store, thread, timer, extras
 
 
-from .broker import *
-from .client import *
-from .config import *
-from .errors import *
-from .events import *
-from .locate import *
-from .handle import *
-from .events import *
-from .method import *
-from .object import *
-from .parser import *
-from .repeat import *
-from .runner import *
-from .stores import *
-from .thread import *
-from .timers import *
-from .extras import *
+from .broker  import *
+from .client  import *
+from .config  import *
+from .error   import *
+from .event   import *
+from .locate  import *
+from .handler import *
+from .method  import *
+from .object  import *
+from .parser  import *
+from .runner  import *
+from .store   import *
+from .thread  import *
+from .timer   import *
+from .extras  import *
 
 
 def __dir__():

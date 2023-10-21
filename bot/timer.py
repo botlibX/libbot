@@ -17,6 +17,7 @@ from .thread import launch
 def __dir__():
     return (
             'Timer',
+            'Repeater'
            )
 
 
@@ -50,3 +51,11 @@ class Timer(Object):
     def stop(self) -> None:
         if self.timer:
             self.timer.cancel()
+
+
+class Repeater(Timer):
+
+    def run(self):
+        thr = launch(self.start)
+        super().run()
+        return thr

@@ -11,7 +11,6 @@ import sys
 import traceback
 
 
-from .config import Cfg
 from .object import Object
 
 
@@ -84,5 +83,4 @@ def cprint(txt):
 
 
 def debug(txt):
-    if "v" in Cfg.opts:
-        cprint(txt)
+    cprint(txt)

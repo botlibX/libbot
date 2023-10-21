@@ -13,7 +13,7 @@ import time
 
 from .method import fqn, ident, search
 from .object import Object, read, update, write
-from .extras import cdir, strip
+from .utils  import cdir, strip
 
 
 def  __dir__():

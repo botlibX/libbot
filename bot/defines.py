@@ -6,19 +6,20 @@
 "the python3 bot namespace"
 
 
-from . import brokers, censors, clients, handler, message, methods, objects
-from . import repeats, storage, threads, timings, utility
+from . import brokers, clients, errored, handler, message, methods, objects
+from . import configs, parsers, repeats, storage, threads, timings, utility
 
 
 from .brokers import *
-from .censors import *
 from .clients import *
+from .configs import *
 from .errored import *
 from .finding import *
 from .handler import *
 from .message import *
 from .methods import *
 from .objects import *
+from .parsers import *
 from .repeats import *
 from .scanner import *
 from .storage import *

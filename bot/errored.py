@@ -10,19 +10,37 @@ import io
 import traceback
 
 
-from .censors import output
 from .objects import Object
 
 
 def __dir__():
     return (
+            'Censor',
             'Errors',
+            'cprint',
+            'debug',
+            'output',
             'shutdown'
             )
 
 
 def shutdown():
     Errors.show()
+
+
+output = None
+
+
+class Censor(Object):
+
+    words = []
+
+    @staticmethod
+    def skip(txt) -> bool:
+        for skp in Censor.words:
+            if skp in str(txt):
+                return True
+        return False
 
 
 class Errors(Object):
@@ -52,4 +70,17 @@ class Errors(Object):
     def show():
         for exc in Errors.errors:
             Errors.handle(exc)
-    
+
+
+def cprint(txt):
+    if output is None:
+        return
+    if Censor.skip(txt):
+        return
+    output(txt)
+    sys.stdout.flush()
+
+
+def debug(txt):
+    if "v" in Cfg.opts:
+        cprint(txt)

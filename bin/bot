@@ -27,10 +27,10 @@ sys.path.insert(0, os.getcwd())
 from bot.defines import Broker, Cfg, Client, Errors, Handler, Message, Storage
 from bot.defines import command, cprint, debug, parse, scan
 from bot.defines import daemon, launch, mods, name, privileges, shutdown, spl
-from bot.defines import censors
 
 
-import bot.modules as modules
+from bot import errored
+from bot import modules
 
 
 NAME = __file__.split(os.sep)[-1].lower()
@@ -43,7 +43,7 @@ VERSION = 21
 Cfg.name = NAME
 
 
-censors.output = print
+errored.output = print
 
 
 class CLI(Client):

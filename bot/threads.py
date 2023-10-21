@@ -12,7 +12,7 @@ import time
 import types
 
 
-from .errors import Errors
+from .errored import Errors
 
 
 def __dir__():

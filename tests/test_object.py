@@ -9,8 +9,8 @@
 import unittest
 
 
-from bot import Object, items, keys, update, values
-from bot import fmt, fqn
+from bot.defines import Object, items, keys, update, values
+from bot.defines import fmt, fqn
 
 
 VALIDJSON = '{"test": "bla"}'

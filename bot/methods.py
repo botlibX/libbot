@@ -11,7 +11,7 @@ import os
 import uuid
 
 
-from .object import items, keys
+from .objects import items, keys
 
 
 def __dir__():

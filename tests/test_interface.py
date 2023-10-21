@@ -11,7 +11,7 @@ import sys
 import unittest
 
 
-from bot import Object
+from bot.defines import Object
 
 
 import bot.objects

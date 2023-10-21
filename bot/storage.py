@@ -8,12 +8,11 @@
 
 import inspect
 import os
-import time
 
 
-from .method import fqn, ident, search
-from .object import Object, read, update, write
-from .extras  import cdir, strip
+from .methods import ident
+from .objects import Object, read, write
+from .utility  import cdir, strip
 
 
 def  __dir__():

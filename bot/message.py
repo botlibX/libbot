@@ -9,8 +9,8 @@
 import threading
 
 
-from .broker import Broker
-from .object import Default
+from .brokers import Broker
+from .objects import Default
 
 
 def __dir__():

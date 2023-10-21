@@ -24,11 +24,13 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from bot.define import Broker, Cfg, Client, Errors, Event, Handler, Storage
-from bot.define import command, cprint, debug, parse, scan
-from bot.define import daemon, launch, mods, name, privileges, shutdown, spl
-from bot.define import error
-from bot.define import modules
+from bot.defines import Broker, Cfg, Client, Errors, Event, Handler, Storage
+from bot.defines import command, cprint, debug, parse, scan
+from bot.defines import daemon, launch, mods, name, privileges, shutdown, spl
+
+
+from bot import errored
+from bot import modules
 
 
 NAME = __file__.split(os.sep)[-1].lower()
@@ -41,7 +43,7 @@ VERSION = 21
 Cfg.name = NAME
 
 
-error.output = print
+errored.output = print
 
 
 class CLI(Client):

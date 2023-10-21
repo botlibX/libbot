@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,E0402,E1102
+# pylint: disable=C0115,C0116,E0402,E1102,R0903,C0103
 
 
 "errors"
@@ -11,7 +11,7 @@ import sys
 import traceback
 
 
-from .object import Object
+from .objects import Object
 
 
 def __dir__():

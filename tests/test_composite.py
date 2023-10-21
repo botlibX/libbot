@@ -9,7 +9,7 @@
 import unittest
 
 
-from bot import Object
+from bot.defines import Object
 
 
 class TestComposite(unittest.TestCase):

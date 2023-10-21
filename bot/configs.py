@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=E0402,C0115,R0903,W0201
+# pylint: disable=E0402,C0115,R0902,R0903,W0201
 
 
 "configuration"
@@ -11,8 +11,8 @@ import os
 import time
 
 
-from .object import Default
-from .stores import Storage
+from .objects import Default
+from .storage import Storage
 
 
 def __dir__():

@@ -9,7 +9,7 @@
 import unittest
 
 
-from bot import Object, dumps, loads
+from bot.defines import Object, dumps, loads
 
 
 VALIDJSON = "{'test': 'bla'}"

@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,E0402,W0718,W0212
+# pylint: disable=C0115,C0116,E0402,W0718,W0212,W0613
 
 
 "handler"
@@ -12,11 +12,11 @@ import threading
 import _thread
 
 
-from .broker import Broker
-from .errors import Errors
-from .events import Event
-from .object import Object
-from .thread import launch
+from .brokers import Broker
+from .errored import Errors
+from .message import Event
+from .objects import Object
+from .threads import launch
 
 
 
@@ -28,7 +28,7 @@ def __dir__():
            )
 
 
-class Reactor(Object):
+class Handler(Object):
 
     cmds = {}
 
@@ -41,7 +41,7 @@ class Reactor(Object):
 
     @staticmethod
     def add(func):
-        Reactor.cmds[func.__name__] = func
+        Handler.cmds[func.__name__] = func
 
     def event(self, txt):
         evt = Event()
@@ -78,7 +78,7 @@ class Reactor(Object):
             if key.startswith("cb"):
                 continue
             if 'event' in cmd.__code__.co_varnames:
-                Reactor.add(cmd)
+                Handler.add(cmd)
 
     def register(self, typ, cbs):
         self.cbs[typ] = cbs
@@ -90,10 +90,10 @@ class Reactor(Object):
         self.stopped.set()
 
 
-class Client(Reactor):
+class Client(Handler):
 
     def __init__(self):
-        Reactor.__init__(self)
+        Handler.__init__(self)
         self.register("command", command)
         Broker.add(self)
 
@@ -108,7 +108,7 @@ class Client(Reactor):
 
 
 def command(evt):
-    func = Reactor.cmds.get(evt.cmd, None)
+    func = Handler.cmds.get(evt.cmd, None)
     if not func:
         evt.ready()
         return

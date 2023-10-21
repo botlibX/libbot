@@ -24,11 +24,11 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from bot import Broker, Cfg, Client, Errors, Event, Handler, Storage
-from bot import command, cprint, debug, parse, scan
-from bot import daemon, launch, mods, name, privileges, shutdown, spl
-from bot import error
-from bot import modules
+from bot.define import Broker, Cfg, Client, Errors, Event, Handler, Storage
+from bot.define import command, cprint, debug, parse, scan
+from bot.define import daemon, launch, mods, name, privileges, shutdown, spl
+from bot.define import error
+from bot.define import modules
 
 
 NAME = __file__.split(os.sep)[-1].lower()

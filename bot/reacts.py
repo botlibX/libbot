@@ -12,20 +12,23 @@ import threading
 import _thread
 
 
-from .error  import Errors
-from .event  import Event
+from .broker import Broker
+from .errors import Errors
+from .events import Event
 from .object import Object
 from .thread import launch
 
 
+
 def __dir__():
     return (
-            'Handler',
+            'Client',
+            'Reactor',
             'command'
            )
 
 
-class Handler(Object):
+class Reactor(Object):
 
     cmds = {}
 
@@ -38,7 +41,7 @@ class Handler(Object):
 
     @staticmethod
     def add(func):
-        Handler.cmds[func.__name__] = func
+        Reactor.cmds[func.__name__] = func
 
     def event(self, txt):
         evt = Event()
@@ -75,7 +78,7 @@ class Handler(Object):
             if key.startswith("cb"):
                 continue
             if 'event' in cmd.__code__.co_varnames:
-                Handler.add(cmd)
+                Reactor.add(cmd)
 
     def register(self, typ, cbs):
         self.cbs[typ] = cbs
@@ -87,8 +90,25 @@ class Handler(Object):
         self.stopped.set()
 
 
+class Client(Reactor):
+
+    def __init__(self):
+        Reactor.__init__(self)
+        self.register("command", command)
+        Broker.add(self)
+
+    def announce(self, txt):
+        self.raw(txt)
+
+    def dosay(self, channel, txt):
+        self.raw(txt)
+
+    def raw(self, txt):
+        pass
+
+
 def command(evt):
-    func = Handler.cmds.get(evt.cmd, None)
+    func = Reactor.cmds.get(evt.cmd, None)
     if not func:
         evt.ready()
         return

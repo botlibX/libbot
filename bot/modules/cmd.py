@@ -6,8 +6,8 @@
 "list of commands"
 
 
-from bot.handler import Handler
+from bot.reacts import Reactor
 
 
 def cmd(event):
-    event.reply(",".join(sorted(Handler.cmds)))
+    event.reply(",".join(sorted(Reactor.cmds)))

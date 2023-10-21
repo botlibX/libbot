@@ -11,8 +11,8 @@ import os
 import time
 
 
-from .object  import Default
-from .persist import Storage
+from .object import Default
+from .stores import Storage
 
 
 def __dir__():

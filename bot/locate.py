@@ -10,10 +10,10 @@ import os
 import time
 
 
-from .method  import fqn, search
-from .object  import Object, update
-from .persist import Storage, fetch
-from .utils   import strip
+from .method import fqn, search
+from .object import Object, update
+from .stores import Storage, fetch
+from .extras import strip
 
 
 def find(mtc, selector=None) -> []:

@@ -6,7 +6,7 @@
 "configuration"
 
 
-from .objects import Default
+from .object import Default
 
 
 def __dir__():

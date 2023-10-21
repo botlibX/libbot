@@ -9,8 +9,8 @@
 import threading
 
 
-from .brokers import Broker
-from .objects import Default
+from .broker import Broker
+from .object import Default
 
 
 def __dir__():
@@ -19,7 +19,7 @@ def __dir__():
            )
 
 
-class Message(Default):
+class Event(Default):
 
     __slots__ = ('_ready', "_thr")
 

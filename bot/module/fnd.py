@@ -6,8 +6,8 @@
 "locate"
 
 
-from bot.methods import fmt
-from bot.storage import Storage, find
+from bot.method import fmt
+from bot.stores import Storage, find
 
 
 def fnd(event):

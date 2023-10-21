@@ -18,10 +18,10 @@ import time
 import _thread
 
 
-from bot.defines import Broker, Censor, Cfg, Client, Errors, Message, Object
-from bot.defines import Default
-from bot.defines import command, debug, edit, fmt, keys, parse
-from bot.defines import find, fntime, launch, last, laps, sync
+from bot import Broker, Censor, Cfg, Client, Errors, Event, Object
+from bot import Default
+from bot import command, debug, edit, fmt, keys, parse
+from bot import find, fntime, launch, last, laps, sync
 
 
 NAME = Cfg.name or __file__.split(os.sep)[-3]
@@ -331,7 +331,7 @@ class IRC(Client, Output):
         rawstr = rawstr.replace('\u0001', '')
         rawstr = rawstr.replace('\001', '')
         debug(txt)
-        obj = Message()
+        obj = Event()
         obj.args = []
         obj.rawstr = rawstr
         obj.command = ''

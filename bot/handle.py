@@ -12,10 +12,10 @@ import threading
 import _thread
 
 
-from .errored import Errors
-from .message import Message
-from .objects import Object
-from .threads import launch
+from .errors import Errors
+from .events import Event
+from .object import Object
+from .thread import launch
 
 
 def __dir__():
@@ -41,7 +41,7 @@ class Handler(Object):
         Handler.cmds[func.__name__] = func
 
     def event(self, txt):
-        evt = Message()
+        evt = Event()
         evt.txt = txt
         evt.orig = object.__repr__(self)
         return evt
@@ -63,7 +63,7 @@ class Handler(Object):
             except (KeyboardInterrupt, EOFError):
                 _thread.interrupt_main()
 
-    def poll(self) -> Message:
+    def poll(self) -> Event:
         return self.queue.get()
 
     def put(self, evt):

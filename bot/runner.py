@@ -9,10 +9,10 @@
 import os
 
 
-from .handler import Handler
-from .storage import Storage
-from .threads import launch
-from .utility import spl
+from .handle import Handler
+from .stores import Storage
+from .thread import launch
+from .extras import spl
 
 
 def __dir__():

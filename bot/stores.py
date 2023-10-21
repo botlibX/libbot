@@ -11,9 +11,9 @@ import os
 import time
 
 
-from .methods import fqn, ident, search
-from .objects import Object, read, update, write
-from .utility import cdir, strip
+from .method import fqn, ident, search
+from .object import Object, read, update, write
+from .extras import cdir, strip
 
 
 def  __dir__():

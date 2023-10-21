@@ -7,10 +7,12 @@
 
 
 import io
+import sys
 import traceback
 
 
-from .objects import Object
+from .config import Cfg
+from .object import Object
 
 
 def __dir__():

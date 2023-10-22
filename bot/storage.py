@@ -12,7 +12,7 @@ import os
 
 from .methods import ident
 from .objects import Object, read, write
-from .utility  import cdir, strip
+from .utility import cdir, strip
 
 
 def  __dir__():

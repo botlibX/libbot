@@ -30,6 +30,7 @@ SYNOPSIS
 
 INSTALL
 
+::
 
    $ pipx install libbot
 

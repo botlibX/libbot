@@ -39,14 +39,6 @@ USAGE
 
 ::
 
-   modules are store in ~/.bot/modules
-   module examples are stored in share/libbot/modules
-
-   run skel to populate the modules directory
-
-   $ bot skl
-   $
-
    default action is doing nothing
 
    $ bot

@@ -58,8 +58,8 @@ USAGE
    list of modules
 
    $ bot mod
-   bsc,err,flt,irc,log,mod,rss,shp,
-   sts,tdo,thr,udp
+   bsc,err,flt,irc,log,mod,rss,shp,sts,tdo,
+   thr,udp
 
    start as daemon
 
@@ -81,7 +81,7 @@ CONFIGURATION
 
    sasl
 
-   $ bot pwd <nsvnick> <nspass>
+   $ bot pwd <nsnick> <nspass>
    $ bot cfg password=<frompwd>
 
    rss
@@ -89,19 +89,19 @@ CONFIGURATION
    $ bot rss <url>
    $ bot dpl <url> <item1,item2>
    $ bot rem <url>
-   $ bot nme <url< <name>
+   $ bot nme <url> <name>
 
 
 COMMANDS
 
 ::
 
-   cmd - commands
    cfg - irc configuration
+   cmd - commands
    dlt - remove a user
+   dne - mark todo as done
    dpl - sets display items
    fnd - find objects 
-   flt - instances registered
    log - log some text
    met - add a user
    mre - displays cached output
@@ -109,7 +109,8 @@ COMMANDS
    pwd - sasl nickserv name/pass
    rem - removes a rss feed
    rss - add a feed
-   slg - slogan
+   sts - show status
+   tdo - add todo item
    thr - show the running threads
 
 

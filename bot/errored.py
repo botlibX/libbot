@@ -25,10 +25,6 @@ def __dir__():
             )
 
 
-def shutdown():
-    Errors.show()
-
-
 output = None
 
 
@@ -84,3 +80,7 @@ def cprint(txt):
 
 def debug(txt):
     cprint(txt)
+
+
+def shutdown():
+    Errors.show()

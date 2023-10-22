@@ -1,19 +1,19 @@
 NAME
 
-    LIBBOT - library to program bots
+LIBBOT - library to program bots
 
 
 DESCRIPTION
 
 
-    LIBBOT is a python3 library intended to be programmable  in a
-    static, only code, no popen, no user imports and no reading
-    modules from a directory, way. 
+LIBBOT is a python3 library intended to be programmable  in a
+static, only code, no popen, no user imports and no reading
+modules from a directory, way. 
 
-    LIBBOT provides a demo bot, it can connect to IRC, fetch and
-    display RSS feeds, take todo notes, keep a shopping list
-    and log text. You can also copy/past the service file and run
-    it under systemd for 24/7 presence in a IRC channel.
+LIBBOT provides a demo bot, it can connect to IRC, fetch and
+display RSS feeds, take todo notes, keep a shopping list
+and log text. You can also copy/past the service file and run
+it under systemd for 24/7 presence in a IRC channel.
 
 
 SYNOPSIS

@@ -23,7 +23,7 @@ from .threads import launch
 def __dir__():
     return (
             'Client',
-            'Reactor',
+            'Handler',
             'command'
            )
 

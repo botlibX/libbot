@@ -21,14 +21,11 @@ def __dir__():
 def scan(pkg, modnames="", initer=False) -> []:
     if not pkg:
         return []
-    inited = []
-    scanned = []
     threads = []
     for modname in spl(modnames):
         module = getattr(pkg, modname, None)
         if not module:
             continue
-        scanned.append(modname)
         Handler.scan(module)
         Storage.scan(module)
         if initer:
@@ -36,6 +33,5 @@ def scan(pkg, modnames="", initer=False) -> []:
                 module.init
             except AttributeError:
                 continue
-            inited.append(modname)
             threads.append(launch(module.init, name=f"init {modname}"))
     return threads

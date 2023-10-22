@@ -34,10 +34,10 @@ class Handler(Object):
 
     def __init__(self):
         Object.__init__(self)
-        self.cbs = Object()
-        self.queue = queue.Queue()
+        self.cbs     = Object()
+        self.queue   = queue.Queue()
         self.stopped = threading.Event()
-        self.end = threading.Event()
+        self.end     = threading.Event()
 
     @staticmethod
     def add(func):

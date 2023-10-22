@@ -27,12 +27,12 @@ class Thread(threading.Thread):
 
     def __init__(self, func, thrname, *args, daemon=True, **kwargs):
         super().__init__(None, self.run, thrname, (), {}, daemon=daemon)
-        self._result = None
-        self.name = thrname or name(func)
-        self.queue = queue.Queue()
-        self.queue.put_nowait((func, args))
-        self.sleep = None
+        self._result   = None
+        self.name      = thrname or name(func)
+        self.queue     = queue.Queue()
+        self.sleep     = None
         self.starttime = time.time()
+        self.queue.put_nowait((func, args))
 
     def __iter__(self):
         return self

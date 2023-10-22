@@ -14,15 +14,15 @@ def __dir__():
 
 def parse(obj, txt=None) -> None:
     args = []
-    obj.args = obj.args or []
-    obj.cmd = obj.cmd or ""
-    obj.gets = obj.gets or {}
+    obj.args    = obj.args or []
+    obj.cmd     = obj.cmd or ""
+    obj.gets    = obj.gets or {}
     obj.hasmods = obj.hasmod or False
-    obj.mod = obj.mod or ""
-    obj.opts = obj.opts or ""
-    obj.result = obj.reult or []
-    obj.sets = obj.sets or {}
-    obj.otxt = txt or obj.txt or ""
+    obj.mod     = obj.mod or ""
+    obj.opts    = obj.opts or ""
+    obj.result  = obj.reult or []
+    obj.sets    = obj.sets or {}
+    obj.otxt    = txt or obj.txt or ""
     _nr = -1
     for spli in obj.otxt.split():
         if spli.startswith("-"):
@@ -53,8 +53,8 @@ def parse(obj, txt=None) -> None:
         args.append(spli)
     if args:
         obj.args = args
-        obj.txt = obj.cmd or ""
+        obj.txt  = obj.cmd or ""
         obj.rest = " ".join(obj.args)
-        obj.txt = obj.cmd + " " + obj.rest
+        obj.txt  = obj.cmd + " " + obj.rest
     else:
         obj.txt = obj.cmd or ""

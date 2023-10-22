@@ -29,7 +29,7 @@ class Storage:
     workdir = ""
 
     @staticmethod
-    def add(clz):
+    def add(clz) -> None:
         if not clz:
             return
         name = str(clz).split()[1][1:-2]
@@ -40,7 +40,7 @@ class Storage:
         return os.listdir(Storage.store())
 
     @staticmethod
-    def long(name):
+    def long(name) -> str:
         split = name.split(".")[-1].lower()
         res = name
         for named in Storage.classes:
@@ -50,13 +50,13 @@ class Storage:
         return res
 
     @staticmethod
-    def mods():
+    def mods() -> str:
         pth =  Storage.path("modules")
         cdir(pth)
         return pth
 
     @staticmethod
-    def path(pth):
+    def path(pth) -> str:
         if not pth:
             pth = ""
         pth2 =  os.path.join(Storage.workdir, pth)
@@ -64,7 +64,7 @@ class Storage:
         return pth2
 
     @staticmethod
-    def store(pth=""):
+    def store(pth="") -> str:
         pth = os.path.join(Storage.workdir, "store", pth)
         pth2 = os.path.dirname(pth)
         cdir(pth2)
@@ -80,13 +80,13 @@ class Storage:
             Storage.add(clz)
 
 
-def fetch(obj, pth):
+def fetch(obj, pth) -> None:
     pth2 = Storage.store(pth)
     read(obj, pth2)
     obj.__fnm__ = strip(pth)
 
 
-def sync(obj, pth=None):
+def sync(obj, pth=None) -> str:
     pth = pth or obj.__fnm__
     if not pth:
         pth = ident(obj)

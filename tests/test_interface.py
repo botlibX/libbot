@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,I,R
+# pylint: disable=C0115,C0116,E0611,C0103,R0903,I1101
 
 
 "interface"
@@ -11,20 +11,20 @@ import sys
 import unittest
 
 
-from bot.defines import Object
+from bot.objects import Object
 
 
 import bot.objects
 
 
 METHODS = [
-           'construct',
            'items',
            'keys',
            'read',
+           'construct',
            'update',
-           'values',
-           'write'
+           'write',
+           'values'
           ]
 
 
@@ -48,8 +48,8 @@ METHOS = [
           'json',
           'load',
           'loads',
-          'read',
-          'write'
+          'write',
+          'read'
         ]
 
 

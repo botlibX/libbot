@@ -8,7 +8,7 @@
 
 from ..locator import find
 from ..methods import fmt
-from ..storage import Storage, find
+from ..storage import Storage
 
 
 def fnd(event):

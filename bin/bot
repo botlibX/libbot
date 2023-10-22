@@ -93,7 +93,7 @@ def main():
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
-        daemon()
+        daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(getpass.getuser())
         debug(f"dropped to {USER} privileges")

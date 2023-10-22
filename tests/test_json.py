@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116
+# pylint: disable=C0115,C0116,E0611
 
 
 "json"
@@ -9,7 +9,7 @@
 import unittest
 
 
-from bot.defines import Object, dumps, loads
+from bot.objects import Object, dumps, loads
 
 
 VALIDJSON = "{'test': 'bla'}"

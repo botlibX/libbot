@@ -48,7 +48,7 @@ USAGE
 
    $ bot cmd
    cfg,cmd,dlt,dne,dpl,fnd,log,met,mod,mre,
-   nme,pwd,rem,rss,skl,sts,tdo,thr,udp,ver
+   nme,pwd,rem,rss,sts,tdo,thr,ver
 
    starting a console requires an option
 
@@ -105,7 +105,7 @@ COMMANDS
    log - log some text
    met - add a user
    mre - displays cached output
-   nck - changes nick on irc
+   nme - display name of a feed
    pwd - sasl nickserv name/pass
    rem - removes a rss feed
    rss - add a feed

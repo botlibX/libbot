@@ -11,12 +11,13 @@ import os
 import sys
 
 
-from . import cmd, irc, log, mod, rss, sts, tdo, thr
+from . import cmd, fnd, irc, log, mod, rss, sts, tdo, thr
 
 
 def __dir__():
     return (
             'cmd',
+            'fnd',
             'irc',
             'log',
             'mod',

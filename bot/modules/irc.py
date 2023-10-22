@@ -18,10 +18,18 @@ import time
 import _thread
 
 
-from bot.defines import Broker, Censor, Cfg, Client, Errors, Event, Object
-from bot.defines import Default
-from bot.defines import command, debug, edit, fmt, keys, parse
-from bot.defines import find, fntime, launch, last, laps, sync
+from ..brokers import Broker
+from ..configs import Cfg
+from ..errored import Censor, Errors, debug
+from ..handler import Client, command
+from ..locator import find, fntime, last
+from ..message import Event
+from ..methods import edit, fmt
+from ..objects import Default, Object, keys
+from ..parsers import parse
+from ..storage import sync
+from ..threads import launch
+from ..utility import laps
 
 
 NAME = Cfg.name or __file__.split(os.sep)[-3]

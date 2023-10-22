@@ -9,7 +9,10 @@
 import time
 
 
-from bot.defines import Object, find, fntime, laps, sync
+from ..locator import find, fntime
+from ..objects import Object
+from ..storage import sync
+from ..utility import laps
 
 
 class Log(Object):

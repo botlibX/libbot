@@ -1,16 +1,21 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0412,C0115,C0116,W0212,R0903,C0207,C0413,W0611
-# pylint: disable=C0411,E0402,E0611,C2801
+# pylint: disable=C0116
 
 
-"introspection"
+"introspectionl1"
 
 
 from .handler import Handler
 from .storage import Storage
 from .threads import launch
 from .utility import spl
+
+
+def __dir__():
+    return (
+            'scan',
+           )
 
 
 def scan(pkg, modnames="", initer=False) -> []:

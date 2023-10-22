@@ -19,7 +19,7 @@ def  __dir__():
     return (
             'Storage',
             'fetch',
-            'sync',
+            'sync'
            )
 
 

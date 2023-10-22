@@ -16,6 +16,15 @@ from .storage import Storage, fetch
 from .utility import strip
 
 
+def __dir__():
+    return (
+            "find",
+            "fns",
+            "fntime",
+            "last"
+           )
+
+
 def find(mtc, selector=None) -> []:
     if selector is None:
         selector = {}

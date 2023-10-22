@@ -33,14 +33,7 @@ from bot import errored
 from bot import modules
 
 
-NAME = __file__.split(os.sep)[-1].lower()
-Storage.workdir = os.path.expanduser(f"~/.{NAME}")
-PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
-USER = getpass.getuser()
-VERSION = 21
-
-
-Cfg.name = NAME
+Storage.workdir = Cfg.workdir
 
 
 errored.output = print
@@ -68,7 +61,7 @@ class Console(CLI):
 
 
 def ver(event):
-    event.reply(f"{NAME.upper()} {VERSION}")
+    event.reply(f"{Cfg.name.upper()} {Cfg.version}")
 
 
 def wrap(func) -> None:
@@ -96,14 +89,14 @@ def main():
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(getpass.getuser())
-        debug(f"dropped to {USER} privileges")
+        debug(f"dropped to {Cfg.user} privileges")
         scan(modules, Cfg.mod, True)
         while 1:
             time.sleep(1.0)
     elif "c" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
         if "v" in Cfg.opts:
-            cprint(f"{NAME.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
+            cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
         thrs = scan(modules, Cfg.mod, "x" not in Cfg.opts)
         if "w" in Cfg.opts:
             for thr in thrs:

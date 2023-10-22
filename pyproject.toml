@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "library to program bots"
-version = "21"
+version = "22"
 authors = [
     {name = "botlib", email = "botlib@proton.me" },
 ]
@@ -39,5 +39,14 @@ script-files = [
                ]
 zip-safe=true
 
+
 [tool.setuptools.data-files]
 "share/doc/libbot" = ["README.rst",]
+
+
+[tool.setuptools.exclude-package-data]
+"*" = [
+       "env*",
+       "html*",
+       "test*"
+      ]

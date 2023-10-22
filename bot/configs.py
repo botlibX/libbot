@@ -34,4 +34,4 @@ Cfg.workdir = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Storage.workdir, "{Cfg.name}.pid")
 Cfg.starttime = time.time()
 Cfg.user= getpass.getuser()
-Cfg.version = 21
+Cfg.version = 22

@@ -9,7 +9,7 @@ DESCRIPTION
 
 ::
 
-   LIBBOT is a python3 library intended to be programmable  in a
+   LIBBOT is a python3 library intended to be programmable in a
    static, only code, no popen, no user imports and no reading
    modules from a directory, way. 
 

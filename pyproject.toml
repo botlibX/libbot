@@ -35,7 +35,6 @@ packages = [
 script-files = [
                 "bin/bot",
                 "bin/botd",
-                "bin/botcmd"
                ]
 zip-safe=true
 

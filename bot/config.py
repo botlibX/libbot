@@ -6,7 +6,9 @@
 "configuration"
 
 
+import getpass
 import os
+import time
 
 
 from .object import Default
@@ -27,4 +29,7 @@ class Config(Default):
 Cfg = Config()
 Cfg.commands = True
 Cfg.name = __file__.split(os.sep)[-2].lower()
+Cfg.pidfile   = os.path.join(Cfg.workdir, "{Cfg.name}.pid")
+Cfg.starttime = time.time()
+Cfg.user      = getpass.getuser()
 Cfg.workdir = os.path.expanduser(f"~/.{Cfg.name}")

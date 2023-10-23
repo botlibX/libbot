@@ -6,5 +6,5 @@
 "the python3 bot namespace"
 
 
-from . import brk, clt, cfg, err, evt, hdl, fnc
-from . import obj, prs, scn, dsk, thr, tme, fnd
+from . import broker, client, config, error, event, handle, func
+from . import object, parse, scan, disk, thread, timer, find

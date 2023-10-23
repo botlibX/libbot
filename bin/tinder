@@ -22,13 +22,12 @@ WORKDIR = os.path.expanduser("~")
 sys.path.insert(0, os.getcwd())
 
 
-from bot.spc import Cfg, Censor, Client, Object, Storage
-from bot.spc import keys, laps, launch, mods, parse, scan
-from bot.spc import command, debug
+from bot.spec import Cfg, Censor, Client, Object, Storage
+from bot.spec import keys, laps, launch, mods, parse, scan
+from bot.spec import command, debug
 
 
-from bot import err
-from bot import mod as modules
+from bot import modules
 
 
 DATE = time.ctime(time.time()).replace("  ", " ")

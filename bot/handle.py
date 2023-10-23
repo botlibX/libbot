@@ -12,11 +12,11 @@ import threading
 import _thread
 
 
-from .brk import Broker
-from .err import Errors
-from .evt import Event
-from .obj import Object
-from .thr import launch
+from .broker import Broker
+from .error  import Errors
+from .event  import Event
+from .object import Object
+from .thread import launch
 
 
 def __dir__():

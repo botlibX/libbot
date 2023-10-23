@@ -9,7 +9,7 @@
 import os
 
 
-from .obj import Default
+from .object import Default
 
 
 def __dir__():

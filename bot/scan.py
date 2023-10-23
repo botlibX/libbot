@@ -6,10 +6,10 @@
 "introspection"
 
 
-from .hdl import Handler
-from .dsk import Storage
-from .thr import launch
-from .utl import spl
+from .handle import Handler
+from .disk   import Storage
+from .thread import launch
+from .utils  import spl
 
 
 def __dir__():

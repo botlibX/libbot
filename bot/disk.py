@@ -10,9 +10,9 @@ import inspect
 import os
 
 
-from .fnc import ident
-from .obj import Object, read, write
-from .utl import cdir, strip
+from .func   import ident
+from .object import Object, read, write
+from .utils  import cdir, strip
 
 
 def  __dir__():

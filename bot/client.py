@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # This file is placed in the Public Domain.
 #
 # pylint: disable=C0412,C0115,C0116,W0212,R0903,C0207,C0413,W0611
@@ -8,10 +7,10 @@
 "clientside"
 
 
-from .brk import Broker
-from .err import Errors, cprint
-from .hdl import Handler
-from .prs import parse
+from .broker import Broker
+from .error  import Errors, cprint
+from .handle import Handler
+from .parse  import parse
 
 
 def __dir__():

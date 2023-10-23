@@ -10,8 +10,8 @@ import threading
 import time
 
 
-from ..obj import Object, update
-from ..utl import laps
+from bot.object import Object, update
+from bot.utils  import laps
 
 
 STARTTIME = time.time()

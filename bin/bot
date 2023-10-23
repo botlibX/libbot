@@ -24,13 +24,17 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from bot.spc import Broker, Censor, Cfg, Client, Errors, Event
-from bot.spc import CLI, Console, Handler, Storage
-from bot.spc import command, cprint, daemon, debug, parse, scan
-from bot.spc import launch, mods, name, privileges, shutdown, spl
+from bot.spec import Broker, Censor, Cfg, Client, Errors, Event
+from bot.spec import CLI, Console, Handler, Storage
+from bot.spec import command, cprint, daemon, debug, parse, scan
+from bot.spec import launch, mods, name, privileges, shutdown, spl
 
 
-from bot import mod as modules
+modules = None
+
+
+if os.path.exists("modules"):
+    import modules
 
 
 Censor.output = print

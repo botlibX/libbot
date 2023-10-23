@@ -18,14 +18,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from ..brk import Broker
-from ..fnc import fmt
-from ..obj import Default, Object, update
-from ..tme import Repeater
-from ..fnd import find, fntime, last
-from ..dsk import sync
-from ..thr import launch
-from ..utl import laps
+from bot.spec import Broker, Default, Object, Repeater
+from bot.spec import find, fmt, fntime, last, launch, laps, sync, update
 
 
 DEBUG = False

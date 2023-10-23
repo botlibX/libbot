@@ -27,7 +27,16 @@ from bot.spec import keys, laps, launch, mods, parse, scan
 from bot.spec import command, debug
 
 
-from bot import modules
+modules = None
+
+
+try:
+    import bot.modules as modules
+except:
+    try:
+        import modules
+    except:
+        pass
 
 
 DATE = time.ctime(time.time()).replace("  ", " ")

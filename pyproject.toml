@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "library to program bots"
-version = "22"
+version = "23"
 authors = [
     {name = "botlib", email = "botlib@proton.me" },
 ]
@@ -29,8 +29,8 @@ classifiers = [
 
 [tool.setuptools]
 packages = [
-            "bot",
-            "bot.modules",
+            'bot',
+            'bot.modules'
            ]
 script-files = [
                 "bin/bot",

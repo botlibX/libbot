@@ -61,10 +61,11 @@ def main():
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
+        debug(f"daemon at {Cfg.pidfile}")
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
-        privileges(getpass.getuser())
-        debug(f"dropped to {Cfg.user} privileges")
+        privileges(Cfg.user)
+        #debug(f"dropped to {Cfg.user} privileges")
         scan(modules, Cfg.mod, True)
         forever()
     elif "c" in Cfg.opts:

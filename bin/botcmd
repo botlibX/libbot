@@ -13,11 +13,11 @@ import os
 import sys
 
 
-from bot.configs import Cfg
-from bot.handler import Client, command
-from bot.parsers import parse
-from bot.scanner import scan
-from bot.storage import Storage
+from bot.cfg import Cfg
+from bot.hdl import Client, command
+from bot.prs import parse
+from bot.scn import scan
+from bot.dsk import Storage
 
 
 from bot import modules

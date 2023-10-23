@@ -3,13 +3,13 @@
 # pylint: disable=C0116,E0402
 
 
-"introspectionl1"
+"introspection"
 
 
-from .handler import Handler
-from .storage import Storage
-from .threads import launch
-from .utility import spl
+from .hdl import Handler
+from .dsk import Storage
+from .thr import launch
+from .utl import spl
 
 
 def __dir__():

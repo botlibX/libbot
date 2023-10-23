@@ -6,13 +6,10 @@
 "configuration"
 
 
-import getpass
 import os
-import time
 
 
-from .objects import Default
-from .storage import Storage
+from .obj import Default
 
 
 def __dir__():

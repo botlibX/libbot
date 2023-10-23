@@ -10,8 +10,8 @@ import threading
 import time
 
 
-from .objects import Object
-from .threads import launch
+from .obj import Object
+from .thr import Thread, launch
 
 
 def __dir__():
@@ -44,7 +44,7 @@ class Timer(Object):
         timer.state  = self.state
         timer.func   = self.func
         timer.state["starttime"] = time.time()
-        timer.state["latest"] = time.time()
+        timer.state["latest"]    = time.time()
         timer.start()
         self.timer   = timer
 
@@ -55,7 +55,7 @@ class Timer(Object):
 
 class Repeater(Timer):
 
-    def run(self):
+    def run(self) -> Thread:
         thr = launch(self.start)
         super().run()
         return thr

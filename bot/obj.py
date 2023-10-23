@@ -19,6 +19,7 @@ def __dir__():
             'items',
             'keys',
             'read',
+            'search',
             'update',
             'values',
             'write'
@@ -88,6 +89,19 @@ def keys(obj) -> []:
     if isinstance(obj, type({})):
         return obj.keys()
     return obj.__dict__.keys()
+
+
+def search(obj, selector) -> bool:
+    res = False
+    for key, value in items(selector):
+        if key not in obj:
+            res = False
+            break
+        val = obj[key]
+        if str(value) in str(val):
+            res = True
+            break
+    return res
 
 
 def update(obj, data, empty=True) -> None:

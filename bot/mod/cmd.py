@@ -6,7 +6,7 @@
 "list of commands"
 
 
-from ..handler import Handler
+from ..hdl import Handler
 
 
 def cmd(event):

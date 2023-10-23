@@ -11,7 +11,7 @@ import sys
 import traceback
 
 
-from .objects import Object
+from .obj import Object
 
 
 def __dir__():
@@ -20,16 +20,13 @@ def __dir__():
             'Errors',
             'cprint',
             'debug',
-            'output',
             'shutdown'
             )
 
 
-output = None
-
-
 class Censor(Object):
 
+    output = None
     words = []
 
     @staticmethod
@@ -45,7 +42,12 @@ class Errors(Object):
     errors = []
 
     @staticmethod
-    def format(exc):
+    def add(exc) -> None:
+        excp = exc.with_traceback(exc.__traceback__)
+        Errors.errors.append(excp)
+
+    @staticmethod
+    def format(exc) -> str:
         res = ""
         stream = io.StringIO(
                              traceback.print_exception(
@@ -59,28 +61,28 @@ class Errors(Object):
         return res
 
     @staticmethod
-    def handle(exc):
-        if output:
-            output(Errors.format(exc))
+    def handle(exc) -> None:
+        if Censor.output:
+            Censor.output(Errors.format(exc))
 
     @staticmethod
-    def show():
+    def show() -> None:
         for exc in Errors.errors:
             Errors.handle(exc)
 
 
-def cprint(txt):
-    if output is None:
+def cprint(txt) -> None:
+    if Censor.output is None:
         return
     if Censor.skip(txt):
         return
-    output(txt)
+    Censor.output(txt)
     sys.stdout.flush()
 
 
-def debug(txt):
+def debug(txt) -> None:
     cprint(txt)
 
 
-def shutdown():
+def shutdown() -> None:
     Errors.show()

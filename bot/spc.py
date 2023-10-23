@@ -6,31 +6,32 @@
 "the python3 bot namespace"
 
 
-from . import brokers, errored, handler, message, methods, objects
-from . import configs, parsers, scanner, storage, threads, timings, utility
-
-
-from .brokers import *
-from .configs import *
-from .errored import *
-from .handler import *
-from .locator import *
-from .message import *
-from .methods import *
-from .objects import *
-from .parsers import *
-from .scanner import *
-from .storage import *
-from .threads import *
-from .timings import *
-from .utility import *
+from .all import *
+from .brk import *
+from .cfg import *
+from .clt import *
+from .err import *
+from .fnd import *
+from .hdl import *
+from .evt import *
+from .fnc import *
+from .obj import *
+from .prs import *
+from .scn import *
+from .dsk import *
+from .thr import *
+from .tme import *
+from .utl import *
 
 
 def __dir__():
     return (
             'Broker',
+            'Censor',
             'Cfg',
             'Client',
+            'CLI',
+            'Console',
             'Default',
             'Errors',
             'Event',
@@ -55,7 +56,6 @@ def __dir__():
             'launch',
             'mods',
             'name',
-            'output',
             'parse',
             'read',
             'scan',

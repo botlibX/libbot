@@ -9,10 +9,10 @@
 import time
 
 
-from ..locator import find, fntime
-from ..objects import Object
-from ..storage import sync
-from ..utility import laps
+from ..fnd import find, fntime
+from ..obj import Object
+from ..dsk import sync
+from ..utl import laps
 
 
 class Log(Object):

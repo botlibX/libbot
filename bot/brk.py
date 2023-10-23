@@ -6,7 +6,7 @@
 "object management"
 
 
-from .objects import Object
+from .obj import Object
 
 
 def __dir__():

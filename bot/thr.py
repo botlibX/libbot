@@ -12,7 +12,7 @@ import time
 import types
 
 
-from .errored import Errors
+from .err import Errors
 
 
 def __dir__():
@@ -41,20 +41,19 @@ class Thread(threading.Thread):
         for k in dir(self):
             yield k
 
-    def join(self, timeout=None):
+    def join(self, timeout=None) -> type:
         super().join(timeout)
         return self._result
 
-    def run(self):
+    def run(self) -> None:
         func, args = self.queue.get()
         try:
             self._result = func(*args)
         except Exception as ex:
-            exc = ex.with_traceback(ex.__traceback__)
-            Errors.errors.append(exc)
+            Errors.add(ex)
 
 
-def launch(func, *args, **kwargs):
+def launch(func, *args, **kwargs) -> Thread:
     nme = kwargs.get("name", name(func))
     thread = Thread(func, nme, *args, **kwargs)
     thread.start()

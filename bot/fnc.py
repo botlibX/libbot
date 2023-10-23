@@ -11,7 +11,7 @@ import os
 import uuid
 
 
-from .objects import fqn, items, keys
+from .obj import fqn, items, keys
 
 
 def __dir__():
@@ -19,11 +19,10 @@ def __dir__():
             'edit',
             'fmt',
             'ident',
-            'search'
            )
 
 
-def edit(obj, setter, skip=False):
+def edit(obj, setter, skip=False) -> None:
     for key, val in items(setter):
         if skip and val == "":
             continue
@@ -71,16 +70,3 @@ def ident(obj) -> str:
                         str(uuid.uuid4().hex),
                         os.path.join(*str(datetime.datetime.now()).split())
                        )
-
-
-def search(obj, selector) -> bool:
-    res = False
-    for key, value in items(selector):
-        if key not in obj:
-            res = False
-            break
-        val = obj[key]
-        if str(value) in str(val):
-            res = True
-            break
-    return res

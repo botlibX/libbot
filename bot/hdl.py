@@ -12,12 +12,11 @@ import threading
 import _thread
 
 
-from .brokers import Broker
-from .errored import Errors
-from .message import Event
-from .objects import Object
-from .threads import launch
-
+from .brk import Broker
+from .err import Errors
+from .evt import Event
+from .obj import Object
+from .thr import launch
 
 
 def __dir__():
@@ -40,19 +39,19 @@ class Handler(Object):
         self.end     = threading.Event()
 
     @staticmethod
-    def add(func):
+    def add(func) -> None:
         Handler.cmds[func.__name__] = func
 
-    def event(self, txt):
+    def event(self, txt) -> Event:
         evt = Event()
         evt.txt = txt
         evt.orig = object.__repr__(self)
         return evt
 
-    def forever(self):
+    def forever(self) -> None:
         self.stopped.wait()
 
-    def dispatch(self, evt):
+    def dispatch(self, evt) -> None:
         func = getattr(self.cbs, evt.type, None)
         if not func:
             evt.ready()
@@ -69,7 +68,7 @@ class Handler(Object):
     def poll(self) -> Event:
         return self.queue.get()
 
-    def put(self, evt):
+    def put(self, evt) -> None:
         self.queue.put_nowait(evt)
 
     @staticmethod
@@ -80,13 +79,13 @@ class Handler(Object):
             if 'event' in cmd.__code__.co_varnames:
                 Handler.add(cmd)
 
-    def register(self, typ, cbs):
+    def register(self, typ, cbs) -> None:
         self.cbs[typ] = cbs
 
-    def start(self):
+    def start(self) -> None:
         launch(self.loop)
 
-    def stop(self):
+    def stop(self) -> None:
         self.stopped.set()
 
 
@@ -97,17 +96,17 @@ class Client(Handler):
         self.register("command", command)
         Broker.add(self)
 
-    def announce(self, txt):
+    def announce(self, txt) -> None:
         self.raw(txt)
 
-    def dosay(self, channel, txt):
+    def dosay(self, channel, txt) -> None:
         self.raw(txt)
 
-    def raw(self, txt):
+    def raw(self, txt) -> None:
         pass
 
 
-def command(evt):
+def command(evt) -> None:
     func = Handler.cmds.get(evt.cmd, None)
     if not func:
         evt.ready()
@@ -116,6 +115,5 @@ def command(evt):
         func(evt)
         evt.show()
     except Exception as ex:
-        exc = ex.with_traceback(ex.__traceback__)
-        Errors.errors.append(exc)
+        Errors.add(ex)
     evt.ready()

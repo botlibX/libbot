@@ -9,10 +9,10 @@
 import time
 
 
-from ..objects import Object
-from ..locator import find, fntime
-from ..storage import sync
-from ..utility import laps
+from ..obj import Object
+from ..fnd import find, fntime
+from ..dsk import sync
+from ..utl import laps
 
 
 class Todo(Object):

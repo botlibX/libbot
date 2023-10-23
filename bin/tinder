@@ -22,19 +22,20 @@ WORKDIR = os.path.expanduser("~")
 sys.path.insert(0, os.getcwd())
 
 
-from bot.defines import Cfg, Client, Object, Storage
-from bot.defines import keys, laps, launch, mods, parse, scan
-from bot.defines import command, debug
+from bot.spc import Cfg, Censor, Client, Object, Storage
+from bot.spc import keys, laps, launch, mods, parse, scan
+from bot.spc import command, debug
 
 
-from bot import errored, modules
+from bot import err
+from bot import mod as modules
 
 
 DATE = time.ctime(time.time()).replace("  ", " ")
 STARTTIME = time.time()
 
 
-errored.output = print
+Censor.output = print
 
 
 Cfg.debug = True

@@ -31,7 +31,7 @@ def cdir(pth) -> None:
     os.makedirs(pth, exist_ok=True)
 
 
-def daemon(pidfile):
+def daemon(pidfile) -> None:
     pid = os.fork()
     if pid != 0:
         os._exit(0)
@@ -53,7 +53,7 @@ def daemon(pidfile):
         fds.write(str(os.getpid()))
 
 
-def forever():
+def forever() -> None:
     while 1:
         time.sleep(1.0)
 
@@ -97,7 +97,7 @@ def laps(seconds, short=True) -> str:
     return txt
 
 
-def mods(path):
+def mods(path) -> []:
     res = []
     for fnm in os.listdir(path):
         if fnm.endswith("~"):
@@ -110,7 +110,7 @@ def mods(path):
     return sorted(res)
 
 
-def privileges(username):
+def privileges(username) -> None:
     pwnam = pwd.getpwnam(username)
     os.setgid(pwnam.pw_gid)
     os.setuid(pwnam.pw_uid)

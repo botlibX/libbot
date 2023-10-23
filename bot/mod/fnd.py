@@ -6,9 +6,9 @@
 "locate"
 
 
-from ..locator import find
-from ..methods import fmt
-from ..storage import Storage
+from ..fnd import find
+from ..fnc import fmt
+from ..dsk import Storage
 
 
 def fnd(event):

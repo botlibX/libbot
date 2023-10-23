@@ -24,36 +24,20 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from bot.defines import Broker, Cfg, Client, Errors, Event, Handler, Storage
-from bot.defines import command, cprint, debug, parse, scan
-from bot.defines import daemon, launch, mods, name, privileges, shutdown, spl
+from bot.spc import Broker, Censor, Cfg, Client, Errors, Event
+from bot.spc import CLI, Console, Handler, Storage
+from bot.spc import command, cprint, daemon, debug, parse, scan
+from bot.spc import launch, mods, name, privileges, shutdown, spl
 
 
-from bot import errored, modules
+from bot import mod as modules
 
 
+Censor.output = print
 Storage.workdir = Cfg.workdir
 
 
-errored.output = print
-
-
-class CLI(Client):
-
-    def announce(self, txt):
-        pass
-
-    def raw(self, txt):
-        print(txt)
-        sys.stdout.flush()
-
-
-class Console(CLI):
-
-    def dispatch(self, evt):
-        parse(evt)
-        command(evt)
-        evt.wait()
+class Console(Console):
 
     def poll(self) -> Event:
         return self.event(input("> "))
@@ -101,7 +85,7 @@ def main():
         csl.start()
         csl.forever()
     else:
-        cli = CLI()
+        cli = Console()
         scan(modules, Cfg.mod)
         evt = cli.event(Cfg.otxt)
         parse(evt)

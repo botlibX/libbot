@@ -18,18 +18,18 @@ import time
 import _thread
 
 
-from ..brokers import Broker
-from ..configs import Cfg
-from ..errored import Censor, Errors, debug
-from ..handler import Client, command
-from ..locator import find, fntime, last
-from ..message import Event
-from ..methods import edit, fmt
-from ..objects import Default, Object, keys
-from ..parsers import parse
-from ..storage import sync
-from ..threads import launch
-from ..utility import laps
+from ..brk import Broker
+from ..cfg import Cfg
+from ..err import Censor, Errors, debug
+from ..evt import Event
+from ..hdl import Client, command
+from ..fnd import find, fntime, last
+from ..fnc import edit, fmt
+from ..obj import Default, Object, keys
+from ..prs import parse
+from ..dsk import sync
+from ..thr import launch
+from ..utl import laps
 
 
 NAME = Cfg.name or __file__.split(os.sep)[-3]

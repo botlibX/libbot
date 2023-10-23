@@ -33,16 +33,6 @@ from bot import errored
 from bot import modules
 
 
-Cfg.commands = True
-Cfg.name = __file__.split(os.sep)[-2].lower()
-Cfg.workdir = os.path.expanduser(f"~/.{Cfg.name}")
-Cfg.pidfile = os.path.join(Storage.workdir, "{Cfg.name}.pid")
-Cfg.starttime = time.time()
-Cfg.user= getpass.getuser()
-Cfg.version = 22
-
-
-
 Storage.workdir = Cfg.workdir
 
 
@@ -68,10 +58,6 @@ class Console(CLI):
 
     def poll(self) -> Event:
         return self.event(input("> "))
-
-
-def ver(event):
-    event.reply(f"{Cfg.name.upper()} {Cfg.version}")
 
 
 def wrap(func) -> None:
@@ -113,12 +99,10 @@ def main():
                 thr.join()
                 cprint(f"ready {thr.name}")
         csl = Console()
-        csl.add(ver)
         csl.start()
         csl.forever()
     else:
         cli = CLI()
-        cli.add(ver)
         scan(modules, Cfg.mod)
         evt = cli.event(Cfg.otxt)
         parse(evt)

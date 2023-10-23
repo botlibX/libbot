@@ -28,3 +28,6 @@ class Config(Default):
 
 
 Cfg = Config()
+Cfg.commands = True
+Cfg.name = __file__.split(os.sep)[-2].lower()
+Cfg.workdir = os.path.expanduser(f"~/.{Cfg.name}")

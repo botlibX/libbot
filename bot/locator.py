@@ -10,8 +10,8 @@ import os
 import time
 
 
-from .methods import fqn, search
-from .objects import Object, update
+from .methods import search
+from .objects import Object, fqn, update
 from .storage import Storage, fetch
 from .utility import strip
 

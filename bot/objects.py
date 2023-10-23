@@ -15,6 +15,7 @@ def __dir__():
             'Default',
             'Object',
             'construct',
+            'fqn',
             'items',
             'keys',
             'read',
@@ -68,6 +69,13 @@ def construct(obj, *args, **kwargs) -> None:
             update(obj, vars(val))
     if kwargs:
         update(obj, kwargs)
+
+
+def fqn(obj) -> str:
+    kin = str(type(obj)).split()[-1][1:-2]
+    if kin == "type":
+        kin = obj.__name__
+    return kin
 
 
 def items(obj) -> []:

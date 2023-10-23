@@ -13,18 +13,17 @@ import os
 import sys
 
 
-from bot.methods import parse
-from bot.handler import Cfg, Client, command, scan
+from bot.configs import Cfg
+from bot.handler import Client, command
+from bot.parsers import parse
+from bot.scanner import scan
 from bot.storage import Storage
 
 
 from bot import modules
 
 
-NAME = "bot"
-Storage.workdir = os.path.expanduser(f"~/.{NAME}")
-PIDFILE = os.path.join(Storage.workdir, "{NAME}.pid")
-USER = getpass.getuser()
+Storage.workdir = Cfg.workdir
 
 
 class CLI(Client):
@@ -37,11 +36,16 @@ class CLI(Client):
         sys.stdout.flush()
 
 
-parse(Cfg, " ".join(sys.argv[1:]))
-Cfg.mod = ",".join(modules.__dir__())
-cli = CLI()
-scan(modules, Cfg.mod)
-evt2 = cli.event(Cfg.otxt)
-parse(evt2)
-command(evt2)
-evt2.wait()
+def main():
+    parse(Cfg, " ".join(sys.argv[1:]))
+    Cfg.mod = ",".join(modules.__dir__())
+    cli = CLI()
+    scan(modules, Cfg.mod)
+    evt2 = cli.event(Cfg.otxt)
+    parse(evt2)
+    command(evt2)
+    evt2.wait()
+
+
+if __name__ == "__main__":
+    main()

@@ -10,12 +10,14 @@ import os
 import pathlib
 import pwd
 import sys
+import time
 
 
 def __dir__():
     return (
             'cdir',
             'daemon',
+            'forever',
             'laps',
             'mods',
             'privileges',
@@ -49,6 +51,11 @@ def daemon(pidfile):
         os.unlink(pidfile)
     with open(pidfile, "w", encoding="utf-8") as fds:
         fds.write(str(os.getpid()))
+
+
+def forever():
+    while 1:
+        time.sleep(1.0)
 
 
 def laps(seconds, short=True) -> str:

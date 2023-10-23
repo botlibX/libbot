@@ -66,11 +66,11 @@ param.flt = ["", "0"]
 param.rem = ["reddit", ""]
 param.fnd = [
              'log',
-             "cfg",
-             "tdo",
+             "config",
+             "todo",
              "rss",
-             "tdo txt==test",
-             "cfg server==localhost",
+             "todo txt==test",
+             "config server==localhost",
              "rss rss==reddit"
             ]
 param.log = ["test1", ""]

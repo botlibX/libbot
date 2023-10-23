@@ -11,14 +11,13 @@ import os
 import uuid
 
 
-from .objects import items, keys
+from .objects import fqn, items, keys
 
 
 def __dir__():
     return (
             'edit',
             'fmt',
-            'fqn',
             'ident',
             'search'
            )
@@ -64,13 +63,6 @@ def fmt(obj, args=None, skip=None) -> str:
         else:
             txt += f'{key}={value} '
     return txt.strip()
-
-
-def fqn(obj) -> str:
-    kin = str(type(obj)).split()[-1][1:-2]
-    if kin == "type":
-        kin = obj.__name__
-    return kin
 
 
 def ident(obj) -> str:

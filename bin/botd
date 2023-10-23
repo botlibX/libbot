@@ -14,25 +14,30 @@ import sys
 import time
 
 
-from bot.handler import scan
+from bot.configs import Cfg
+from bot.scanner import scan
 from bot.storage import Storage
-from bot.utility import daemon, privileges
+from bot.utility import daemon, forever, privileges
 
 
 from bot import modules
 
 
-ALL             = ",".join(modules.__dir__())
-NAME		= "bot"
-USER 		= getpass.getuser()
-Storage.workdir = os.path.expanduser(f"~/.{NAME}")
-PIDFILE         = os.path.join(Storage.workdir, f"{NAME}.pid")
+Cfg.pidfile   = os.path.join(Cfg.workdir, "{Cfg.name}.pid")
+Cfg.starttime = time.time()
+Cfg.user      = getpass.getuser()
+Cfg.mod       = ",".join(modules.__dir__())
 
 
-daemon(PIDFILE)
-privileges(USER)
-scan(modules, ALL, True)
+Storage.workdir = Cfg.workdir
 
 
-while 1:
-    time.sleep(1.0)
+def main():
+    daemon(Cfg.pidfile)
+    privileges(Cfg.user)
+    scan(modules, Cfg.mod, True)
+    forever()
+
+
+if __name__ == "__main__":
+    main()

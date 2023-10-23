@@ -29,8 +29,7 @@ from bot.defines import command, cprint, debug, parse, scan
 from bot.defines import daemon, launch, mods, name, privileges, shutdown, spl
 
 
-from bot import errored
-from bot import modules
+from bot import errored, modules
 
 
 Storage.workdir = Cfg.workdir

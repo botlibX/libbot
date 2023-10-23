@@ -15,8 +15,8 @@ from .parse  import parse
 
 def __dir__():
     return (
-            'CLI',
-            'Console'
+            'Client',
+            'CLI'
            )
 
 
@@ -44,14 +44,6 @@ class CLI(Client):
 
     def raw(self, txt):
         cprint(txt)
-
-
-class Console(CLI):
-
-    def dispatch(self, evt):
-        parse(evt)
-        command(evt)
-        evt.wait()
 
 
 def command(evt) -> None:

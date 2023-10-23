@@ -31,8 +31,6 @@ lock = _thread.allocate_lock()
 
 class Object:
 
-    "no methods"
-
     __slots__ = ('__dict__', '__fnm__')
 
     def __init__(self):

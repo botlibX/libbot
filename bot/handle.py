@@ -89,23 +89,6 @@ class Handler(Object):
         self.stopped.set()
 
 
-class Client(Handler):
-
-    def __init__(self):
-        Handler.__init__(self)
-        self.register("command", command)
-        Broker.add(self)
-
-    def announce(self, txt) -> None:
-        self.raw(txt)
-
-    def dosay(self, channel, txt) -> None:
-        self.raw(txt)
-
-    def raw(self, txt) -> None:
-        pass
-
-
 def command(evt) -> None:
     func = Handler.cmds.get(evt.cmd, None)
     if not func:

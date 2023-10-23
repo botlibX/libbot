@@ -21,7 +21,7 @@ import traceback
 
 
 from bot.spec import Broker, Censor, Cfg, Client, Errors, Event
-from bot.spec import CLI, Console, Handler, Storage
+from bot.spec import CLI, Handler, Storage
 from bot.spec import command, cprint, daemon, debug, parse, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown, spl
 
@@ -33,7 +33,12 @@ Censor.output = print
 Storage.workdir = Cfg.workdir
 
 
-class Console(Console):
+class Console(CLI):
+
+    def dispatch(self, evt):
+        parse(evt)
+        command(evt)
+        evt.wait()
 
     def poll(self) -> Event:
         return self.event(input("> "))

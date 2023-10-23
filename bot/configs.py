@@ -28,10 +28,3 @@ class Config(Default):
 
 
 Cfg = Config()
-Cfg.commands = True
-Cfg.name = __file__.split(os.sep)[-2].lower()
-Cfg.workdir = os.path.expanduser(f"~/.{Cfg.name}")
-Cfg.pidfile = os.path.join(Storage.workdir, "{Cfg.name}.pid")
-Cfg.starttime = time.time()
-Cfg.user= getpass.getuser()
-Cfg.version = 22

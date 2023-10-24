@@ -9,8 +9,8 @@
 import unittest
 
 
-from bot.methods import fmt, fqn
-from bot.objects import Object, items, keys, update, values
+from bot.func   import fmt
+from bot.object import Object, fqn, items, keys, update, values
 
 
 VALIDJSON = '{"test": "bla"}'
@@ -125,10 +125,10 @@ class TestObject(unittest.TestCase):
         self.assertEqual(len(obj), 0)
 
     def test_module(self):
-        self.assertEqual(Object().__module__, "bot.objects")
+        self.assertEqual(Object().__module__, "bot.object")
 
     def test_fqn(self):
-        self.assertEqual(fqn(Object()), "bot.objects.Object")
+        self.assertEqual(fqn(Object()), "bot.object.Object")
 
     def test_repr(self):
         self.assertTrue(

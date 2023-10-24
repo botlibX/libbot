@@ -11,10 +11,10 @@ import sys
 import unittest
 
 
-from bot.objects import Object
+from bot.object import Object
 
 
-import bot.objects
+import bot.object
 
 
 METHODS = [
@@ -70,7 +70,7 @@ DIFF = [
        ]
 
 
-OBJECT = bot.objects
+OBJECT = bot.object
 
 
 class TestInterface(unittest.TestCase):

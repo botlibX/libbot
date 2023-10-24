@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0116,W0212
+# pylint: disable=C0116,W0212,W0702
 
 
 "utilities"
@@ -11,6 +11,7 @@ import pathlib
 import pwd
 import sys
 import time
+import _thread
 
 
 def __dir__():
@@ -55,7 +56,10 @@ def daemon(pidfile) -> None:
 
 def forever() -> None:
     while 1:
-        time.sleep(1.0)
+        try:
+            time.sleep(1.0)
+        except:
+            _thread.interrupt_main()
 
 
 def laps(seconds, short=True) -> str:

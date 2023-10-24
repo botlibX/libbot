@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,E0402,W0718,W0212,W0613
+# pylint: disable=C0115,C0116,E0402,W0718,W0212,W0613,W0702
 
 
 "handler"
@@ -12,8 +12,6 @@ import threading
 import _thread
 
 
-from .broker import Broker
-from .error  import Errors
 from .event  import Event
 from .object import Object
 from .thread import launch
@@ -49,7 +47,10 @@ class Handler(Object):
         return evt
 
     def forever(self) -> None:
-        self.stopped.wait()
+        try:
+            self.stopped.wait()
+        except:
+            _thread.interrupt_main()
 
     def dispatch(self, evt) -> None:
         func = getattr(self.cbs, evt.type, None)
@@ -87,16 +88,3 @@ class Handler(Object):
 
     def stop(self) -> None:
         self.stopped.set()
-
-
-def command(evt) -> None:
-    func = Handler.cmds.get(evt.cmd, None)
-    if not func:
-        evt.ready()
-        return
-    try:
-        func(evt)
-        evt.show()
-    except Exception as ex:
-        Errors.add(ex)
-    evt.ready()

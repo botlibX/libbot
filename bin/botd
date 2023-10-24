@@ -1,1 +1,21 @@
-python3 -m bot -d ;
+#!/usr/bin/env python3
+# This file is placed in the Public Domain.
+#
+# pylint: disable=C0412,C0115,C0116,W0212,R0903,C0207,C0413,W0611
+# pylint: disable=C0411,E0402,E0611,C2801
+
+
+"daemon"
+
+
+from bot.config import Cfg
+from bot.scan   import scan
+from bot.utils  import daemon, privileges, forever
+from bot        import modules
+
+
+Cfg.mod = ",".join(modules.__dir__())
+daemon(Cfg.pidfile)
+privileges(Cfg.user)
+scan(modules, Cfg.mod, True)
+forever()

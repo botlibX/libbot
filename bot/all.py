@@ -6,5 +6,5 @@
 "the python3 bot namespace"
 
 
-from . import broker, client, config, error, event, handle, func
+from . import broker, client, config, error, event, handler, func
 from . import object, parse, scan, disk, thread, timer, find

@@ -7,10 +7,10 @@
 "clientside"
 
 
-from .broker import Broker
-from .error  import Errors, cprint
-from .handle import Handler
-from .parse  import parse
+from .broker  import Broker
+from .error   import Errors, cprint
+from .handler import Handler
+from .parse   import parse
 
 
 def __dir__():

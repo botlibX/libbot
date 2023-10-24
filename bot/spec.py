@@ -6,22 +6,22 @@
 "the python3 bot namespace"
 
 
-from .all    import *
-from .broker import *
-from .config import *
-from .client import *
-from .error  import *
-from .find   import *
-from .handle import *
-from .event  import *
-from .func   import *
-from .object import *
-from .parse  import *
-from .scan   import *
-from .disk   import *
-from .thread import *
-from .timer  import *
-from .utils  import *
+from .all     import *
+from .broker  import *
+from .config  import *
+from .client  import *
+from .error   import *
+from .find    import *
+from .handler import *
+from .event   import *
+from .func    import *
+from .object  import *
+from .parse   import *
+from .scan    import *
+from .disk    import *
+from .thread  import *
+from .timer   import *
+from .utils   import *
 
 
 def __dir__():

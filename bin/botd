@@ -8,13 +8,15 @@
 "daemon"
 
 
-from bot.config import Cfg
-from bot.scan   import scan
-from bot.utils  import daemon, privileges, forever
-from bot        import modules
+from bot.spec import Cfg, Storage
+from bot.spec import daemon, forever, privileges, scan
+from bot      import modules
 
 
-Cfg.mod = ",".join(modules.__dir__())
+Storage.workdir = Cfg.workdir
+Cfg.mod         = ",".join(modules.__dir__())
+
+
 daemon(Cfg.pidfile)
 privileges(Cfg.user)
 scan(modules, Cfg.mod, True)

@@ -3,18 +3,14 @@
 # pylint: disable=C0116,W0105,E0402
 
 
-"running threads"
+"show running threads"
 
 
 import threading
 import time
 
 
-from bot.object import Object, update
-from bot.utils  import laps
-
-
-STARTTIME = time.time()
+from bot.spec import Cfg, Object, laps, update
 
 
 def thr(event):
@@ -29,7 +25,7 @@ def thr(event):
         elif getattr(obj, 'starttime', None):
             uptime = int(time.time() - obj.starttime)
         else:
-            uptime = int(time.time() - STARTTIME)
+            uptime = int(time.time() - Cfg.starttime)
         result.append((uptime, thread.name))
     res = []
     for uptime, txt in sorted(result, key=lambda x: x[1]):

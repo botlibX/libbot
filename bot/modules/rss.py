@@ -18,11 +18,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot.spec import Broker, Default, Object, Repeater
+from bot.spec import Broker, Cfg, Default, Object, Repeater
 from bot.spec import find, fmt, fntime, last, launch, laps, sync, update
-
-
-DEBUG = False
 
 
 def init():
@@ -154,7 +151,7 @@ class Parser(Object):
 
 
 def getfeed(url, item):
-    if DEBUG:
+    if Cfg.debug:
         return [Object(), Object()]
     try:
         result = geturl(url)

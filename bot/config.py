@@ -28,6 +28,7 @@ class Config(Default):
 
 Cfg = Config()
 Cfg.commands  = True
+Cfg.debug     = False
 Cfg.name      = __file__.split(os.sep)[-2].lower()
 Cfg.workdir   = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile   = os.path.join(Cfg.workdir, f"{Cfg.name}.pid")

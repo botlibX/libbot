@@ -6,9 +6,7 @@
 "locate"
 
 
-from bot.find import find
-from bot.func import fmt
-from bot.disk import Storage
+from bot.spec import Storage, find, fmt
 
 
 def fnd(event):

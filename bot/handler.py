@@ -19,9 +19,7 @@ from .thread import launch
 
 def __dir__():
     return (
-            'Client',
             'Handler',
-            'command'
            )
 
 

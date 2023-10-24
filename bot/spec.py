@@ -3,22 +3,22 @@
 # pylint: disable=W0611,W0614,W0401,E0402,E0611
 
 
-"the python3 bot namespace"
+"specifications"
 
 
 from .all     import *
 from .broker  import *
 from .config  import *
 from .client  import *
+from .disk    import *
 from .error   import *
-from .find    import *
-from .handler import *
 from .event   import *
 from .func    import *
+from .find    import *
+from .handler import *
 from .object  import *
 from .parse   import *
 from .scan    import *
-from .disk    import *
 from .thread  import *
 from .timer   import *
 from .utils   import *

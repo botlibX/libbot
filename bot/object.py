@@ -3,7 +3,7 @@
 # pylint: disable=C0112,C0115,C0116,W0105,R0902,R0903,E0402,C0411,W0622,W0102
 
 
-"a clean namespace"
+"clean namespace"
 
 
 import json

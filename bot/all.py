@@ -3,7 +3,7 @@
 # pylint: disable=W0611,W0614,W0401,E0402,E0611,W0622
 
 
-"the python3 bot namespace"
+"import all modules"
 
 
 from . import broker, client, config, error, event, handler, func

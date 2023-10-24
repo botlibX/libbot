@@ -3,7 +3,7 @@
 # pylint: disable=C0112,C0115,C0116,E0402,W0105,W0718
 
 
-"timers"
+"timer"
 
 
 import threading

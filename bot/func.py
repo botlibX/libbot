@@ -3,7 +3,7 @@
 # pylint: disable=C0115,C0116,E0402
 
 
-"methods"
+"object functions"
 
 
 import datetime

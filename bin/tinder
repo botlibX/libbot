@@ -53,7 +53,7 @@ Cfg.silent = False
 Cfg.skip = ["debug",]
 
 
-Storage.workdir = ".test"
+Storage.wd = ".test"
 
 
 paylock = _thread.allocate_lock()
@@ -155,8 +155,8 @@ def wrap(func) -> None:
 
 
 def main() -> None:
-    if os.path.exists(Storage.workdir):
-        shutil.rmtree(Storage.workdir)
+    if os.path.exists(Storage.wd):
+        shutil.rmtree(Storage.wd)
     parse(Cfg, " ".join(sys.argv[1:]))
     scan(modules, Cfg.mod)
     nrs = Cfg.index or 1

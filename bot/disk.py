@@ -26,7 +26,7 @@ def  __dir__():
 class Storage:
 
     classes = {}
-    workdir = ""
+    wd = ""
 
     @staticmethod
     def add(clz) -> None:
@@ -59,13 +59,13 @@ class Storage:
     def path(pth) -> str:
         if not pth:
             pth = ""
-        pth2 =  os.path.join(Storage.workdir, pth)
+        pth2 =  os.path.join(Storage.wd, pth)
         cdir(pth2)
         return pth2
 
     @staticmethod
     def store(pth="") -> str:
-        pth = os.path.join(Storage.workdir, "store", pth)
+        pth = os.path.join(Storage.wd, "store", pth)
         pth2 = os.path.dirname(pth)
         cdir(pth2)
         return pth

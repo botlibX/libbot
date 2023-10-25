@@ -25,16 +25,51 @@ sys.path.insert(0, os.getcwd())
 
 
 from bot.spec import Broker, Censor, Cfg, Client, Errors, Event
-from bot.spec import CLI, Handler, Storage
+from bot.spec import Object, CLI, Handler, Storage, keys
 from bot.spec import command, cprint, daemon, debug, parse, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown, spl
 
 
-from bot import modules
+class Table(Object):
 
+    modules = Object()
+
+    @staticmethod
+    def add(module):
+        Table.modules[name] = module
+
+    @staticmethod
+    def get(fqn):
+        return getattr(Table.modules, fqn, None)
+
+    @staticmethod
+    def init(self):
+        for module in values(Table.modules):
+            if "init" in dir(module):
+                try:
+                    module.init()
+                except Exception as ex:
+                    Errors.add(ex)
+
+    @staticmethod
+    def scan(path):
+        mns = []
+        pname = path.split(os.sep)[-1]
+        for fnm in os.listdir(path):
+            if fnm.startswith("__"):
+                continue
+            if not fnm.endswith(".py"):
+                continue
+            fnn = fnm[:-3]
+            fqn = f"{pname}.{fnn}"
+            mod = importlib.import_module(fqn, pname)
+            Table.add(mod)
+            Storage.scan(mod)
+            Handler.scan(mod)
+            
 
 Censor.output = print
-Storage.workdir = Cfg.workdir
+Storage.wd = Cfg.wd
 
 
 class Console(CLI):
@@ -66,20 +101,23 @@ def wrap(func) -> None:
 
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
-    Cfg.mod = ",".join(modules.__dir__())
+    if Cfg.wd:
+        Storage.wd = Cfg.wd
+    if "v" in Cfg.opts:
+        dtime = time.ctime(time.time()).replace("  ", " ")
+        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg}")
+    if Cfg.md:
+        cprint(f"scanning {Cfg.md}")
+        Table.scan(Cfg.md)
+    Cfg.mod = ",".join(keys(Table.modules))
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(Cfg.user)
-        scan(modules, Cfg.mod, True)
         forever()
     elif "c" in Cfg.opts:
-        dtime = time.ctime(time.time()).replace("  ", " ")
-        if "v" in Cfg.opts:
-            cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
-        thrs = scan(modules, Cfg.mod, "x" not in Cfg.opts)
         if "w" in Cfg.opts:
             for thr in thrs:
                 thr.join()
@@ -89,7 +127,6 @@ def main():
         csl.forever()
     else:
         cli = Console()
-        scan(modules, Cfg.mod)
         evt = cli.event(Cfg.otxt)
         parse(evt)
         command(evt)

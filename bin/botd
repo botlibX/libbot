@@ -7,16 +7,48 @@
 "daemon"
 
 
-from bot.spec import Cfg, Storage
+from bot.spec import Cfg, Object, Storage
 from bot.spec import daemon, forever, privileges, scan
-from bot      import modules
 
 
-Storage.workdir = Cfg.workdir
-Cfg.mod         = ",".join(modules.__dir__())
+class Table(Object):
+
+    modules = Object()
+
+    @staticmethod
+    def add(module):
+        Table.modules[name] = module
+
+    @staticmethod
+    def get(fqn):
+        return getattr(Table.modules, fqn, None)
+
+    @staticmethod
+    def init(self):
+        for module in values(Table.modules):
+            if "init" in dir(module):
+                try:
+                    module.init()
+                except Exception as ex:
+                    Errors.add(ex)
+
+    @staticmethod
+    def scan(path):
+        mns = []
+        for fnm in os.listdir(path):
+            if fnm.startswith("__"):
+                continue
+            fnn = fnm[:-3]
+            pname = fnn.split(os.sep)[-2]
+            fqn = f"{pname}.{fnn}"
+            mod = importlib.import_module(fqn, pname)
+            Table.add(mod)
+            Storage.scan(mod)
+            Handler.scan(mod)
+
 
 
 daemon(Cfg.pidfile)
 privileges(Cfg.user)
-scan(modules, Cfg.mod, True)
+Table.scan(Storage.mods())
 forever()

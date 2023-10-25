@@ -6,6 +6,9 @@
 "parsing"
 
 
+from .object import Default
+
+
 def __dir__():
     return (
             "parse",
@@ -16,12 +19,12 @@ def parse(obj, txt=None) -> None:
     args = []
     obj.args    = obj.args or []
     obj.cmd     = obj.cmd or ""
-    obj.gets    = obj.gets or {}
+    obj.gets    = obj.gets or Default()
     obj.hasmods = obj.hasmod or False
     obj.mod     = obj.mod or ""
     obj.opts    = obj.opts or ""
     obj.result  = obj.reult or []
-    obj.sets    = obj.sets or {}
+    obj.sets    = obj.sets or Default()
     obj.otxt    = txt or obj.txt or ""
     _nr = -1
     for spli in obj.otxt.split():

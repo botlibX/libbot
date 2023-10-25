@@ -7,48 +7,42 @@
 "daemon"
 
 
-from bot.spec import Cfg, Object, Storage
-from bot.spec import daemon, forever, privileges, scan
+import os
+import importlib
+
+from bot.spec import Cfg, Object, Handler, Storage
+from bot.spec import daemon, forever, mods, privileges
 
 
-class Table(Object):
+Cfg.mod = ",".join(mods(Cfg.md))
+Storage.wd = Cfg.wd
 
-    modules = Object()
 
-    @staticmethod
-    def add(module):
-        Table.modules[name] = module
-
-    @staticmethod
-    def get(fqn):
-        return getattr(Table.modules, fqn, None)
-
-    @staticmethod
-    def init(self):
-        for module in values(Table.modules):
-            if "init" in dir(module):
-                try:
-                    module.init()
-                except Exception as ex:
-                    Errors.add(ex)
-
-    @staticmethod
-    def scan(path):
-        mns = []
-        for fnm in os.listdir(path):
-            if fnm.startswith("__"):
-                continue
-            fnn = fnm[:-3]
-            pname = fnn.split(os.sep)[-2]
-            fqn = f"{pname}.{fnn}"
-            mod = importlib.import_module(fqn, pname)
-            Table.add(mod)
-            Storage.scan(mod)
-            Handler.scan(mod)
-
+def scan(path, modnames, init=False):
+    mns = []
+    if not os.path.exists(path):
+        return mns
+    pname = path.split(os.sep)[-1]
+    for fnm in os.listdir(path):
+        if fnm.startswith("__"):
+            continue
+        if not fnm.endswith(".py"):
+            continue
+        fnn = fnm[:-3]
+        fqn = f"{pname}.{fnn}"
+        mod = importlib.import_module(fqn, pname)
+        mns.append(fqn)
+        Storage.scan(mod)
+        Handler.scan(mod)
+        if init and "init" in dir(mod):
+            try:
+                mod.init()
+            except Exception as ex:
+                Errors.add(ex)
+    return mns
 
 
 daemon(Cfg.pidfile)
 privileges(Cfg.user)
-Table.scan(Storage.mods())
+scan(Storage.mods(), Cfg.mod, True)
 forever()

@@ -30,6 +30,8 @@ from bot.spec import command, cprint, daemon, debug, parse, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown, spl, update
 
 
+import bot.modules
+
 Censor.output = print
 Storage.wd = Cfg.wd
 
@@ -45,7 +47,7 @@ class Console(CLI):
         return self.event(input("> "))
 
 
-def scan(path, modnames, init=False):
+def scandir(path, modnames, init=False):
     mns = []
     if not os.path.exists(path):
         return mns
@@ -88,9 +90,12 @@ def wrap(func) -> None:
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     update(Cfg, Cfg.sets)
-    Cfg.mod = ",".join(mods(Cfg.md))
+    Cfg.mod = ",".join(bot.modules.__dir__())
     if Cfg.wd:
         Storage.wd = Cfg.wd
+    if Cfg.md:
+        scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
+        Cfg.mod = ",".join(mods(Cfg.md))
     if "v" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
         cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg}")
@@ -100,19 +105,19 @@ def main():
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(Cfg.user)
-        scan(Cfg.md, Cfg.mod)
+        scan(bot.modules, Cfg.mod, True)
         forever()
     elif "c" in Cfg.opts:
         if "w" in Cfg.opts:
             for thr in thrs:
                 thr.join()
                 cprint(f"ready {thr.name}")
-        scan(Cfg.md, Cfg.mod, True)
+        scan(bot.modules, Cfg.mod, True)
         csl = Console()
         csl.start()
         csl.forever()
     else:
-        scan(Cfg.md, Cfg.mod)
+        scan(bot.modules, Cfg.mod)
         cli = Console()
         evt = cli.event(Cfg.otxt)
         parse(evt)

@@ -29,7 +29,7 @@ class Config(Default):
 Cfg = Config()
 Cfg.commands  = True
 Cfg.debug     = False
-Cfg.md        = "modules"
+Cfg.md        = ""
 Cfg.name      = __file__.split(os.sep)[-2].lower()
 Cfg.wd        = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile   = os.path.join(Cfg.wd, f"{Cfg.name}.pid")

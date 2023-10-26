@@ -10,39 +10,19 @@
 import os
 import importlib
 
+
 from bot.spec import Cfg, Object, Handler, Storage
-from bot.spec import daemon, forever, mods, privileges
+from bot.spec import daemon, forever, privileges, scan
 
 
-Cfg.mod = ",".join(mods(Cfg.md))
+import bot.modules
+
+
+Cfg.mod = ",".join(bot.modules.__dir__())
 Storage.wd = Cfg.wd
-
-
-def scan(path, modnames, init=False):
-    mns = []
-    if not os.path.exists(path):
-        return mns
-    pname = path.split(os.sep)[-1]
-    for fnm in os.listdir(path):
-        if fnm.startswith("__"):
-            continue
-        if not fnm.endswith(".py"):
-            continue
-        fnn = fnm[:-3]
-        fqn = f"{pname}.{fnn}"
-        mod = importlib.import_module(fqn, pname)
-        mns.append(fqn)
-        Storage.scan(mod)
-        Handler.scan(mod)
-        if init and "init" in dir(mod):
-            try:
-                mod.init()
-            except Exception as ex:
-                Errors.add(ex)
-    return mns
 
 
 daemon(Cfg.pidfile)
 privileges(Cfg.user)
-scan(Storage.mods(), Cfg.mod, True)
+scan(bot.modules, Cfg.mod, True)
 forever()

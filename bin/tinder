@@ -31,10 +31,10 @@ modules = None
 
 
 try:
-    import bot.modules as modules
+    import bot.mods as modules
 except:
     try:
-        import modules
+        import mods as modules
     except:
         pass
 

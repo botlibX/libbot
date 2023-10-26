@@ -118,9 +118,6 @@ SYSTEMD
 
 ::
 
-   replace "<user>" with the user running pipx
-
-
    [Unit]
    Description=library to program bots
    Requires=network.target
@@ -138,6 +135,13 @@ SYSTEMD
    WantedBy=multi-user.target
 
 
+   replace "<user>" with the user running pipx
+   save it in /etc/systems/system/libbot.service
+   run this
+
+    $ sudo systemctl enable libbot --now
+
+
 FILES
 
 ::
@@ -153,7 +157,7 @@ AUTHOR
 
 ::
 
-   botlib <botlib@proton.me>
+  libbot <libbotx@gmail.com>
 
 
 COPYRIGHT

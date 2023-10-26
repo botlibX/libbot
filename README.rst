@@ -131,7 +131,7 @@ SYSTEMD
    User=<user>
    Group=<user>
    WorkingDirectory=/home/<user>/.bot
-   ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/botd
+   ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d
    RemainAfterExit=yes
 
    [Install]

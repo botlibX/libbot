@@ -102,6 +102,8 @@ def laps(seconds, short=True) -> str:
 
 
 def mods(path) -> []:
+    if not os.path.exists(path):
+        return {}
     res = []
     for fnm in os.listdir(path):
         if fnm.endswith("~"):

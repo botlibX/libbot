@@ -6,9 +6,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "the python3 bot namespace"
-version = "30"
+version = "31"
 authors = [
-    {name = "botlib", email = "botlib@proton.me" },
+    {name = "libbot", email = "libbotx@gmail.com" },
 ]
 readme = "README.rst"
 license = { text="Public Domain"}
@@ -34,7 +34,7 @@ classifiers = [
 [tool.setuptools]
 packages = [
             'bot',
-            'bot.modules'
+            'bot.mods'
            ]
 zip-safe=true
 

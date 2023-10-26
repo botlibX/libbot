@@ -85,7 +85,6 @@ class TestInterface(unittest.TestCase):
             if not func2:
                 continue
             if dir(func1) != dir(func2):
-                print(func1, func2)
                 okd = False
             sys.stdout.flush()
         self.assertTrue(okd)

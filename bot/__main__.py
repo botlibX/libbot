@@ -29,9 +29,9 @@ from bot.spec import command, cprint, fmt, daemon, debug, parse, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown, spl, update
 
 
-import bot.modules
+import bot.mods
 
-Censor.output = print
+
 Storage.wd = Cfg.wd
 
 
@@ -89,34 +89,35 @@ def wrap(func) -> None:
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     update(Cfg, Cfg.sets)
-    Cfg.mod = ",".join(bot.modules.__dir__())
+    Cfg.mod = ",".join(bot.mods.__dir__())
     if Cfg.wd:
         Storage.wd = Cfg.wd
     if Cfg.md:
         scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
         Cfg.mod += "." + ",".join(mods(Cfg.md))
     if "v" in Cfg.opts:
+        Censor.output = print
         dtime = time.ctime(time.time()).replace("  ", " ")
-        cprint(f"{Cfg.name.upper()} started at {dtime} {fmt(Cfg)}")
+        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mods.upper()}")
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(Cfg.user)
-        scan(bot.modules, Cfg.mod, True)
+        scan(bot.mods, Cfg.mod, True)
         forever()
     elif "c" in Cfg.opts:
+        thrs = scan(bot.mods, Cfg.mod, True)
         if "w" in Cfg.opts:
             for thr in thrs:
                 thr.join()
                 cprint(f"ready {thr.name}")
-        scan(bot.modules, Cfg.mod, True)
         csl = Console()
         csl.start()
         csl.forever()
     else:
-        scan(bot.modules, Cfg.mod)
+        scan(bot.mods, Cfg.mod)
         cli = Console()
         evt = cli.event(Cfg.otxt)
         parse(evt)

@@ -51,7 +51,7 @@ class Storage:
 
     @staticmethod
     def mods() -> str:
-        pth =  Storage.path("modules")
+        pth =  Storage.path("mods")
         cdir(pth)
         return pth
 

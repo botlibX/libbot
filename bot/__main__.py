@@ -29,7 +29,7 @@ from bot.spec import command, cprint, fmt, daemon, debug, parse, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown, spl, update
 
 
-import bot.mods
+import bot.mods as modules
 
 
 Storage.wd = Cfg.wd
@@ -44,6 +44,9 @@ class Console(CLI):
 
     def poll(self) -> Event:
         return self.event(input("> "))
+
+    def raw(self, txt):
+        print(txt)
 
 
 def scandir(path, modnames, init=False):
@@ -84,31 +87,32 @@ def wrap(func) -> None:
     finally:
         if old:
             termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, old)
+    shutdown()
 
 
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     update(Cfg, Cfg.sets)
-    Cfg.mod = ",".join(bot.mods.__dir__())
+    Cfg.mod = ",".join(modules.__dir__())
+    if "v" in Cfg.opts:
+        Censor.output = print
+        dtime = time.ctime(time.time()).replace("  ", " ")
+        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
     if Cfg.wd:
         Storage.wd = Cfg.wd
     if Cfg.md:
         scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
         Cfg.mod += "." + ",".join(mods(Cfg.md))
-    if "v" in Cfg.opts:
-        Censor.output = print
-        dtime = time.ctime(time.time()).replace("  ", " ")
-        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mods.upper()}")
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
         privileges(Cfg.user)
-        scan(bot.mods, Cfg.mod, True)
+        scan(modules, Cfg.mod, True)
         forever()
     elif "c" in Cfg.opts:
-        thrs = scan(bot.mods, Cfg.mod, True)
+        thrs = scan(modules, Cfg.mod, True)
         if "w" in Cfg.opts:
             for thr in thrs:
                 thr.join()
@@ -117,12 +121,12 @@ def main():
         csl.start()
         csl.forever()
     else:
-        scan(bot.mods, Cfg.mod)
+        scan(modules, Cfg.mod)
         cli = Console()
         evt = cli.event(Cfg.otxt)
         parse(evt)
         command(evt)
-        evt.wait()
+
 
 
 def wrapped():

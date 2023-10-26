@@ -41,7 +41,15 @@ zip-safe=true
 
 [tool.setuptools.data-files]
 "share/doc/libbot" = ["README.rst",]
-
+"share/libbot/mods" = [
+                       'mods/mbx.py',
+                       'mods/mdl.py',
+                       'mods/req.py',
+                       'mods/shp.py',
+                       'mods/udp.py',
+                       'mods/wsd.py',
+                       'mods/wsh.py'
+                      ]
 
 [tool.setuptools.exclude-package-data]
 "*" = [

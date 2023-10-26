@@ -19,9 +19,9 @@ import _thread
 
 
 from bot.spec import Broker, Cfg, Censor, Client, Default, Errors, Event, Object
-from bot.spec import User, Users
-from bot.spec import command, debug, edit, find, fmt, fntime, last
-from bot.spec import keys, launch, laps, parse, sync
+from bot.spec import Users
+from bot.spec import command, debug, edit, fmt, last
+from bot.spec import keys, launch, parse, sync
 
 
 NAME = Cfg.name or __file__.split(os.sep)[-3]
@@ -322,7 +322,6 @@ class IRC(Client, Output):
     def logon(self, server, nck):
         self.events.connected.wait()
         self.events.authed.wait()
-        nck = self.cfg.username
         self.direct(f'NICK {nck}')
         self.direct(f'USER {nck} {server} {server} {nck}')
 
@@ -466,6 +465,7 @@ class IRC(Client, Output):
 
     def start(self):
         last(self.cfg)
+        print(self.cfg)
         if self.cfg.channel not in self.channels:
             self.channels.append(self.cfg.channel)
         self.events.connected.clear()

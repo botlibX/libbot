@@ -25,7 +25,7 @@ sys.path.insert(0, os.getcwd())
 
 from bot.spec import Broker, Censor, Cfg, Client, Errors, Event
 from bot.spec import Object, CLI, Handler, Storage, keys
-from bot.spec import command, cprint, daemon, debug, parse, scan, forever
+from bot.spec import command, cprint, fmt, daemon, debug, parse, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown, spl, update
 
 
@@ -97,7 +97,7 @@ def main():
         Cfg.mod += "." + ",".join(mods(Cfg.md))
     if "v" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
-        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg}")
+        cprint(f"{Cfg.name.upper()} started at {dtime} {fmt(Cfg)}")
     if "n" in Cfg.opts:
         Cfg.commands = False
     if "d" in Cfg.opts:
@@ -124,6 +124,9 @@ def main():
         evt.wait()
 
 
-if __name__ == "__main__":
+def wrapped():
     wrap(main)
-    shutdown()
+
+
+if __name__ == "__main__":
+    wrapped()

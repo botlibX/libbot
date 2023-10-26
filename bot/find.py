@@ -77,3 +77,4 @@ def last(obj, selector=None) -> None:
         inp = result[-1]
         update(obj, inp)
         obj.__fnm__ = inp.__fnm__
+        print(obj.__fnm__)

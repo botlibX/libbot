@@ -5,8 +5,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "libbot"
-description = "library to program bots"
-version = "24"
+description = "the python3 bot namespace"
+version = "30"
 authors = [
     {name = "botlib", email = "botlib@proton.me" },
 ]
@@ -22,7 +22,7 @@ classifiers = [
 
 
 [project.scripts]
-"bot" = "bot.__main__:main"
+"bot" = "bot.__main__:wrapped"
 
 
 [project.urls]

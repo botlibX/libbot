@@ -29,7 +29,6 @@ def find(mtc, selector=None) -> []:
         selector = {}
     clz = Storage.long(mtc)
     for fnm in reversed(sorted(fns(clz), key=fntime)):
-        print(fnm)
         obj = Object()
         fetch(obj, fnm)
         if '__deleted__' in obj:

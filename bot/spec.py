@@ -21,6 +21,7 @@ from .parse   import *
 from .scan    import *
 from .thread  import *
 from .timer   import *
+from .users   import *
 from .utils   import *
 
 
@@ -40,6 +41,8 @@ def __dir__():
             'Repeater',
             'Storage',
             'Thread',
+            'User',
+            'Users',
             'cdir',
             'command',
             'construct',

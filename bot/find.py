@@ -29,6 +29,7 @@ def find(mtc, selector=None) -> []:
         selector = {}
     clz = Storage.long(mtc)
     for fnm in reversed(sorted(fns(clz), key=fntime)):
+        print(fnm)
         obj = Object()
         fetch(obj, fnm)
         if '__deleted__' in obj:
@@ -47,8 +48,8 @@ def fns(mtc) -> []:
             if dname.count('-') == 2:
                 ddd = os.path.join(rootdir, dname)
                 fls = sorted(os.listdir(ddd))
-                if fls:
-                    yield strip(os.path.join(ddd, fls[-1]))
+                for fll in fls:
+                    yield strip(os.path.join(ddd, fll))
 
 
 def fntime(daystr) -> float:

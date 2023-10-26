@@ -67,6 +67,13 @@ def fmt(obj, args=None, skip=None) -> str:
 def ident(obj) -> str:
     return os.path.join(
                         fqn(obj),
+                        os.path.join(*str(datetime.datetime.now()).split())
+                       )
+
+
+def ident2(obj) -> str:
+    return os.path.join(
+                        fqn(obj),
                         str(uuid.uuid4().hex),
                         os.path.join(*str(datetime.datetime.now()).split())
                        )

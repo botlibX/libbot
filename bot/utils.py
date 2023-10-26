@@ -129,4 +129,4 @@ def spl(txt) -> []:
 
 
 def strip(pth) -> str:
-    return os.sep.join(pth.split(os.sep)[-4:])
+    return os.sep.join(pth.split(os.sep)[-3:])

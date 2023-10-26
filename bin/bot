@@ -95,7 +95,7 @@ def main():
         Storage.wd = Cfg.wd
     if Cfg.md:
         scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
-        Cfg.mod = ",".join(mods(Cfg.md))
+        Cfg.mod += "." + ",".join(mods(Cfg.md))
     if "v" in Cfg.opts:
         dtime = time.ctime(time.time()).replace("  ", " ")
         cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg}")

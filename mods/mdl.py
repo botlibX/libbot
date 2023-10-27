@@ -7,9 +7,6 @@
 "genocide model of the netherlands"
 
 
-__author__ = "Bart Thate <programmingobject@gmail.com>"
-
-
 import datetime
 import time
 
@@ -18,7 +15,7 @@ from bot.spec import Broker, Event, Object, Repeater
 from bot.spec import construct, laps, launch, keys
 
 
-def start():
+def init():
     time.sleep(60.0)
     for key in keys(oorzaken):
         val = getattr(oorzaken, key, None)

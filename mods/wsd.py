@@ -186,9 +186,6 @@
 """
 
 
-__author__ = "Bart Thate <programmingobject@gmail.com>"
-
-
 import random
 
 

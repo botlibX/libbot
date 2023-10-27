@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-#
+# pylint: disable=C0115,C0116,C0209,W0212
 
 
 "mailbox"
@@ -12,7 +12,7 @@ import time
 
 
 from bot.spec import Object
-from bot.spec import find, fmt, fntime, laps, update, write
+from bot.spec import find, fmt, fntime, laps, sync, update
 
 
 bdmonths = [
@@ -110,13 +110,13 @@ def cor(event):
         else:
             txt = "From,Subject"
         lsp = laps(time.time() - fntime(email.__oid__))
-        txt = fmt(email, txt, plain=True)
+        txt = fmt(email)
         event.reply(f"{nrs} {txt} {lsp}")
 
 
 def eml(event):
     if not event.args:
-        event.reply("eml <searchtxtinemail>")
+        event.reply("eml <txtinemail>")
         return
     nrs = -1
     for email in find("email"):
@@ -151,7 +151,7 @@ def mbx(event):
             if payload.get_content_type() == 'text/plain':
                 email.text += payload.get_payload()
         email.text = email.text.replace("\\n", "\n")
-        write(email)
+        sync(email)
         nrs += 1
     if nrs:
-        event.reply("ok {nrs}")
+        event.reply(f"ok {nrs}")

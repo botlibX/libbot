@@ -1,14 +1,15 @@
 # This file is placed in the Public Domain.
 #
-#
+# pylint: disable=C0115,C0116
 
 
 "users"
 
 
-from .disk  import sync
-from .find  import find
-from .users import User
+import time
+
+
+from bot.spec import User, find, fntime, laps, sync
 
 
 def dlt(event):
@@ -42,4 +43,3 @@ def met(event):
     user.perms = ['USER']
     sync(user)
     event.reply('ok')
-

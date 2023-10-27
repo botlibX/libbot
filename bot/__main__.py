@@ -1,7 +1,7 @@
 # This file is placed in the Public Domain.
 #
 # pylint: disable=C0412,C0115,C0116,W0212,R0903,C0207,C0413,W0611
-# pylint: disable=C0411,E0402,E0611,C2801
+# pylint: disable=C0411,E0402,E0611,C2801,W0718
 
 
 "runtime"
@@ -49,15 +49,19 @@ class Console(CLI):
         print(txt)
 
 
-def scandir(path, modnames, init=False):
+def scandir(path, modnames="", init=False, wait=False):
     mns = []
     if not os.path.exists(path):
         return mns
+    threads = []
     pname = path.split(os.sep)[-1]
+    mnames = spl(modnames)
     for fnm in os.listdir(path):
         if fnm.startswith("__"):
             continue
         if not fnm.endswith(".py"):
+            continue
+        if fnm not in mnames:
             continue
         fnn = fnm[:-3]
         fqn = f"{pname}.{fnn}"
@@ -67,9 +71,12 @@ def scandir(path, modnames, init=False):
         Handler.scan(mod)
         if init and "init" in dir(mod):
             try:
-                mod.init()
+                threads.append(launch(mod.init))
             except Exception as ex:
                 Errors.add(ex)
+    if wait:
+        for thr in threads:
+            thr.join()
     return mns
 
 
@@ -96,15 +103,17 @@ def main():
     Cfg.mod = ",".join(modules.__dir__())
     if "v" in Cfg.opts:
         Censor.output = print
-        dtime = time.ctime(time.time()).replace("  ", " ")
-        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
     if Cfg.wd:
         Storage.wd = Cfg.wd
     if Cfg.md:
-        scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
-        Cfg.mod += "." + ",".join(mods(Cfg.md))
+        Cfg.mod += "," + ",".join(mods(Cfg.md))
+    if "v" in Cfg.opts:
+        dtime = time.ctime(time.time()).replace("  ", " ")
+        cprint(f"{Cfg.name.upper()} started at {dtime} {Cfg.opts.upper()} {Cfg.mod.upper()}")
     if "n" in Cfg.opts:
         Cfg.commands = False
+    if Cfg.md:
+        scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:
@@ -126,7 +135,6 @@ def main():
         evt = cli.event(Cfg.otxt)
         parse(evt)
         command(evt)
-
 
 
 def wrapped():

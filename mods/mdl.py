@@ -1,7 +1,7 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,I,R,W0613,E1101,E0402,W0401
-# pylama: ignore=E225,E501
+# pylint: disable=C,I,R,W0613,E1101,E0402,W0401,W0105
+# flake8: noqa=E501
 
 
 "genocide model of the netherlands"
@@ -12,11 +12,16 @@ import time
 
 
 from bot.spec import Broker, Event, Object, Repeater
-from bot.spec import construct, laps, launch, keys
+from bot.spec import construct, keys, laps, launch
+
+
+def __dir__():
+    return (
+            "now",
+           ) 
 
 
 def init():
-    time.sleep(60.0)
     for key in keys(oorzaken):
         val = getattr(oorzaken, key, None)
         if val and int(val) > 10000:
@@ -27,9 +32,9 @@ def init():
             repeater = Repeater(sec, cbstats, evt, thrname=aliases.get(key))
             repeater.start()
     launch(daily, name="daily")
+    
 
-
-DAY=24*60*60
+DAY = 24*60*60
 YEAR = 365*DAY
 SOURCE = "https://github.com/bthate/genocide"
 STARTDATE = "2020-01-01 00:00:00"
@@ -232,9 +237,6 @@ aantal = """
          """.split(";")
 
 
-#oorzaak.Suicide = 1859
-
-
 aliases = {}
 aliases["Nieuwvormingen"] = "cancer"
 aliases["Hart en vaatstelsel"] = "hart disease"
@@ -275,56 +277,6 @@ construct(oorzaak, zip(oor, aantal))
 oorzaken = Object()
 
 
-def boot():
-    _nr = -1
-    for key in keys(oorzaak):
-        _nr += 1
-        if _nr == 0:
-            continue
-        if key.startswith('"'):
-            key = key[1:]
-        lines = key.split("/")
-        if len(lines) > 1 and not lines[1].startswith("Totaal"):
-            continue
-        atl = lines[0].replace('(aantal)"', "")
-        atl = atl.replace("Ziekten van de", "")
-        atl = atl.replace("Ziekten van", "")
-        atl = atl.replace("Ziekten", "")
-        atl = atl.replace("Zktn", "")
-        atl = atl.replace("zktn", "")
-        atl = atl.replace("en..", "")
-        atl = atl.replace("..", "")
-        atl = atl.replace("bindweef", "bindweefsel")
-        atl = atl.replace("bevind", "bevindingen")
-        atl = atl.replace("stofwiss.", "stofwisseling")
-        atl = atl.replace("Sympt.,", "")
-        atl = atl.replace(", bevalling en kraambed. ", "")
-        atl = atl.replace("Aandoeningen v.d. ", "")
-        nms = " ".join(atl.split()[1:]).capitalize()
-        nms = nms.strip()
-        setattr(oorzaken, nms, aantal[_nr])
-
-
-def daily():
-    time.sleep(10.0)
-    while 1:
-        evt = Event()
-        cbnow(evt)
-        time.sleep(24*60*60)
-
-
-def hourly():
-    while 1:
-        time.sleep(60*60)
-        evt = Event()
-        cbnow(evt)
-
-
-def seconds(nrs):
-    if not nrs:
-        return nrs
-    return 60*60*24*365 / float(nrs)
-
 
 def getalias(txt):
     for key, value in aliases.items():
@@ -345,11 +297,32 @@ def getnr(name):
     return 0
 
 
+def seconds(nrs):
+    if not nrs:
+        return nrs
+    return 60*60*24*365 / float(nrs)
+
+
+
 def iswanted(k, line):
     for word in line:
         if word in k:
             return True
     return False
+
+
+def daily():
+    while 1:
+        time.sleep(24*60*60)
+        evt = Event()
+        cbnow(evt)
+
+
+def hourly():
+    while 1:
+        time.sleep(60*60)
+        evt = Event()
+        cbnow(evt)
 
 
 def cbnow(evt):
@@ -383,57 +356,61 @@ def cbstats(evt):
                                                                laps(needed),
                                                                nryear,
                                                               )
-        Broker.announce(txt)
+        for bot in Broker.objs:
+            bot.announce(txt)
 
 
 def now(event):
-    delta = time.time() - STARTTIME
-    txt = laps(delta) + " "
-    for name in sorted(keys(oorzaken), key=lambda x: seconds(getnr(x))):
-        needed = seconds(getnr(name))
-        if needed > 60*60:
-            continue
-        nrtimes = int(delta/needed)
-        txt += "%s: %s " % (getalias(name), nrtimes)
-    txt += " http://genocide.rtfd.io"
-    event.reply(txt)
-
-
-def mdl(event):
     name = event.rest or "Psych"
     needed = seconds(getnr(name))
     if needed:
         delta = time.time() - STARTTIME
+        txt = laps(delta) + " "
         nrtimes = int(delta/needed)
         nryear = int(YEAR/needed)
         nrday = int(DAY/needed)
         thisday = int(DAY % needed)
-        txt = "patient #%s died from %s (%s/%s/%s) every %s" % (
-                                                               nrtimes,
-                                                               getalias(name),
-                                                               thisday,
-                                                               nrday,
-                                                               nryear,
-                                                               laps(needed)
-                                                              )
+        txt += "patient #%s died from %s (%s/%s/%s) every %s" % (
+                                                                 nrtimes,
+                                                                 getalias(name),
+                                                                 thisday,
+                                                                 nrday,
+                                                                 nryear,
+                                                                 laps(needed)
+                                                                )
         event.reply(txt)
+    else:
+        event.reply("not needed")
 
 
-def tpc(event):
-    txt = "%ss " % laps(time.time() - STARTTIME)
-    for name in sorted(oorzaken, key=lambda x: seconds(getnr(x))):
-        needed = seconds(getnr(name))
-        delta = time.time() - STARTTIME
-        nrtimes = int(delta/needed)
-        if needed > 60*60:
+def boot():
+    _nr = -1
+    for key in keys(oorzaak):
+        _nr += 1
+        if _nr == 0:
             continue
-        txt += "%s %s " % (getalias(name), nrtimes)
-    for bot in Broker.objs:
-        try:
-            for channel in bot.channels:
-                bot.topic(channel, txt)
-        except AttributeError:
-            pass
+        if key.startswith('"'):
+            key = key[1:]
+        lines = key.split("/")
+        if len(lines) > 1 and not lines[1].startswith("Totaal"):
+            continue
+        atl = lines[0].replace('(aantal)"', "")
+        atl = atl.replace("Ziekten van de", "")
+        atl = atl.replace("Ziekten van", "")
+        atl = atl.replace("Ziekten", "")
+        atl = atl.replace("Zktn", "")
+        atl = atl.replace("zktn", "")
+        atl = atl.replace("en..", "")
+        atl = atl.replace("..", "")
+        atl = atl.replace("bindweef", "bindweefsel")
+        atl = atl.replace("bevind", "bevindingen")
+        atl = atl.replace("stofwiss.", "stofwisseling")
+        atl = atl.replace("Sympt.,", "")
+        atl = atl.replace(", bevalling en kraambed. ", "")
+        atl = atl.replace("Aandoeningen v.d. ", "")
+        nms = " ".join(atl.split()[1:]).capitalize()
+        nms = nms.strip()
+        setattr(oorzaken, nms, aantal[_nr])
 
 
 boot()

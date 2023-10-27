@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-#
+# pylint: disable=C0115,C0116,R0903
 
 
 "udp to irc relay"
@@ -27,12 +27,6 @@ class Cfg(Object):
         super().__init__()
         self.host = "localhost"
         self.port = 5500
-
-    def len(self):
-        return self.server
-
-    def size(self):
-        return self.port
 
 
 class UDP(Object):

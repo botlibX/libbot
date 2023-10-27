@@ -1,5 +1,8 @@
 [build-system]
-requires = ["setuptools>=43.0.0", "wheel"]
+requires = [
+    "setuptools>=43.0.0",
+    "wheel"
+]
 build-backend = "setuptools.build_meta"
 
 
@@ -8,17 +11,17 @@ name = "libbot"
 description = "the python3 bot namespace"
 version = "31"
 authors = [
-    {name = "libbot", email = "libbotx@gmail.com" },
+    {name = "libbot",email = "libbotx@gmail.com"},
 ]
 readme = "README.rst"
-license = { text="Public Domain"}
+license = {text="Public Domain"}
 classifiers = [ 
-               'Development Status :: 3 - Alpha',
-               'License :: Public Domain',
-               'Operating System :: Unix',
-               'Programming Language :: Python',
-               'Topic :: Utilities'
-              ]
+    'Development Status :: 3 - Alpha',
+    'License :: Public Domain',
+    'Operating System :: Unix',
+    'Programming Language :: Python',
+    'Topic :: Utilities'
+]
 
 
 [project.scripts]
@@ -33,15 +36,27 @@ classifiers = [
 
 [tool.setuptools]
 packages = [
-            'bot',
-            'bot.mods'
-           ]
+    'bot',
+    'bot.mods'
+]
 zip-safe=true
 
 
 [tool.setuptools.data-files]
-"share/doc/libbot" = ["README.rst",]
+"share/doc/libbot" = [
+    "README.rst",
+]
 
+
+"share/libbot/mods" = [
+    'mods/mbx.py',
+    'mods/mdl.py',
+    'mods/req.py',
+    'mods/shp.py',
+    'mods/udp.py',
+    'mods/wsd.py',
+    'mods/wsh.py'
+]                   
 
 [tool.setuptools.exclude-package-data]
 "*" = [

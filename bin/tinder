@@ -7,6 +7,7 @@
 "created clients"
 
 
+import importlib
 import os
 import random
 import shutil
@@ -22,7 +23,7 @@ WORKDIR = os.path.expanduser("~")
 sys.path.insert(0, os.getcwd())
 
 
-from bot.spec import Cfg, Censor, Client, Object, Storage
+from bot.spec import Cfg, Censor, Client, Handler, Object, Storage
 from bot.spec import keys, laps, launch, mods, parse, scan
 from bot.spec import command, debug
 
@@ -136,6 +137,34 @@ def payload(clt) -> None:
         return nmr
 
 
+def scandir(path, init=False, wait=False):
+    mns = []
+    if not os.path.exists(path):
+        return mns
+    threads = []
+    pname = path.split(os.sep)[-1]
+    for fnm in os.listdir(path):
+        if fnm.startswith("__"):
+            continue
+        if not fnm.endswith(".py"):
+            continue
+        fnn = fnm[:-3]
+        fqn = f"{pname}.{fnn}"
+        mod = importlib.import_module(fqn, pname)
+        mns.append(fqn)
+        Storage.scan(mod)
+        Handler.scan(mod)
+        if init and "init" in dir(mod):
+            try:
+                threads.append(launch(mod.init))
+            except Exception as ex:
+                Errors.add(ex)
+    if wait:
+        for thr in threads:
+            thr.join()
+    return mns
+
+
 def wrap(func) -> None:
     if "d" in Cfg.opts:
         debug("terminal disabled!")
@@ -159,6 +188,7 @@ def main() -> None:
         shutil.rmtree(Storage.wd)
     parse(Cfg, " ".join(sys.argv[1:]))
     scan(modules, Cfg.mod)
+    scandir("mods")
     nrs = Cfg.index or 1
     cli = CLI()
     cli.start()

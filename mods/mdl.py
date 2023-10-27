@@ -17,7 +17,8 @@ from bot.spec import construct, keys, laps, launch
 
 def __dir__():
     return (
-            "now",
+            'init',
+            'now'
            ) 
 
 

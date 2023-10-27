@@ -49,19 +49,16 @@ class Console(CLI):
         print(txt)
 
 
-def scandir(path, modnames="", init=False, wait=False):
+def scandir(path, init=False, wait=False):
     mns = []
     if not os.path.exists(path):
         return mns
     threads = []
     pname = path.split(os.sep)[-1]
-    mnames = spl(modnames)
     for fnm in os.listdir(path):
         if fnm.startswith("__"):
             continue
         if not fnm.endswith(".py"):
-            continue
-        if fnm not in mnames:
             continue
         fnn = fnm[:-3]
         fqn = f"{pname}.{fnn}"
@@ -113,7 +110,7 @@ def main():
     if "n" in Cfg.opts:
         Cfg.commands = False
     if Cfg.md:
-        scandir(Cfg.md, Cfg.mod, "x" not in Cfg.opts)
+        scandir(Cfg.md, "x" not in Cfg.opts, "w" in Cfg.opts)
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile)
     if "d" in Cfg.opts or "s" in Cfg.opts:

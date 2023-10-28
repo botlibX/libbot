@@ -6,7 +6,7 @@
 "object broker"
 
 
-from .object import Object
+from obj import Object
 
 
 def __dir__():

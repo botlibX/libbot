@@ -23,10 +23,14 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
+from obj         import Object, keys, update
+from obj.methods import fmt
+
+
 from bot.spec import Broker, Censor, Cfg, Client, Errors, Event
-from bot.spec import Object, CLI, Handler, Storage, keys
-from bot.spec import command, cprint, fmt, daemon, debug, parse, scan, forever
-from bot.spec import launch, mods, name, privileges, shutdown, spl, update
+from bot.spec import CLI, Handler, Storage
+from bot.spec import command, cprint, daemon, debug, parse, scan, forever
+from bot.spec import launch, mods, name, privileges, shutdown, spl
 
 
 import bot.mods as modules

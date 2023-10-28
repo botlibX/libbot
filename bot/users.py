@@ -7,8 +7,10 @@
 "users"
 
 
-from .disk   import sync
-from .object import Default
+from obj.default import Default
+
+
+from .disk import sync
 
 
 class NoUser(Exception):
@@ -50,7 +52,7 @@ class Users:
     @staticmethod
     def get_users(origin=''):
         selector = {'user': origin}
-        return find('user', selector)
+        return [x[1] for x in find('user', selector)]
 
     @staticmethod
     def get_user(origin):

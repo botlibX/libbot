@@ -30,7 +30,7 @@ def got(event):
     if not event.args:
         return
     selector = {'txt': event.args[0]}
-    for obj in find('shop', selector):
+    for fnm, obj in find('shop', selector):
         obj.__deleted__ = True
         sync(obj)
         event.reply('ok')
@@ -39,7 +39,7 @@ def got(event):
 def shp(event):
     if not event.rest:
         nmr = 0
-        for obj in find('shop'):
+        for fnm, obj in find('shop'):
             lap = laps(time.time()-fntime(obj.__oid__))
             event.reply(f'{nmr} {obj.txt} {lap}')
             nmr += 1

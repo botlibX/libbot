@@ -22,8 +22,8 @@ class Log(Object):
 def log(event):
     if not event.rest:
         nmr = 0
-        for obj in find('log'):
-            lap = laps(time.time() - fntime(obj.__fnm__))
+        for fnm, obj in find('log'):
+            lap = laps(time.time() - fntime(fnm))
             event.reply(f'{nmr} {obj.txt} {lap}')
             nmr += 1
         if not nmr:

@@ -102,7 +102,7 @@ def cor(event):
         event.reply("cor <email>")
         return
     nrs = -1
-    for email in find("email", {"From": event.args[0]}):
+    for fnm, email in find("email", {"From": event.args[0]}):
         nrs += 1
         txt = ""
         if len(event.args) > 1:
@@ -119,7 +119,7 @@ def eml(event):
         event.reply("eml <txtinemail>")
         return
     nrs = -1
-    for email in find("email"):
+    for fnm, email in find("email"):
         if event.rest in email.text:
             nrs += 1
             txt = fmt(email, "From,Subject")

@@ -10,8 +10,10 @@ import inspect
 import os
 
 
+from obj import Object, read, write
+
+
 from .func   import ident
-from .object import Object, read, write
 from .utils  import cdir, strip
 
 
@@ -83,14 +85,12 @@ class Storage:
 def fetch(obj, pth) -> None:
     pth2 = Storage.store(pth)
     read(obj, pth2)
-    obj.__fnm__ = strip(pth)
+    return strip(pth)
 
 
 def sync(obj, pth=None) -> str:
-    pth = pth or obj.__fnm__
-    if not pth:
+    if pth is None:
         pth = ident(obj)
     pth2 = Storage.store(pth)
     write(obj, pth2)
-    obj.__fnm__ = pth
     return pth

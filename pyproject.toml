@@ -22,7 +22,9 @@ classifiers = [
     'Programming Language :: Python',
     'Topic :: Utilities'
 ]
-
+dependencies = [
+    "libobj",
+]
 
 [project.scripts]
 "bot" = "bot.__main__:wrapped"

@@ -10,8 +10,11 @@ import os
 import time
 
 
-from .object import Object, fqn, search, update
+from obj import Object, search, update
+
+
 from .disk   import Storage, fetch
+from .func   import fqn
 from .utils  import strip
 
 
@@ -35,7 +38,7 @@ def find(mtc, selector=None) -> []:
             continue
         if selector and not search(obj, selector):
             continue
-        yield obj
+        yield (fnm, obj)
 
 
 def fns(mtc) -> []:

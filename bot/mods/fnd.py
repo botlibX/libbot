@@ -23,7 +23,7 @@ def fnd(event):
             if otype == claz.lower():
                 clz = fnm
     nmr = 0
-    for obj in find(clz, event.gets):
+    for fnm, obj in find(clz, event.gets):
         event.reply(f"{nmr} {fmt(obj)}")
         nmr += 1
     if not nmr:

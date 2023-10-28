@@ -11,7 +11,7 @@ import os
 import time
 
 
-from .object import Default
+from obj.default import Default
 
 
 def __dir__():

@@ -12,8 +12,10 @@ import threading
 import _thread
 
 
+from obj import Object
+
+
 from .event  import Event
-from .object import Object
 from .thread import launch
 
 

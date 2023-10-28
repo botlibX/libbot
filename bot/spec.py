@@ -16,7 +16,6 @@ from .event   import *
 from .func    import *
 from .find    import *
 from .handler import *
-from .object  import *
 from .parse   import *
 from .scan    import *
 from .thread  import *
@@ -33,11 +32,9 @@ def __dir__():
             'Client',
             'CLI',
             'Console',
-            'Default',
             'Errors',
             'Event',
             'Handler',
-            'Object',
             'Repeater',
             'Storage',
             'Thread',

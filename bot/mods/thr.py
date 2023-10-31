@@ -10,7 +10,10 @@ import threading
 import time
 
 
-from bot.spec import Cfg, Object, laps, update
+from obj.spec import Object, laps, update
+
+
+STARTTIME = time.time()
 
 
 def thr(event):
@@ -25,7 +28,7 @@ def thr(event):
         elif getattr(obj, 'starttime', None):
             uptime = int(time.time() - obj.starttime)
         else:
-            uptime = int(time.time() - Cfg.starttime)
+            uptime = int(time.time() - STARTTIME)
         result.append((uptime, thread.name))
     res = []
     for uptime, txt in sorted(result, key=lambda x: x[1]):

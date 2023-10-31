@@ -10,11 +10,9 @@ from .all     import *
 from .broker  import *
 from .config  import *
 from .client  import *
-from .disk    import *
 from .error   import *
 from .event   import *
 from .func    import *
-from .find    import *
 from .handler import *
 from .parse   import *
 from .scan    import *
@@ -36,35 +34,16 @@ def __dir__():
             'Event',
             'Handler',
             'Repeater',
-            'Storage',
             'Thread',
             'User',
             'Users',
             'cdir',
             'command',
-            'construct',
-            'edit',
-            'fetch',
-            'find',
-            'fntime',
-            'fqn',
-            'ident',
-            'items',
-            'keys',
             'laps',
-            'last',
             'launch',
             'mods',
             'name',
             'parse',
-            'read',
             'scan',
-            'search', 
             'shutdown',
-            'spl',
-            'strip',
-            'sync',
-            'update',
-            'values',
-            'write'
            )

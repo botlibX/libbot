@@ -18,8 +18,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot.spec import Broker, Cfg, Default, Object, Repeater
-from bot.spec import find, fmt, fntime, last, launch, laps, sync, update
+from obj.spec import Default, Object, find, fmt, fntime, laps, last, sync, update
+from bot.spec import Broker, Cfg, Repeater, launch
 
 
 def init():
@@ -249,7 +249,7 @@ def rss(event):
         nrs = 0
         for fnm, feed in find('rss'):
             nrs += 1
-            elp = laps(time.time()-fntime(feed.__fnm__))
+            elp = laps(time.time()-fntime(fnm))
             txt = fmt(feed)
             event.reply(f'{nrs} {txt} {elp}')
         if not nrs:

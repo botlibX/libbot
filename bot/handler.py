@@ -27,7 +27,7 @@ def __dir__():
 
 class Handler(Object):
 
-    cmds = {}
+    cmds = Object()
 
     def __init__(self):
         Object.__init__(self)
@@ -38,7 +38,7 @@ class Handler(Object):
 
     @staticmethod
     def add(func) -> None:
-        Handler.cmds[func.__name__] = func
+        setattr(Handler.cmds, func.__name__, func)
 
     def event(self, txt) -> Event:
         evt = Event()
@@ -81,7 +81,7 @@ class Handler(Object):
                 Handler.add(cmd)
 
     def register(self, typ, cbs) -> None:
-        self.cbs[typ] = cbs
+        setattr(self.cbs, typ, cbs)
 
     def start(self) -> None:
         launch(self.loop)

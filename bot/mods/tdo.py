@@ -9,7 +9,7 @@
 import time
 
 
-from bot.spec import Object, find, fntime, laps, sync
+from obj.spec import Object, find, fntime, laps, sync
 
 
 class Todo(Object):

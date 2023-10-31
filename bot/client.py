@@ -45,7 +45,7 @@ class CLI(Client):
 
 
 def command(evt) -> None:
-    func = Handler.cmds.get(evt.cmd, None)
+    func = getattr(Handler.cmds, evt.cmd, None)
     if not func:
         evt.ready()
         return

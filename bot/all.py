@@ -6,5 +6,5 @@
 "import all modules"
 
 
-from . import broker, client, config, error, event, handler, func
+from . import broker, client, config, error, event, handler
 from . import parse, scan, thread, timer

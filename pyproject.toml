@@ -39,7 +39,7 @@ dependencies = [
 [tool.setuptools]
 packages = [
     'bot',
-    'bot.mods'
+    'bot.modules'
 ]
 zip-safe=true
 

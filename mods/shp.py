@@ -9,8 +9,7 @@
 import time
 
 
-from bot.spec import Object
-from bot.spec import find, fntime, laps, sync
+from obj.spec import Object, find, fntime, laps, sync
 
 
 class Shop(Object):

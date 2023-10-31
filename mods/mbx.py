@@ -11,8 +11,7 @@ import os
 import time
 
 
-from bot.spec import Object
-from bot.spec import find, fmt, fntime, laps, sync, update
+from obj.spec import Object, find, fmt, fntime, laps, sync, update
 
 
 bdmonths = [

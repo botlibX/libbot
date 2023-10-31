@@ -32,7 +32,7 @@ def met(event):
     if not event.args:
         nmr = 0
         for fnm, obj in find('user'):
-            lap = laps(time.time() - fntime(obj.__fnm__))
+            lap = laps(time.time() - fntime(fnm))
             event.reply(f'{nmr} {obj.user} {obj.perms} {lap}s')
             nmr += 1
         if not nmr:

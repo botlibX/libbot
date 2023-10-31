@@ -43,11 +43,11 @@ def parse(obj, txt=None) -> None:
                 else:
                     obj.mod = value
                 continue
-            obj.sets[key] = value
+            setattr(obj.sets, key, value)
             continue
         if "==" in spli:
             key, value = spli.split("==", maxsplit=1)
-            obj.gets[key] = value
+            setattr(obj.gets, key, value)
             continue
         _nr += 1
         if _nr == 0:

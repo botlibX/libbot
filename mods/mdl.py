@@ -11,10 +11,8 @@ import datetime
 import time
 
 
-from obj import Object, construct, keys
-
-
-from bot.spec import Broker, Event, Repeater, laps, launch
+from obj.spec import Object, construct, keys, laps
+from bot.spec import Broker, Event, Repeater, launch
 
 
 def __dir__():

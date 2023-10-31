@@ -6,12 +6,13 @@
 "storage"
 
 
-import datetime
 import inspect
 import os
 
 
-from .object import Object, cdir, fqn, read, write
+from .object import Object, cdir, read, write
+from .method import ident
+from .utils  import strip
 
 
 def  __dir__():
@@ -78,23 +79,6 @@ class Storage:
             if not issubclass(clz, Object):
                 continue
             Storage.add(clz)
-
-
-"utilities"
-
-
-def strip(pth) -> str:
-    return os.sep.join(pth.split(os.sep)[-3:])
-
-
-"methods"
-
-
-def ident(obj) -> str:
-    return os.path.join(
-                        fqn(obj),
-                        os.path.join(*str(datetime.datetime.now()).split())
-                       )
 
 
 def fetch(obj, pth) -> None:

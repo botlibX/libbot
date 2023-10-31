@@ -1,9 +1,12 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0116,W0212,W0702
+# pylint: disable=C0116,W0212,W0702,C0103
 
 
 "utilities"
+
+
+import os
 
 
 def __dir__():
@@ -58,3 +61,7 @@ def spl(txt) -> []:
     except (TypeError, ValueError):
         res = txt
     return [x for x in res if x]
+
+
+def strip(pth, nr=3) -> str:
+    return os.sep.join(pth.split(os.sep)[-nr:])

@@ -10,8 +10,9 @@ import os
 import time
 
 
-from .object  import Default, keys, search, update
-from .disk    import Storage, fetch, fqn, strip
+from .object import Default, update
+from .method import fqn, search
+from .disk   import Storage, fetch, strip
 
 
 def __dir__():
@@ -35,27 +36,6 @@ def find(mtc, selector=None) -> []:
         if selector and not search(obj, selector):
             continue
         yield (fnm, obj)
-
-
-def fmt(obj, args=None, skip=None, plain=False) -> str:
-    if args is None:
-        args = keys(obj)
-    if skip is None:
-        skip = []
-    txt = ""
-    for key in sorted(args):
-        if key in skip:
-            continue
-        value = getattr(obj, key, None)
-        if value is None:
-            continue
-        if plain:
-            txt += f"{value} "
-        elif isinstance(value, str) and len(value.split()) >= 2:
-            txt += f'{key}="{value}" '
-        else:
-            txt += f'{key}={value} '
-    return txt.strip()
 
 
 def fns(mtc) -> []:

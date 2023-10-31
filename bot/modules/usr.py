@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116
+# pylint: disable=C0115,C0116,W0612
 
 
 "users"
@@ -9,7 +9,8 @@
 import time
 
 
-from bot.spec import User, find, fntime, laps, sync
+from obj.spec import  find, fntime, laps, sync
+from bot.spec import User
 
 
 def dlt(event):

@@ -12,7 +12,6 @@ from .config  import *
 from .client  import *
 from .error   import *
 from .event   import *
-from .func    import *
 from .handler import *
 from .parse   import *
 from .scan    import *
@@ -37,9 +36,7 @@ def __dir__():
             'Thread',
             'User',
             'Users',
-            'cdir',
             'command',
-            'laps',
             'launch',
             'mods',
             'name',

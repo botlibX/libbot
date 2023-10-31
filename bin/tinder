@@ -24,8 +24,6 @@ sys.path.insert(0, os.getcwd())
 
 
 from obj.spec import Object, Storage, keys, laps
-
-
 from bot.spec import Cfg, Censor, Client, Handler
 from bot.spec import launch, mods, parse, scan
 from bot.spec import command, debug
@@ -35,7 +33,7 @@ modules = None
 
 
 try:
-    import bot.mods as modules
+    import bot.modules as modules
 except:
     try:
         import mods as modules

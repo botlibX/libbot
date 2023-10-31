@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,E0402
+# pylint: disable=C0115,C0116,E0402,R0902
 
 
 "messages"
@@ -9,7 +9,7 @@
 import threading
 
 
-from obj.default import Default 
+from obj.spec import Default
 
 
 from .broker import Broker

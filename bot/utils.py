@@ -7,7 +7,6 @@
 
 
 import os
-import pathlib
 import pwd
 import sys
 import time
@@ -16,20 +15,11 @@ import _thread
 
 def __dir__():
     return (
-            'cdir',
             'daemon',
             'forever',
-            'laps',
             'mods',
             'privileges',
-            'spl',
-            'strip'
            )
-
-
-def cdir(pth) -> None:
-    pth = pathlib.Path(pth)
-    os.makedirs(pth, exist_ok=True)
 
 
 def daemon(pidfile) -> None:
@@ -62,45 +52,6 @@ def forever() -> None:
             _thread.interrupt_main()
 
 
-def laps(seconds, short=True) -> str:
-    txt = ""
-    nsec = float(seconds)
-    if nsec < 1:
-        return f"{nsec:.2f}s"
-    year = 365*24*60*60
-    week = 7*24*60*60
-    nday = 24*60*60
-    hour = 60*60
-    minute = 60
-    years = int(nsec/year)
-    nsec -= years*year
-    weeks = int(nsec/week)
-    nsec -= weeks*week
-    nrdays = int(nsec/nday)
-    nsec -= nrdays*nday
-    hours = int(nsec/hour)
-    nsec -= hours*hour
-    minutes = int(nsec/minute)
-    nsec -= int(minute*minutes)
-    sec = int(nsec)
-    if years:
-        txt += f"{years}y"
-    if weeks:
-        nrdays += weeks * 7
-    if nrdays:
-        txt += f"{nrdays}d"
-    if nrdays and short and txt:
-        return txt.strip()
-    if hours:
-        txt += f"{hours}h"
-    if minutes:
-        txt += f"{minutes}m"
-    if sec:
-        txt += f"{sec}s"
-    txt = txt.strip()
-    return txt
-
-
 def mods(path) -> []:
     if not os.path.exists(path):
         return {}
@@ -120,15 +71,3 @@ def privileges(username) -> None:
     pwnam = pwd.getpwnam(username)
     os.setgid(pwnam.pw_gid)
     os.setuid(pwnam.pw_uid)
-
-
-def spl(txt) -> []:
-    try:
-        res = txt.split(',')
-    except (TypeError, ValueError):
-        res = txt
-    return [x for x in res if x]
-
-
-def strip(pth) -> str:
-    return os.sep.join(pth.split(os.sep)[-3:])

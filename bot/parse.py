@@ -6,7 +6,7 @@
 "parsing"
 
 
-from obj.default import Default
+from obj.spec import Default
 
 
 def __dir__():

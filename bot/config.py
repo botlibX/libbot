@@ -11,7 +11,7 @@ import os
 import time
 
 
-from obj.spec import Default
+from .object import Default
 
 
 def __dir__():

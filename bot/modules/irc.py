@@ -18,9 +18,7 @@ import time
 import _thread
 
 
-from obj.spec import Default, Object, edit, fmt, keys, last, parse, sync
-
-
+from bot.spec import Default, Object, edit, fmt, keys, last, parse, sync
 from bot.spec import Broker, Cfg, Censor, Client, Errors, Event
 from bot.spec import Users, command, debug, launch
 

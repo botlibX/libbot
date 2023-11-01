@@ -18,7 +18,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from obj.spec import Default, Object, find, fmt, fntime, laps, last, sync, update
+from bot.spec import Default, Object, find, fmt, fntime, laps, last, sync, update
 from bot.spec import Broker, Cfg, Repeater, launch
 
 

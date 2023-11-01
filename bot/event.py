@@ -9,10 +9,8 @@
 import threading
 
 
-from obj.spec import Default
-
-
 from .broker import Broker
+from .object import Default
 
 
 def __dir__():

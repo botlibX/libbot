@@ -10,7 +10,7 @@ import threading
 import time
 
 
-from obj.spec import Object, laps, update
+from bot.spec import Object, laps, update
 
 
 STARTTIME = time.time()

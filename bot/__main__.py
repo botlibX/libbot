@@ -23,9 +23,7 @@ import traceback
 sys.path.insert(0, os.getcwd())
 
 
-from obj.spec import Object, Storage, fmt, keys, parse, update, spl
-
-
+from bot.spec import Object, Storage, fmt, keys, parse, update, spl
 from bot.spec import Broker, Censor, Cfg, Client, Errors, Event, CLI, Handler
 from bot.spec import command, cprint, daemon, debug, scan, forever
 from bot.spec import launch, mods, name, privileges, shutdown

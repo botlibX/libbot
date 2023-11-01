@@ -6,12 +6,11 @@
 "introspection"
 
 
-from obj.disk  import Storage
-from obj.utils import spl
 
-
+from .disk  import Storage
 from .handler import Handler
 from .thread  import launch
+from .utils import spl
 
 
 def __dir__():

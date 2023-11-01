@@ -7,8 +7,8 @@
 "users"
 
 
-from obj.disk   import sync
-from obj.object import Default
+from .disk   import sync
+from .object import Default
 
 
 class NoUser(Exception):

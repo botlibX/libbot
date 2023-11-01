@@ -205,7 +205,6 @@ class IRC(Client, Output):
         self.state.nrconnect += 1
         self.events.connected.clear()
         debug(f"connecting to {server}:{port}")
-        print(self.cfg)
         if self.cfg.password:
             debug("using SASL")
             self.cfg.sasl = True

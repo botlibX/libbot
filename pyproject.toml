@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "the python3 bot namespace"
-version = "41"
+version = "42"
 authors = [
     {name = "libbot",email = "libbotx@gmail.com"},
 ]
@@ -22,9 +22,7 @@ classifiers = [
     'Programming Language :: Python',
     'Topic :: Utilities'
 ]
-dependencies = [
-    "libobj>=503",
-]
+
 
 [project.scripts]
 "bot" = "bot.__main__:wrapped"

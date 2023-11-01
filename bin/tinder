@@ -2,12 +2,12 @@
 # This file is placed in the Public Domain.
 #
 # pylint: disable=C0115,C0116,C0413,E0401,R0903,E0611,C0412,C0103,W0702,R0402
+# pylint: disable=W0718
 
 
 "created clients"
 
 
-import importlib
 import os
 import random
 import shutil
@@ -23,10 +23,11 @@ WORKDIR = os.path.expanduser("~")
 sys.path.insert(0, os.getcwd())
 
 
-from obj.spec import Object, Storage, keys, laps
-from bot.spec import Cfg, Censor, Client, Handler
+from bot.spec import Object, Storage, keys, laps
+from bot.spec import Cfg, Censor, Client
 from bot.spec import launch, mods, parse, scan
 from bot.spec import command, debug
+from bot.__main__ import scandir
 
 
 modules = None
@@ -136,34 +137,6 @@ def payload(clt) -> None:
                     command(evt)
                 nmr += 1
         return nmr
-
-
-def scandir(path, init=False, wait=False):
-    mns = []
-    if not os.path.exists(path):
-        return mns
-    threads = []
-    pname = path.split(os.sep)[-1]
-    for fnm in os.listdir(path):
-        if fnm.startswith("__"):
-            continue
-        if not fnm.endswith(".py"):
-            continue
-        fnn = fnm[:-3]
-        fqn = f"{pname}.{fnn}"
-        mod = importlib.import_module(fqn, pname)
-        mns.append(fqn)
-        Storage.scan(mod)
-        Handler.scan(mod)
-        if init and "init" in dir(mod):
-            try:
-                threads.append(launch(mod.init))
-            except Exception as ex:
-                Errors.add(ex)
-    if wait:
-        for thr in threads:
-            thr.join()
-    return mns
 
 
 def wrap(func) -> None:

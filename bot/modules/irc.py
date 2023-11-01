@@ -71,12 +71,6 @@ class Config(Default):
         self.server = Config.server
         self.username = Config.username
 
-    def __edited__(self):
-        return Config.edited
-
-    def __size__(self):
-        return len(Config)
-
 
 class Cache(Object):
 
@@ -211,6 +205,7 @@ class IRC(Client, Output):
         self.state.nrconnect += 1
         self.events.connected.clear()
         debug(f"connecting to {server}:{port}")
+        print(self.cfg)
         if self.cfg.password:
             debug("using SASL")
             self.cfg.sasl = True

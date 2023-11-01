@@ -9,8 +9,7 @@
 import time
 
 
-from obj.spec import  find, fntime, laps, sync
-from bot.spec import User
+from bot.spec import User, find, fntime, laps, sync
 
 
 def dlt(event):

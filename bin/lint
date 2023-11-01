@@ -1,2 +1,2 @@
 bin/clean
-pylint bot/* obj/* 
+pylint bin/tinder bot/* test/* 

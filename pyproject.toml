@@ -23,7 +23,7 @@ classifiers = [
     'Topic :: Utilities'
 ]
 dependencies = [
-    "libobj",
+    "libobj>=503",
 ]
 
 [project.scripts]

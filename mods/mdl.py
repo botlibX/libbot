@@ -11,7 +11,7 @@ import datetime
 import time
 
 
-from obj.spec import Object, construct, keys, laps
+from bot.spec import Object, construct, keys, laps
 from bot.spec import Broker, Event, Repeater, launch
 
 

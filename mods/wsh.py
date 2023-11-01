@@ -9,7 +9,7 @@
 import time
 
 
-from obj.spec import Object, find, fntime, laps, sync
+from bot.spec import Object, find, fntime, laps, sync
 
 
 class Wish(Object):

@@ -12,7 +12,7 @@ import sys
 import time
 
 
-from obj.spec import Object, last
+from bot.spec import Broker, Object, launch, last
 from bot.spec import Broker, launch
 
 

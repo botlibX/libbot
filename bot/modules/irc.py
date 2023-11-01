@@ -18,11 +18,11 @@ import time
 import _thread
 
 
-from obj.spec import Default, Object, edit, fmt, keys, last, sync
+from obj.spec import Default, Object, edit, fmt, keys, last, parse, sync
 
 
 from bot.spec import Broker, Cfg, Censor, Client, Errors, Event
-from bot.spec import Users, command, debug, launch, parse
+from bot.spec import Users, command, debug, launch
 
 
 NAME = Cfg.name or __file__.split(os.sep)[-3]

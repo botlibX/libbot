@@ -7,4 +7,4 @@
 
 
 from . import broker, client, config, error, event, handler
-from . import parse, scan, thread, timer
+from . import scan, thread, timer

@@ -13,7 +13,6 @@ from .client  import *
 from .error   import *
 from .event   import *
 from .handler import *
-from .parse   import *
 from .scan    import *
 from .thread  import *
 from .timer   import *
@@ -40,7 +39,6 @@ def __dir__():
             'launch',
             'mods',
             'name',
-            'parse',
             'scan',
             'shutdown',
            )

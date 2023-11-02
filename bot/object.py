@@ -1,6 +1,7 @@
 # This file is placed in the Public Domain.
 #
 # pylint: disable=C0112,C0115,C0116,W0105,R0902,R0903,E0402,C0411,W0622,W0102
+# pylint: disable=C0413
 
 
 """a clean namespace
@@ -14,7 +15,7 @@ argument.
 basic usage is this:
 
 
-    >>> from obj import Object, read, write
+    >>> from obj.object import Object, read, write
     >>> o = Object()
     >>> o.a = "b"
     >>> write(o, ".test/testing")
@@ -29,10 +30,19 @@ this package is a Work In Progress (WIP).
 """
 
 
+__author__ = "libbot <libbotx@gmail.com>"
+
+
+"imports"
+
+
 import os
 import pathlib
 import json
 import _thread
+
+
+"defines"
 
 
 def __dir__():
@@ -50,6 +60,9 @@ def __dir__():
 
 
 lock = _thread.allocate_lock()
+
+
+"object"
 
 
 class Object:
@@ -179,12 +192,20 @@ def write(obj, pth) -> None:
         with open(pth, 'w', encoding='utf-8') as ofile:
             dump(obj, ofile)
 
-"utility"
+"utilities"
 
 
 def cdir(pth) -> None:
     pth = pathlib.Path(pth)
     os.makedirs(pth, exist_ok=True)
+
+
+def spl(txt) -> []:
+    try:
+        res = txt.split(',')
+    except (TypeError, ValueError):
+        res = txt
+    return [x for x in res if x]
 
 
 "methods"

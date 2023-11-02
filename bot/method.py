@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,C0209,C0413,W0201,R0903,W0212
+# pylint: disable=C0115,C0116,C0209,C0413,W0201,R0903,W0212,W0105,E0402
 
 
-"object methods"
+"methods"
+
+
+__author__ = "libbot <libbotx@gmail.com>"
+
+
+"imports"
 
 
 import datetime
@@ -12,6 +18,23 @@ import os
 
 
 from .object import Default, items, keys
+
+
+"defines"
+
+
+def __dir__():
+    return (
+        'edit',
+        'fmt',
+        'fqn',
+        'ident',
+        'parse',
+        'search'
+    )
+
+
+"methods"
 
 
 def edit(obj, setter, skip=False) -> None:
@@ -42,7 +65,7 @@ def fmt(obj, args=None, skip=None, plain=False) -> str:
     if skip is None:
         skip = []
     txt = ""
-    for key in sorted(args):
+    for key in args:
         if key in skip:
             continue
         value = getattr(obj, key, None)
@@ -92,6 +115,9 @@ def parse(obj, txt=None) -> None:
             continue
         if "==" in spli:
             key, value = spli.split("==", maxsplit=1)
+            if key in obj.gets:
+                val = getattr(obj.gets, key)
+                value = val + "," + value
             setattr(obj.gets, key, value)
             continue
         if "=" in spli:
@@ -117,18 +143,3 @@ def parse(obj, txt=None) -> None:
         obj.txt  = obj.cmd + " " + obj.rest
     else:
         obj.txt = obj.cmd or ""
-
-
-def search(obj, selector) -> bool:
-    res = False
-    for key, value in items(selector):
-        if key not in obj:
-            res = False
-            break
-        val = getattr(obj, key, None)
-        if val and str(value) in str(val):
-            res = True
-        else:
-            res = False
-            break
-    return res

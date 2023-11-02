@@ -1,18 +1,27 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0112,C0115,C0116,W0105,R0903,E0402,C0209,R1710
+# pylint: disable=C0112,C0115,C0116,W0105,R0903,E0402,C0209,R1710,C0413
 
 
-"locate objects"
+"locate"
+
+
+__author__ = "libbot <libbotx@gmail.com>"
+
+
+"imports"
 
 
 import os
 import time
 
 
-from .object import Default, update
-from .method import fqn, search
+from .object import Default, items, spl, update
+from .method import fqn
 from .disk   import Storage, fetch, strip
+
+
+"defines"
 
 
 def __dir__():
@@ -24,11 +33,14 @@ def __dir__():
     )
 
 
+"utilities"
+
+
 def find(mtc, selector=None) -> []:
     if selector is None:
         selector = {}
     clz = Storage.long(mtc)
-    for fnm in reversed(sorted(fns(clz), key=fntime)):
+    for fnm in sorted(fns(clz), key=fntime):
         obj = Default()
         fetch(obj, fnm)
         if '__deleted__' in obj:
@@ -43,12 +55,12 @@ def fns(mtc) -> []:
     pth = Storage.store(mtc)
     for rootdir, dirs, _files in os.walk(pth, topdown=False):
         if dirs:
-            dname = sorted(dirs)[-1]
-            if dname.count('-') == 2:
-                ddd = os.path.join(rootdir, dname)
-                fls = sorted(os.listdir(ddd))
-                for fll in fls:
-                    yield strip(os.path.join(ddd, fll))
+            for dname in sorted(dirs):
+                if dname.count('-') == 2:
+                    ddd = os.path.join(rootdir, dname)
+                    fls = sorted(os.listdir(ddd))
+                    for fll in fls:
+                        yield strip(os.path.join(ddd, fll))
 
 
 def fntime(daystr) -> float:
@@ -66,6 +78,9 @@ def fntime(daystr) -> float:
     return timed
 
 
+"methods"
+
+
 def last(obj, selector=None) -> None:
     if selector is None:
         selector = {}
@@ -76,3 +91,19 @@ def last(obj, selector=None) -> None:
     if result:
         inp = result[-1][-1]
         update(obj, inp)
+
+
+def search(obj, selector) -> bool:
+    res = False
+    for key, value in items(selector):
+        if key not in obj:
+            res = False
+            break
+        for vval in spl(str(value)):
+            val = getattr(obj, key, None)
+            if str(vval).lower() in str(val).lower():
+                res = True
+            else:
+                res = False
+                break
+    return res

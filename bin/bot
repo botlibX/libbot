@@ -21,8 +21,8 @@ from bot.object import Default, Object, fmt, keys
 from bot.disk   import Storage
 from bot.error  import Censor, Errors
 from bot.find   import find
-from bot.run    import Cfg, Commands, Errors, Event, Reactor, forever, parse
-from bot.run    import lsmod, scan
+from bot.run    import Cfg, Commands, Errors, Event, Reactor
+from bot.run    import forever, parse,  lsmod, scan
 
 
 "defines"
@@ -111,12 +111,14 @@ def main():
         Cfg.mod = ",".join((lsmod(modules.__path__[0])))
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
-        print(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
+        print(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()} {Cfg.mod.upper()}")
     for mod in scan(modules):
         if "i" in Cfg.opts and "init" in dir(mod):
             mod.init()
+    for mod in scan(mods, Cfg.mod):
+        if "i" in Cfg.opts and "init" in dir(mod):
+            mod.init()
     if "c" in Cfg.opts:
-       scan(mods)
        csl = Console()
        csl.start()
        forever()

@@ -18,10 +18,16 @@ from bot.object import Object
 from bot.thread import launch
 
 
-def start():
+"defines"
+
+
+def init():
     udpd = UDP()
     udpd.start()
     return udpd
+
+
+"udp"
 
 
 class Cfg(Object):
@@ -74,16 +80,22 @@ class UDP(Object):
         launch(self.server)
 
 
+"utility"
+
+
 def toudp(host, port, txt):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(bytes(txt.strip(), "utf-8"), (host, port))
+
+
+"command"
 
 
 def udp(event):
     cfg = Cfg()
     last(cfg)
     if len(sys.argv) > 2:
-        txt = " ".join(sys.argv[2:])
+        txt = " ".join(sys.argv[3:])
         toudp(cfg.host, cfg.port, txt)
         return
     if not select.select([sys.stdin, ], [], [], 0.0)[0]:
@@ -106,4 +118,3 @@ def udp(event):
             toudp(cfg.host, cfg.port, txt)
         if stop:
             break
-    event.reply(f"send {size}")

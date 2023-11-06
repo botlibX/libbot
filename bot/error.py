@@ -54,7 +54,6 @@ class Errors(Object):
 
     @staticmethod
     def format(exc) -> str:
-        res = ""
         stream = io.StringIO(
                              traceback.print_exception(
                                                        type(exc),

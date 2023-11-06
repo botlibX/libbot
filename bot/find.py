@@ -11,7 +11,7 @@ import os
 import time
 
 
-from .object import Default, items, search, spl, update
+from .object import Default, search, update
 from .disk   import Storage, fetch, fqn, strip
 
 

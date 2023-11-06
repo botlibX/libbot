@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,C0209,W0212
+# pylint: disable=C0115,C0116,C0209,W0212,E1101,W0105,C0413,W0105,R0903,E0401
 
 
 "mailbox"
@@ -8,10 +8,13 @@
 
 import mailbox
 import os
-import time
 
 
-from bot.spec import Object, find, fmt, fntime, laps, sync, update
+from ..object import Object, update
+from ..disk   import fqn, sync
+
+
+"defines"
 
 
 bdmonths = [
@@ -47,17 +50,17 @@ monthint = {
            }
 
 
+"email"
+
+
 class Email(Object):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.text = ""
 
-    def len(self):
-        return len(self.__dict__)
 
-    def size(self):
-        return len(self.__dict__)
+"utility"
 
 
 def to_date(date):
@@ -70,7 +73,12 @@ def to_date(date):
         if "-" in res[3]:
             raise ValueError
         int(res[3])
-        ddd = "{:4}-{:#02}-{:#02} {:6}".format(res[3], monthint[res[2]], int(res[1]), res[4])
+        ddd = "{:4}-{:#02}-{:#02} {:6}".format(
+            res[3],
+            monthint[res[2]],
+            int(res[1]),
+            res[4]
+       )
     except (IndexError, KeyError, ValueError) as ex:
         try:
             if "+" in res[4]:
@@ -78,16 +86,33 @@ def to_date(date):
             if "-" in res[4]:
                 raise ValueError from ex
             int(res[4])
-            ddd = "{:4}-{:#02}-{:02} {:6}".format(res[4], monthint[res[1]], int(res[2]), res[3])
+            ddd = "{:4}-{:#02}-{:02} {:6}".format(
+                res[4],
+                monthint[res[1]],
+                int(res[2]),
+                res[3]
+            )
         except (IndexError, KeyError, ValueError):
             try:
-                ddd = "{:4}-{:#02}-{:02} {:6}".format(res[2], monthint[res[1]], int(res[0]), res[3])
+                ddd = "{:4}-{:#02}-{:02} {:6}".format(
+                    res[2],
+                    monthint[res[1]],
+                    int(res[0]),
+                    res[3]
+                )
             except (IndexError, KeyError):
                 try:
-                    ddd = "{:4}-{:#02}-{:02}".format(res[2], monthint[res[1]], int(res[0]))
+                    ddd = "{:4}-{:#02}-{:02}".format(
+                        res[2],
+                        monthint[res[1]],
+                        int(res[0])
+                   )
                 except (IndexError, KeyError):
                     try:
-                        ddd = "{:4}-{:#02}".format(res[2], monthint[res[1]])
+                        ddd = "{:4}-{:#02}".format(
+                            res[2],
+                            monthint[res[1]]
+                        )
                     except (IndexError, KeyError):
                         try:
                             ddd = "{:4}".format(res[2])
@@ -96,41 +121,15 @@ def to_date(date):
     return ddd
 
 
-def cor(event):
-    if not event.args:
-        event.reply("cor <email>")
-        return
-    nrs = -1
-    for fnm, email in find("email", {"From": event.args[0]}):
-        nrs += 1
-        txt = ""
-        if len(event.args) > 1:
-            txt = ",".join(event.args[1:])
-        else:
-            txt = "From,Subject"
-        lsp = laps(time.time() - fntime(email.__oid__))
-        txt = fmt(email)
-        event.reply(f"{nrs} {txt} {lsp}")
-
-
-def eml(event):
-    if not event.args:
-        event.reply("eml <txtinemail>")
-        return
-    nrs = -1
-    for fnm, email in find("email"):
-        if event.rest in email.text:
-            nrs += 1
-            txt = fmt(email, "From,Subject")
-            lsp = laps(time.time() - fntime(email.__oid__))
-            event.reply(f"{nrs} {txt} {lsp}")
+"command"
 
 
 def mbx(event):
     if not event.args:
+        event.reply("mbx <path>")
         return
     path = os.path.expanduser(event.args[0])
-    event.reply("reading from {path}")
+    event.reply(f"reading from {path}")
     nrs = 0
     if os.path.isdir(path):
         thing = mailbox.Maildir(path, create=False)
@@ -144,13 +143,19 @@ def mbx(event):
         pass
     for mail in thing:
         email = Email()
-        update(email, mail._headers)
+        update(email, dict(mail._headers))
         email.text = ""
         for payload in mail.walk():
             if payload.get_content_type() == 'text/plain':
                 email.text += payload.get_payload()
         email.text = email.text.replace("\\n", "\n")
-        sync(email)
+        if "Date" in email:
+            date = to_date(email.Date)
+        elif "Published" in email:
+            date = to_date(email.Published)
+        elif "date" in email:
+            date = to_date(email.date)
+        sync(email, os.path.join(fqn(email), os.sep.join(date.split())))
         nrs += 1
     if nrs:
         event.reply(f"ok {nrs}")

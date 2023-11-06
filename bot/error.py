@@ -62,9 +62,7 @@ class Errors(Object):
                                                        exc.__traceback__
                                                       )
                             )
-        for line in stream.readlines():
-            res += line + "\n"
-        return res
+        return "\n".join(stream.readlines())
 
     @staticmethod
     def handle(exc) -> None:

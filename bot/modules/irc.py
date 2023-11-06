@@ -280,7 +280,6 @@ class IRC(Reactor, Output):
     def connect(self, server, port=6667):
         self.state.nrconnect += 1
         self.events.connected.clear()
-        debug(f"connecting to {server}:{port}")
         if self.cfg.password:
             debug("using SASL")
             self.cfg.sasl = True

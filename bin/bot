@@ -63,6 +63,9 @@ class Console(Reactor):
         Reactor.__init__(self)
         self.register("command", Commands.dispatch)
 
+    def announce(self, txt):
+        pass
+
     def dispatch(self, evt):
         Commands.dispatch(evt)
 
@@ -106,14 +109,14 @@ def main():
         Storage.wd = Cfg.wd
     if not Cfg.mod:
         Cfg.mod = ",".join((lsmod(modules.__path__[0])))
+    if "v" in Cfg.opts:
+        dte = time.ctime(time.time()).replace("  ", " ")
+        print(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
     for mod in scan(modules):
         if "i" in Cfg.opts and "init" in dir(mod):
             mod.init()
-    scan(mods)
     if "c" in Cfg.opts:
-       if "v" in Cfg.opts:
-           dte = time.ctime(time.time()).replace("  ", " ")
-           print(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
+       scan(mods)
        csl = Console()
        csl.start()
        forever()

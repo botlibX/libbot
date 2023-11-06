@@ -1,27 +1,30 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,E0402,E1102,R0903,C0103
+# pylint: disable=C0115,C0116,E0402,R0903,E1102
 
 
 "errors"
 
 
 import io
-import sys
 import traceback
 
 
 from .object import Object
 
 
+"defines"
+
+
 def __dir__():
     return (
-            'Censor',
-            'Errors',
-            'cprint',
-            'debug',
-            'shutdown'
-            )
+        'Censor',
+        'Errors',
+        'debug'
+    )
+
+
+"censor"
 
 
 class Censor(Object):
@@ -35,6 +38,9 @@ class Censor(Object):
             if skp in str(txt):
                 return True
         return False
+
+
+"errors"
 
 
 class Errors(Object):
@@ -71,18 +77,9 @@ class Errors(Object):
             Errors.handle(exc)
 
 
-def cprint(txt) -> None:
-    if Censor.output is None:
-        return
-    if Censor.skip(txt):
-        return
-    Censor.output(txt)
-    sys.stdout.flush()
+"utilities"
 
 
-def debug(txt) -> None:
-    cprint(txt)
-
-
-def shutdown() -> None:
-    Errors.show()
+def debug(txt):
+    if Censor.output and not Censor.skip(txt):
+        Censor.output(txt)

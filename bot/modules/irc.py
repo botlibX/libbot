@@ -18,9 +18,16 @@ import time
 import _thread
 
 
-from bot.spec import Default, Object, edit, fmt, keys, last, parse, sync
-from bot.spec import Broker, Cfg, Censor, Client, Errors, Event
-from bot.spec import Users, command, debug, launch
+from ..broker import Broker
+from ..disk   import sync
+from ..error  import Censor, debug
+from ..find   import last
+from ..object import Default, Object, edit, fmt, keys
+from ..run    import Cfg, Commands, Event, Reactor
+from ..thread import launch
+
+
+"defines"
 
 
 NAME = Cfg.name or __file__.split(os.sep)[-3]
@@ -39,10 +46,7 @@ def init():
     return irc
 
 
-def stop():
-    for bot in Broker.objs:
-        if "IRC" in str(type(bot)):
-            bot.stop()
+"config"
 
 
 class Config(Default):
@@ -64,12 +68,15 @@ class Config(Default):
 
     def __init__(self):
         Default.__init__(self)
-        self.channel = Config.channel
-        self.nick = Config.nick
-        self.port = Config.port
-        self.realname = Config.realname
-        self.server = Config.server
-        self.username = Config.username
+        self.channel = self.channel or Config.channel
+        self.nick = self.nick or Config.nick
+        self.port = self.port or Config.port
+        self.realname = self.realname or Config.realname
+        self.server = self.server or Config.server
+        self.username = self.username or Config.username
+
+
+"cache"
 
 
 class Cache(Object):
@@ -81,6 +88,9 @@ class Cache(Object):
         if chan in Cache.cache:
             return len(Cache.cache.get(chan, []))
         return 0
+
+
+"output"
 
 
 class TextWrap(textwrap.TextWrapper):
@@ -150,10 +160,13 @@ class Output(Cache):
                 self.dosay(channel, txt)
 
 
-class IRC(Client, Output):
+"irc"
+
+
+class IRC(Reactor, Output):
 
     def __init__(self):
-        Client.__init__(self)
+        Reactor.__init__(self)
         Output.__init__(self)
         self.buffer = []
         self.cfg = Config()
@@ -463,7 +476,7 @@ class IRC(Client, Output):
         self.events.connected.clear()
         self.events.joined.clear()
         launch(Output.out, self)
-        Client.start(self)
+        Reactor.start(self)
         launch(
                self.doconnect,
                self.cfg.server or "localhost",
@@ -475,12 +488,15 @@ class IRC(Client, Output):
 
     def stop(self):
         Broker.remove(self)
-        Client.stop(self)
+        Reactor.stop(self)
         self.dostop.set()
         self.disconnect()
 
     def wait(self):
         self.events.ready.wait()
+
+
+"callbacks"
 
 
 byorig = Broker.byorig
@@ -550,8 +566,8 @@ def cb_notice(evt):
 
 def cb_privmsg(evt):
     bot = byorig(evt.orig)
-    if not Cfg.commands:
-        return
+    #if not Cfg.commands:
+    #    return
     if evt.txt:
         if evt.txt[0] in ['!',]:
             evt.txt = evt.txt[1:]
@@ -564,8 +580,8 @@ def cb_privmsg(evt):
         if bot.cfg.users and not Users.allowed(evt.origin, 'USER'):
             return
         debug(f"command from {evt.origin}: {evt.txt}")
-        parse(evt)
-        command(evt)
+        #parse(evt)
+        Commands.dispatch(evt)
 
 
 def cb_quit(evt):
@@ -580,7 +596,7 @@ def cb_quit(evt):
 
 def cfg(event):
     config = Config()
-    last(config)
+    path = last(config)
     if not event.sets:
         event.reply(
                     fmt(
@@ -591,7 +607,7 @@ def cfg(event):
                    )
     else:
         edit(config, event.sets)
-        sync(config)
+        sync(config, path)
         event.reply('ok')
 
 

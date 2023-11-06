@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0116,W0105,E0402
+# pylint: disable=C0116,W0105,E0402,E0401
 
 
 "show running threads"
@@ -10,10 +10,17 @@ import threading
 import time
 
 
-from bot.spec import Object, laps, update
+from ..find   import laps
+from ..object import Object, update
+
+
+"defines"
 
 
 STARTTIME = time.time()
+
+
+"command"
 
 
 def thr(event):

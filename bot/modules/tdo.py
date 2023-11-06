@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,R0903,W0105,E0402,W0612
+# pylint: disable=C0115,C0116,R0903,W0105,E0402,W0612,E0401
 
 
 "todo list"
@@ -9,7 +9,12 @@
 import time
 
 
-from bot.spec import Object, find, fntime, laps, sync
+from ..disk   import sync
+from ..object import Object
+from ..find   import find, fntime, laps
+
+
+"todo"
 
 
 class Todo(Object):
@@ -17,6 +22,9 @@ class Todo(Object):
     def __init__(self):
         Object.__init__(self)
         self.txt = ''
+
+
+"commands"
 
 
 def dne(event):
@@ -28,7 +36,7 @@ def dne(event):
     for fnm, obj in find('todo', selector):
         nmr += 1
         obj.__deleted__ = True
-        sync(obj)
+        sync(obj, fnm)
         event.reply('ok')
         break
     if not nmr:

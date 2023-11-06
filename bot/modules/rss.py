@@ -18,8 +18,15 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot.spec import Default, Object, find, fmt, fntime, laps, last, sync, update
-from bot.spec import Broker, Cfg, Repeater, launch
+from ..broker import Broker
+from ..disk   import sync
+from ..find   import find, fntime, laps, last
+from ..object import Default, Object, fmt, update
+from ..run    import Cfg
+from ..thread import Repeater, launch
+
+
+"defines"
 
 
 def init():
@@ -29,6 +36,9 @@ def init():
 
 
 fetchlock = _thread.allocate_lock()
+
+
+"classes"
 
 
 class Feed(Default):
@@ -54,6 +64,7 @@ class Fetcher(Object):
 
     dosave = False
     seen = Seen()
+    seenfn = None
 
     @staticmethod
     def display(obj):
@@ -98,7 +109,7 @@ class Fetcher(Object):
                     sync(fed)
                 res.append(fed)
         if res:
-            sync(Fetcher.seen)
+            sync(Fetcher.seen, Fetcher.seenfn)
         txt = ''
         feedname = getattr(feed, 'name', None)
         if feedname:
@@ -115,7 +126,7 @@ class Fetcher(Object):
         return thrs
 
     def start(self, repeat=True):
-        last(Fetcher.seen)
+        Fetcher.seenfn = last(Fetcher.seen)
         if repeat:
             repeater = Repeater(300.0, self.run)
             repeater.start()

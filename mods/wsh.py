@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116
+# pylint: disable=C0115,C0116,W0612,E0602
 
 
 "wish list"
@@ -9,7 +9,9 @@
 import time
 
 
-from bot.spec import Object, find, fntime, laps, sync
+from bot.disk   import sync
+from bot.object import Object
+from bot.find   import find, fntime
 
 
 class Wish(Object):

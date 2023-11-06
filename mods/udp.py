@@ -12,8 +12,10 @@ import sys
 import time
 
 
-from bot.spec import Broker, Object, launch, last
-from bot.spec import Broker, launch
+from bot.broker import Broker
+from bot.find   import last
+from bot.object import Object
+from bot.thread import launch
 
 
 def start():

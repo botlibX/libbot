@@ -10,8 +10,8 @@ import mailbox
 import os
 
 
-from ..object import Object, update
-from ..disk   import fqn, sync
+from bot.object import Object, update
+from bot.disk   import fqn, sync
 
 
 "defines"

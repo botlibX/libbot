@@ -6,4 +6,4 @@
 "pre imported modules"
 
 
-from . import irc, rss
+from . import cmd, fnd, irc, log, mod, rss, sts, tdo, thr

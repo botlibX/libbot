@@ -123,6 +123,10 @@ SYSTEMD
 
 ::
 
+   save the following it in /etc/systems/system/libbot.service
+   replace "<user>" with the user running pipx
+
+
    [Unit]
    Description=library to program bots
    Requires=network.target
@@ -140,9 +144,7 @@ SYSTEMD
    WantedBy=multi-user.target
 
 
-   replace "<user>" with the user running pipx
-   save it in /etc/systems/system/libbot.service
-   run this
+   then run this
 
     $ sudo systemctl enable libbot --now
 

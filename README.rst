@@ -30,54 +30,57 @@ LIBBOT is a contribution back to society and is Public Domain.
 SYNOPSIS
 ========
 
+::
 
-   | bot <cmd> [key=val] 
-   | bot <cmd> [key==val]
-   | bot [-c] [-d] [-v] [-i]
+    bot <cmd> [key=val] 
+    bot <cmd> [key==val]
+    bot [-c] [-d] [-v] [-i]
 
 
 INSTALL
 =======
 
-   | $ pipx install libbot
+::
+
+   $ pipx install libbot
 
 
 USAGE
 =====
 
-::
 
-   default action is doing nothing
+default action is doing nothing::
 
    $ bot
    $
 
-   first argument is a command
+first argument is a command::
 
    $ bot cmd
    cfg,cmd,dlt,dne,dpl,fnd,log,met,mod,mre,
    nme,pwd,rem,rss,sts,tdo,thr,ver
 
-   starting a console requires an option
+starting a console requires an option::
 
    $ bot -c
    >
 
-   list of modules
+list of modules::
 
    $ bot mod
    bsc,err,flt,irc,log,mod,rss,shp,sts,tdo,
    thr,udp
 
-   start as daemon
+start as daemon::
 
    $ bot -d
    $ 
 
-   add -v if you want to have verbose logging
+add -v if you want to have verbose logging
 
 
 CONFIGURATION
+=============
 
 ::
 
@@ -101,6 +104,7 @@ CONFIGURATION
 
 
 COMMANDS
+========
 
 ::
 
@@ -123,6 +127,7 @@ COMMANDS
 
 
 SYSTEMD
+=======
 
 ::
 
@@ -153,6 +158,7 @@ SYSTEMD
 
 
 FILES
+=====
 
 ::
 
@@ -162,14 +168,12 @@ FILES
 
 
 AUTHOR
+======
 
-::
-
-  libbot <libbotx@gmail.com>
+libbot <libbotx@gmail.com>
 
 
 COPYRIGHT
+=========
 
-::
-
-   LIBBOT is placed in the Public Domain.
+LIBBOT is placed in the Public Domain.

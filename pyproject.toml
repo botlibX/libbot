@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "the python3 bot namespace"
-version = "44"
+version = "50"
 authors = [
     {name = "libbot",email = "libbotx@gmail.com"},
 ]
@@ -46,17 +46,6 @@ script-files = [
     "README.rst",
 ]
 
-
-"share/libbot/mods" = [
-    'mods/__init__.py',
-    'mods/mbx.py',
-    'mods/mdl.py',
-    'mods/req.py',
-    'mods/shp.py',
-    'mods/udp.py',
-    'mods/wsd.py',
-    'mods/wsh.py'
-]                   
 
 [tool.setuptools.exclude-package-data]
 "*" = [

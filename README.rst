@@ -1,13 +1,10 @@
 NAME
 
-::
-
     LIBBOT - the python3 bot namespave
 
 
 DESCRIPTION
 
-::
 
     LIBBOT is a python3 library implementing the 'bot' package. It
     provides all the tools to program a bot, such as disk perisistence

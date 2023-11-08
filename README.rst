@@ -155,8 +155,6 @@ FILES
 
    ~/.bot
    ~/.local/bin/bot
-   ~/.local/bin/botcmd
-   ~/.local/bin/botd
    ~/.local/pipx/venvs/libbot/
 
 

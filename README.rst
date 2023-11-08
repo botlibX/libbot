@@ -6,10 +6,13 @@ README
 NAME
 ====
 
+
 LIBBOT - the python3 bot namespave
+
 
 DESCRIPTION
 ===========
+
 
 LIBBOT is a python3 library implementing the 'bot' package. It
 provides all the tools to program a bot, such as disk perisistence
@@ -25,8 +28,10 @@ it under systemd for 24/7 presence in a IRC channel.
 
 LIBBOT is a contribution back to society and is Public Domain.
 
+
 SYNOPSIS
 ========
+
 
 basic usage of the demo bot is this::
 
@@ -34,15 +39,19 @@ basic usage of the demo bot is this::
  bot <cmd> [key==val]
  bot [-c] [-d] [-v] [-i]
 
+
 INSTALL
 =======
+
 
 use pipx to install libbot and the bot demo program::
 
 $  pipx install libbot
 
+
 USAGE
 =====
+
 
 default action is doing nothing::
 
@@ -58,7 +67,7 @@ first argument is a command::
 starting a console requires an option::
 
  $ bot -c
- $ >
+ >
 
 list of modules::
 
@@ -70,7 +79,7 @@ starting services like irc or rss requires
 an extra option::
 
  $ bot -ci
- $
+ >
 
 to start the bot as daemon::
 
@@ -80,12 +89,13 @@ to start the bot as daemon::
 add -v if you want to have verbose logging::
 
  $ bot -cvi
- BOT started Wed Nov 8 15:38:56 2023 VC
+ BOT started Wed Nov 8 15:38:56 2023 CVI
  >
 
 
 CONFIGURATION
 =============
+
 
 configuration is done with the cli interface
 using the ``cfg`` command::
@@ -112,6 +122,7 @@ using the ``cfg`` command::
 COMMANDS
 ========
 
+
 here is a list of the most basic commands::
 
  cfg - irc configuration
@@ -134,6 +145,7 @@ here is a list of the most basic commands::
 
 SYSTEMD
 =======
+
 
 save the following it in /etc/systems/system/libbot.service and
 replace "<user>" with the user running pipx::
@@ -162,6 +174,7 @@ then run this::
 FILES
 =====
 
+
 files are installed at the following places::
 
  ~/.bot
@@ -172,6 +185,7 @@ files are installed at the following places::
 AUTHOR
 ======
 
+
 you can reach me at the following email::
 
  libbot <libbotx@gmail.com>
@@ -179,5 +193,6 @@ you can reach me at the following email::
 
 COPYRIGHT
 =========
+
 
 LIBBOT is a contribution back to society and is Public Domain.

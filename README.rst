@@ -1,16 +1,15 @@
 README
 ######
 
+"while king commits genocide" - http://genocide.rtfd.io
 
 NAME
 ====
 
 LIBBOT - the python3 bot namespave
 
-
 DESCRIPTION
 ===========
-
 
 LIBBOT is a python3 library implementing the 'bot' package. It
 provides all the tools to program a bot, such as disk perisistence
@@ -26,113 +25,107 @@ it under systemd for 24/7 presence in a IRC channel.
 
 LIBBOT is a contribution back to society and is Public Domain.
 
-
 SYNOPSIS
 ========
 
-::
+basic usage of the demo bot is this::
 
-    bot <cmd> [key=val] 
-    bot <cmd> [key==val]
-    bot [-c] [-d] [-v] [-i]
-
+ bot <cmd> [key=val] 
+ bot <cmd> [key==val]
+ bot [-c] [-d] [-v] [-i]
 
 INSTALL
 =======
 
-::
+use pipx to install libbot and the bot demo program::
 
-   $ pipx install libbot
-
+$  pipx install libbot
 
 USAGE
 =====
 
-
 default action is doing nothing::
 
-   $ bot
-   $
+ $ bot
+ $
 
 first argument is a command::
 
-   $ bot cmd
-   cfg,cmd,dlt,dne,dpl,fnd,log,met,mod,mre,
-   nme,pwd,rem,rss,sts,tdo,thr,ver
+ $ bot cmd
+ cfg,cmd,dlt,dne,dpl,fnd,log,met,mod,mre,
+ nme,pwd,rem,rss,sts,tdo,thr,ver
 
 starting a console requires an option::
 
-   $ bot -c
-   >
+ $ bot -c
+ $ >
 
 list of modules::
 
-   $ bot mod
-   bsc,err,flt,irc,log,mod,rss,shp,sts,tdo,
-   thr,udp
+ $ bot mod
+ bsc,err,flt,irc,log,mod,rss,shp,sts,tdo,
+ thr,udp
 
 start as daemon::
 
-   $ bot -d
-   $ 
+ $ bot -d
+ $ 
 
 add -v if you want to have verbose logging
-
 
 CONFIGURATION
 =============
 
-::
+configuration is done with the cli interface
+using the ``cfg`` command::
 
-   irc
+ irc
 
-   $ bot cfg server=<server>
-   $ bot cfg channel=<channel>
-   $ bot cfg nick=<nick>
+ $ bot cfg server=<server>
+ $ bot cfg channel=<channel>
+ $ bot cfg nick=<nick>
 
-   sasl
+ sasl
 
-   $ bot pwd <nsnick> <nspass>
-   $ bot cfg password=<frompwd>
+ $ bot pwd <nsnick> <nspass>
+ $ bot cfg password=<frompwd>
 
-   rss
+ rss
 
-   $ bot rss <url>
-   $ bot dpl <url> <item1,item2>
-   $ bot rem <url>
-   $ bot nme <url> <name>
+ $ bot rss <url>
+ $ bot dpl <url> <item1,item2>
+ $ bot rem <url>
+ $ bot nme <url> <name>
 
 
 COMMANDS
 ========
 
-::
+here is a list of the most basic commands::
 
-   cfg - irc configuration
-   cmd - commands
-   dlt - remove a user
-   dne - mark todo as done
-   dpl - sets display items
-   fnd - find objects 
-   log - log some text
-   met - add a user
-   mre - displays cached output
-   nme - display name of a feed
-   pwd - sasl nickserv name/pass
-   rem - removes a rss feed
-   rss - add a feed
-   sts - show status
-   tdo - add todo item
-   thr - show the running threads
+ cfg - irc configuration
+ cmd - commands
+ dlt - remove a user
+ dne - mark todo as done
+ dpl - sets display items
+ fnd - find objects 
+ log - log some text
+ met - add a user
+ mre - displays cached output
+ nme - display name of a feed
+ pwd - sasl nickserv name/pass
+ rem - removes a rss feed
+ rss - add a feed
+ sts - show status
+ tdo - add todo item
+ thr - show the running threads
 
 
 SYSTEMD
 =======
 
-save the following it in /etc/systems/system/libbot.service
-replace "<user>" with the user running pipx
-
-::
+save the following it in /etc/systems/system/libbot.service and
+replace "<user>" with the user running pipx::
 
  [Unit]
  Description=library to program bots
@@ -150,10 +143,9 @@ replace "<user>" with the user running pipx
  [Install]
  WantedBy=multi-user.target
 
+then run this::
 
-then run this
-
-$ sudo systemctl enable libbot --now
+ $ sudo systemctl enable libbot --now
 
 
 FILES

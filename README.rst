@@ -4,14 +4,12 @@ README
 "while king commits genocide" - http://genocide.rtfd.io
 
 NAME
-====
 
 
 LIBBOT - the python3 bot namespave
 
 
 DESCRIPTION
-===========
 
 
 LIBBOT is a python3 library implementing the 'bot' package. It
@@ -30,7 +28,6 @@ LIBBOT is a contribution back to society and is Public Domain.
 
 
 SYNOPSIS
-========
 
 
 basic usage of the demo bot is this::
@@ -41,7 +38,6 @@ basic usage of the demo bot is this::
 
 
 INSTALL
-=======
 
 
 use pipx to install libbot and the bot demo program::
@@ -50,7 +46,6 @@ $  pipx install libbot
 
 
 USAGE
-=====
 
 
 default action is doing nothing::
@@ -94,24 +89,25 @@ add -v if you want to have verbose logging::
 
 
 CONFIGURATION
-=============
 
 
-configuration is done with the cli interface
-using the ``cfg`` command::
+irc configuration is done with the cli interface
+using the ``cfg`` command.
 
- irc
+irc::
 
  $ bot cfg server=<server>
  $ bot cfg channel=<channel>
  $ bot cfg nick=<nick>
 
- sasl
+sasl need a nickserv nick/password pair to generate
+a password for sasl::
+
 
  $ bot pwd <nsnick> <nspass>
  $ bot cfg password=<frompwd>
 
- rss
+rss has several configuration commands::
 
  $ bot rss <url>
  $ bot dpl <url> <item1,item2>
@@ -120,7 +116,6 @@ using the ``cfg`` command::
 
 
 COMMANDS
-========
 
 
 here is a list of the most basic commands::
@@ -144,7 +139,6 @@ here is a list of the most basic commands::
 
 
 SYSTEMD
-=======
 
 
 save the following it in /etc/systems/system/libbot.service and
@@ -172,7 +166,6 @@ then run this::
 
 
 FILES
-=====
 
 
 files are installed at the following places::
@@ -183,7 +176,6 @@ files are installed at the following places::
 
 
 AUTHOR
-======
 
 
 you can reach me at the following email::
@@ -192,7 +184,6 @@ you can reach me at the following email::
 
 
 COPYRIGHT
-=========
 
 
 LIBBOT is a contribution back to society and is Public Domain.

@@ -6,11 +6,14 @@ README
 NAME
 ~~~~
 
-LIBBOT - the python3 bot namespave
+::
+
+ LIBBOT - the python3 bot namespave
 
 
 DESCRIPTION
 ===========
+
 
 LIBBOT is a python3 library implementing the 'bot' package. It
 provides all the tools to program a bot, such as disk perisistence
@@ -30,6 +33,7 @@ LIBBOT is a contribution back to society and is Public Domain.
 SYNOPSIS
 ========
 
+
 basic usage of the demo bot is this::
 
  bot <cmd> [key=val] 
@@ -40,6 +44,7 @@ basic usage of the demo bot is this::
 INSTALL
 =======
 
+
 use pipx to install libbot and the bot demo program::
 
  pipx install libbot
@@ -47,6 +52,7 @@ use pipx to install libbot and the bot demo program::
 
 USAGE
 =====
+
 
 default action is doing nothing::
 
@@ -91,10 +97,9 @@ add -v if you want to have verbose logging::
 CONFIGURATION
 =============
 
-irc configuration is done with the cli interface
-using the ``cfg`` command.
 
-irc::
+irc configuration is done with the cli interface
+using the ``cfg`` command::
 
  $ bot cfg server=<server>
  $ bot cfg channel=<channel>
@@ -102,7 +107,6 @@ irc::
 
 sasl need a nickserv nick/password pair to generate
 a password for sasl::
-
 
  $ bot pwd <nsnick> <nspass>
  $ bot cfg password=<frompwd>
@@ -162,7 +166,7 @@ replace "<user>" with the user running pipx::
 
 then run this::
 
- $ sudo systemctl enable libbot --now
+ sudo systemctl enable libbot --now
 
 
 FILES

@@ -2,7 +2,7 @@
 # This file is placed in the Public Domain.
 #
 # pylint: disable=C0115,C0116,C0413,E0401,R0903,E0611,C0412,C0103,W0702,R0402
-# pylint: disable=W0718
+# pylint: disable=W0718,W0611,W0613,E0102
 
 
 "created clients"
@@ -20,19 +20,18 @@ import _thread
 sys.path.insert(0, os.getcwd())
 
 
-from bot.disk   import Storage
-from bot.find   import laps
-from bot.object import Object, keys
-from bot.run    import Cfg, Commands, Event, lsmod, parse, scan
-from bot.thread import launch
+from bot.objects import Object, keys
+from bot.storage import Storage, laps
+from bot.runtime import Censor, Cfg, CLI, Commands, Event
+from bot.runtime import launch, lsmod, parse, scan
 
 
 STARTTIME = time.time()
 
 
-import bot.modules as modules
+from bot import modules
 
- 
+
 Cfg.debug = True
 Cfg.mod = ",".join(lsmod(modules.__path__[0]))
 Cfg.name = "tinder"
@@ -69,11 +68,9 @@ param.shp = ["bread", "butter", "cheese"]
 param.tdo = ["test4", ""]
 
 
-class CLI(Commands):
+class CLI(CLI):
 
     def dosay(self, channel, txt):
-        if "v" not in Cfg.opts:
-            return
         print(txt.encode('utf-8', 'replace').decode())
         sys.stdout.flush()
 
@@ -95,7 +92,7 @@ def consume(evts):
 
 
 def payload(clt) -> None:
-    cmds = list(keys(clt.cmds))
+    cmds = list(keys(Commands.cmds))
     random.shuffle(cmds)
     with paylock:
         nmr = 0
@@ -109,15 +106,12 @@ def payload(clt) -> None:
                     clt.put(evt)
                     events.append(evt)
                 else:
-                    CLI.dispatch(evt)
+                    clt.dispatch(evt)
                 nmr += 1
         return nmr
 
 
 def wrap(func) -> None:
-    if "d" in Cfg.opts:
-        debug("terminal disabled!")
-        return
     old2 = None
     try:
         old2 = termios.tcgetattr(sys.stdin.fileno())
@@ -133,10 +127,11 @@ def wrap(func) -> None:
 
 
 def main() -> None:
+    Censor.output = print
     if os.path.exists(Storage.wd):
         shutil.rmtree(Storage.wd)
     parse(Cfg, " ".join(sys.argv[1:]))
-    scan(modules)
+    scan(modules, Cfg.mod)
     nrs = Cfg.index or 1
     cli = CLI()
     waiters = []

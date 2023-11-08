@@ -33,8 +33,7 @@ LIBBOT is a contribution back to society and is Public Domain.
 SYNOPSIS
 ========
 
-
-basic usage of the demo bot is this::
+::
 
  bot <cmd> [key=val] 
  bot <cmd> [key==val]
@@ -44,8 +43,7 @@ basic usage of the demo bot is this::
 INSTALL
 =======
 
-
-use pipx to install libbot and the bot demo program::
+::
 
  pipx install libbot
 
@@ -172,7 +170,7 @@ then run this::
 FILES
 =====
 
-files are installed at the following places::
+::
 
  ~/.bot
  ~/.local/bin/bot
@@ -182,7 +180,7 @@ files are installed at the following places::
 AUTHOR
 ======
 
-you can reach me at the following email::
+::
 
  libbot <libbotx@gmail.com>
 
@@ -190,4 +188,6 @@ you can reach me at the following email::
 COPYRIGHT
 =========
 
-LIBBOT is a contribution back to society and is Public Domain.
+::
+
+ LIBBOT is a contribution back to society and is Public Domain.

@@ -66,12 +66,23 @@ list of modules::
  bsc,err,flt,irc,log,mod,rss,shp,sts,tdo,
  thr,udp
 
-start as daemon::
+starting services like irc or rss requires
+an extra option::
+
+ $ bot -ci
+ $
+
+to start the bot as daemon::
 
  $ bot -d
  $ 
 
-add -v if you want to have verbose logging
+add -v if you want to have verbose logging::
+
+ $ bot -cvi
+ BOT started Wed Nov 8 15:38:56 2023 VC
+ >
+
 
 CONFIGURATION
 =============

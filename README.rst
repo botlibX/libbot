@@ -1,24 +1,24 @@
 NAME
 
-    LIBBOT - the python3 bot namespave
+   LIBBOT - the python3 bot namespave
 
 
 DESCRIPTION
 
 
-    LIBBOT is a python3 library implementing the 'bot' package. It
-    provides all the tools to program a bot, such as disk perisistence
-    for configuration files, event handler to handle the client/server
-    connection, code to introspect modules for commands, deferred
-    exception handling to not crash on an error, a parser to parse
-    commandline options and values, etc.
+   LIBBOT is a python3 library implementing the 'bot' package. It
+   provides all the tools to program a bot, such as disk perisistence
+   for configuration files, event handler to handle the client/server
+   connection, code to introspect modules for commands, deferred
+   exception handling to not crash on an error, a parser to parse
+   commandline options and values, etc.
 
-    LIBBOT provides a demo bot, it can connect to IRC, fetch and
-    display RSS feeds, take todo notes, keep a shopping list
-    and log text. You can also copy/paste the service file and run
-    it under systemd for 24/7 presence in a IRC channel.
+   LIBBOT provides a demo bot, it can connect to IRC, fetch and
+   display RSS feeds, take todo notes, keep a shopping list
+   and log text. You can also copy/paste the service file and run
+   it under systemd for 24/7 presence in a IRC channel.
 
-    LIBBOT is a contribution back to society and is Public Domain.
+   LIBBOT is a contribution back to society and is Public Domain.
 
 
 SYNOPSIS

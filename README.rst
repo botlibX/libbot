@@ -1,7 +1,7 @@
 README
 ######
 
-"while king commits genocide" - http://genocide.rtfd.io
+"while king commits genocide" - https://genocide.rtfd.io
 
 NAME
 ~~~~

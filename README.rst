@@ -129,51 +129,52 @@ COMMANDS
 SYSTEMD
 =======
 
+save the following it in /etc/systems/system/libbot.service
+replace "<user>" with the user running pipx
+
 ::
 
-   save the following it in /etc/systems/system/libbot.service
-   replace "<user>" with the user running pipx
+ [Unit]
+ Description=library to program bots
+ Requires=network.target
+ After=network.target
+
+ [Service]
+ Type=simple
+ User=<user>
+ Group=<user>
+ WorkingDirectory=/home/<user>/.bot
+ ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d
+ RemainAfterExit=yes
+
+ [Install]
+ WantedBy=multi-user.target
 
 
-   [Unit]
-   Description=library to program bots
-   Requires=network.target
-   After=network.target
+then run this
 
-   [Service]
-   Type=simple
-   User=<user>
-   Group=<user>
-   WorkingDirectory=/home/<user>/.bot
-   ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d
-   RemainAfterExit=yes
-
-   [Install]
-   WantedBy=multi-user.target
-
-
-   then run this
-
-    $ sudo systemctl enable libbot --now
+$ sudo systemctl enable libbot --now
 
 
 FILES
 =====
 
-::
+files are installed at the following places::
 
-   ~/.bot
-   ~/.local/bin/bot
-   ~/.local/pipx/venvs/libbot/
+ ~/.bot
+ ~/.local/bin/bot
+ ~/.local/pipx/venvs/libbot/
 
 
 AUTHOR
 ======
 
-libbot <libbotx@gmail.com>
+you can reach me at the following email::
+
+ libbot <libbotx@gmail.com>
 
 
 COPYRIGHT
 =========
 
-LIBBOT is placed in the Public Domain.
+LIBBOT is a contribution back to society and is Public Domain.

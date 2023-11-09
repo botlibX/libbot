@@ -42,7 +42,6 @@ class CLI(CLI):
 
 class Console(CLI):
 
-
     def poll(self) -> Event:
         evt = Event()
         evt.orig = object.__repr__(self)

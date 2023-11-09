@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,W0612,E0602,E0402,W0105
+# pylint: disable=C0115,C0116,W0612,E0602,E0402
 
 
 "wish list"
@@ -9,8 +9,8 @@
 import time
 
 
-from ..storage import find, fntime, sync
-from ..objects import Object
+from ..disk   import find, fntime, sync
+from ..object import Object
 
 
 "wishes"

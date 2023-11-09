@@ -9,8 +9,8 @@
 import time
 
 
-from ..objects import Object
-from ..storage import find, fntime, laps, sync
+from ..disk   import find, fntime, laps, sync
+from ..object import Object
 
 
 "shop"

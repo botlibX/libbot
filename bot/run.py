@@ -1,8 +1,7 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,C0209,C0413,W0201,R0903,W0212,E0402
-# pylint: disable=W0105,R1710,W0718,W0702,E1102,R0902,C0112,W0246
-# pylint: disable=W4902,W0621
+# pylint: disable=C,R,W0212,E0402,W0105 W0718,W0702,E1102,W0246
+
 
 "runtime"
 
@@ -11,21 +10,16 @@ import inspect
 import io
 import os
 import queue
-import time
 import threading
+import time
 import traceback
 import types
 import _thread
 
 
-"defines"
-
-
-from .objects import Default, Object, spl
-from .storage import Storage
-
-
-"defines"
+from .disk   import Storage
+from .error  import Errors
+from .object import Default, Object, spl
 
 
 def __dir__():
@@ -37,6 +31,7 @@ def __dir__():
         'Errors',
         'Event',
         'Reactor',
+        'command',
         'debug',
         'lsmod',
         'parse',
@@ -47,7 +42,31 @@ def __dir__():
 Cfg = Default()
 
 
-"broker"
+class Event(Default):
+
+    def __init__(self):
+        Default.__init__(self)
+        self._ready  = threading.Event()
+        self._thrs   = []
+        self.orig    = None
+        self.result  = []
+        self.txt     = ""
+
+    def ready(self):
+        self._ready.set()
+
+    def reply(self, txt) -> None:
+        self.result.append(txt)
+
+    def show(self) -> None:
+        for txt in self.result:
+            Broker.say(self.orig, self.channel, txt)
+
+    def wait(self):
+        for thr in self._thrs:
+            thr.join()
+        self._ready.wait()
+        return self.result
 
 
 class Broker(Object):
@@ -83,25 +102,6 @@ class Broker(Object):
         if not bot:
             return
         bot.dosay(channel, txt)
-
-
-"censor"
-
-
-class Censor(Object):
-
-    output = None
-    words = []
-
-    @staticmethod
-    def skip(txt) -> bool:
-        for skp in Censor.words:
-            if skp in str(txt):
-                return True
-        return False
-
-
-"commands"
 
 
 class Commands(Object):
@@ -143,76 +143,6 @@ class Commands(Object):
                 Commands.add(cmd)
 
 
-"errors"
-
-
-class Errors(Object):
-
-    errors = []
-
-    @staticmethod
-    def add(exc) -> None:
-        excp = exc.with_traceback(exc.__traceback__)
-        Errors.errors.append(excp)
-
-    @staticmethod
-    def format(exc) -> str:
-        res = ""
-        stream = io.StringIO(
-                             traceback.print_exception(
-                                                       type(exc),
-                                                       exc,
-                                                       exc.__traceback__
-                                                      )
-                            )
-        for line in stream.readlines():
-            res += line + "\n"
-        return res
-
-    @staticmethod
-    def handle(exc) -> None:
-        if Censor.output:
-            Censor.output(Errors.format(exc))
-
-    @staticmethod
-    def show() -> None:
-        for exc in Errors.errors:
-            Errors.handle(exc)
-
-
-"event"
-
-
-class Event(Default):
-
-    def __init__(self):
-        Default.__init__(self)
-        self._ready  = threading.Event()
-        self._thrs   = []
-        self.orig    = None
-        self.result  = []
-        self.txt     = ""
-
-    def ready(self):
-        self._ready.set()
-
-    def reply(self, txt) -> None:
-        self.result.append(txt)
-
-    def show(self) -> None:
-        for txt in self.result:
-            Broker.say(self.orig, self.channel, txt)
-
-    def wait(self):
-        for thr in self._thrs:
-            thr.join()
-        self._ready.wait()
-        return self.result
-
-
-"reactor"
-
-
 class Reactor(Object):
 
     def __init__(self):
@@ -252,9 +182,6 @@ class Reactor(Object):
         self.stopped.set()
 
 
-"cli"
-
-
 class CLI(Reactor):
 
     def __init__(self):
@@ -271,144 +198,14 @@ class CLI(Reactor):
         raise NotImplementedError("CLI.dosay")
 
 
-"thread"
-
-
-class Thread(threading.Thread):
-
-    def __init__(self, func, thrname, *args, daemon=True, **kwargs):
-        ""
-        super().__init__(None, self.run, thrname, (), {}, daemon=daemon)
-        self._result   = None
-        self.name      = thrname or name(func)
-        self.queue     = queue.Queue()
-        self.sleep     = None
-        self.starttime = time.time()
-        self.queue.put_nowait((func, args))
-
-    def __iter__(self):
-        ""
-        return self
-
-    def __next__(self):
-        ""
-        for k in dir(self):
-            yield k
-
-    def __repr__(self) -> str:
-        ""
-        return super().__repr__()
-
-    def getName(self) -> str:
-        ""
-        return super().getName()
-
-    def isDaemon(self) -> bool:
-        ""
-        return super().isDaemon()
-
-    def is_alive(self) -> bool:
-        ""
-        return super().is_alive()
-
-    def join(self, timeout=None) -> type:
-        ""
-        super().join(timeout)
-        return self._result
-
-    def run(self) -> None:
-        ""
-        func, args = self.queue.get()
-        try:
-            self._result = func(*args)
-        except Exception as exc:
-            Errors.add(exc)
-
-    def setDaemon(self, daemonic) -> bool:
-        ""
-        return super().setDaemon(daemonic)
-
-    def setName(self, name) -> str:
-        ""
-        return super().setName(name)
-
-    def start(self) -> None:
-        ""
-        return super().start()
-
-
-"timer"
-
-
-class Timer(Object):
-
-    def __init__(self, sleep, func, *args, thrname=None):
-        ""
-        Object.__init__(self)
-        self.args  = args
-        self.func  = func
-        self.sleep = sleep
-        self.name  = thrname or str(self.func).split()[2]
-        self.state = {}
-        self.timer = None
-
-    def run(self) -> None:
-        ""
-        self.state["latest"] = time.time()
-        launch(self.func, *self.args)
-
-    def start(self) -> None:
-        ""
-        timer = threading.Timer(self.sleep, self.run)
-        timer.name   = self.name
-        timer.daemon = True
-        timer.sleep  = self.sleep
-        timer.state  = self.state
-        timer.func   = self.func
-        timer.state["starttime"] = time.time()
-        timer.state["latest"]    = time.time()
-        timer.start()
-        self.timer   = timer
-
-    def stop(self) -> None:
-        ""
-        if self.timer:
-            self.timer.cancel()
-
-
-"repeater"
-
-
-class Repeater(Timer):
-
-    def run(self) -> Thread:
-        ""
-        thr = launch(self.start)
-        super().run()
-        return thr
-
-
-"utilities"
-
-
-def debug(txt):
-    if Censor.output and not Censor.skip(txt):
-        Censor.output(txt)
-
-
-def forever():
-    while 1:
-        try:
-            time.sleep(1.0)
-        except:
-            _thread.interrupt_main()
-
-
-def launch(func, *args, **kwargs) -> Thread:
-    nme = kwargs.get("name", name(func))
-    thread = Thread(func, nme, *args, **kwargs)
-    thread.start()
-    return thread
+def command(txt):
+    cli = CLI()
+    evn = Event()
+    evn.orig = object.__repr__(cli)
+    evn.txt = txt
+    parse(evn)
+    cli.dispatch(evn)
+    return evn
 
 
 def lsmod(path) -> []:
@@ -436,24 +233,6 @@ def scan(pkg, mnames=None) -> []:
         Storage.scan(module)
         res.append(module)
     return res
-
-
-"methods"
-
-
-def name(obj) -> str:
-    typ = type(obj)
-    if isinstance(typ, types.ModuleType):
-        return obj.__name__
-    if '__self__' in dir(obj):
-        return f'{obj.__self__.__class__.__name__}.{obj.__name__}'
-    if '__class__' in dir(obj) and '__name__' in dir(obj):
-        return f'{obj.__class__.__name__}.{obj.__name__}'
-    if '__class__' in dir(obj):
-        return f"{obj.__class__.__module__}.{obj.__class__.__name__}"
-    if '__name__' in dir(obj):
-        return f'{obj.__class__.__name__}.{obj.__name__}'
-    return None
 
 
 def parse(obj, txt=None) -> None:
@@ -506,3 +285,114 @@ def parse(obj, txt=None) -> None:
         obj.txt  = obj.cmd + " " + obj.rest
     else:
         obj.txt = obj.cmd or ""
+
+
+
+class Thread(threading.Thread):
+
+    def __init__(self, func, thrname, *args, daemon=True, **kwargs):
+        ""
+        super().__init__(None, self.run, thrname, (), {}, daemon=daemon)
+        self._result   = None
+        self.name      = thrname or name(func)
+        self.queue     = queue.Queue()
+        self.sleep     = None
+        self.starttime = time.time()
+        self.queue.put_nowait((func, args))
+
+    def __iter__(self):
+        ""
+        return self
+
+    def __next__(self):
+        ""
+        for k in dir(self):
+            yield k
+
+    def join(self, timeout=None) -> type:
+        ""
+        super().join(timeout)
+        return self._result
+
+    def run(self) -> None:
+        ""
+        func, args = self.queue.get()
+        try:
+            self._result = func(*args)
+        except Exception as exc:
+            Errors.add(exc)
+
+
+class Timer:
+
+    def __init__(self, sleep, func, *args, thrname=None):
+        ""
+        self.args  = args
+        self.func  = func
+        self.sleep = sleep
+        self.name  = thrname or str(self.func).split()[2]
+        self.state = {}
+        self.timer = None
+
+    def run(self) -> None:
+        ""
+        self.state["latest"] = time.time()
+        launch(self.func, *self.args)
+
+    def start(self) -> None:
+        ""
+        timer = threading.Timer(self.sleep, self.run)
+        timer.name   = self.name
+        timer.daemon = True
+        timer.sleep  = self.sleep
+        timer.state  = self.state
+        timer.func   = self.func
+        timer.state["starttime"] = time.time()
+        timer.state["latest"]    = time.time()
+        timer.start()
+        self.timer   = timer
+
+    def stop(self) -> None:
+        ""
+        if self.timer:
+            self.timer.cancel()
+
+
+class Repeater(Timer):
+
+    def run(self) -> Thread:
+        ""
+        thr = launch(self.start)
+        super().run()
+        return thr
+
+
+def forever():
+    while 1:
+        try:
+            time.sleep(1.0)
+        except:
+            _thread.interrupt_main()
+
+
+
+def launch(func, *args, **kwargs) -> Thread:
+    nme = kwargs.get("name", name(func))
+    thread = Thread(func, nme, *args, **kwargs)
+    thread.start()
+    return thread
+
+
+def name(obj) -> str:
+    typ = type(obj)
+    if isinstance(typ, types.ModuleType):
+        return obj.__name__
+    if '__self__' in dir(obj):
+        return f'{obj.__self__.__class__.__name__}.{obj.__name__}'
+    if '__class__' in dir(obj) and '__name__' in dir(obj):
+        return f'{obj.__class__.__name__}.{obj.__name__}'
+    if '__class__' in dir(obj):
+        return f"{obj.__class__.__module__}.{obj.__class__.__name__}"
+    if '__name__' in dir(obj):
+        return f'{obj.__class__.__name__}.{obj.__name__}'
+    return None

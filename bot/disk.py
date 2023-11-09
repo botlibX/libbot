@@ -11,8 +11,8 @@ import os
 import time
 
 
-from .objects import Object, cdir, read, write
-from .objects import Default, fqn, ident, search, update
+from .object import Object, cdir, read, write
+from .object import Default, fqn, ident, search, update
 
 
 "defines"

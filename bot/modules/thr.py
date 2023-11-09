@@ -10,8 +10,8 @@ import threading
 import time
 
 
-from ..storage import laps
-from ..objects import Object, update
+from ..disk   import laps
+from ..object import Object, update
 
 
 "defines"

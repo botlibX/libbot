@@ -8,7 +8,6 @@
 
 
 import getpass
-import inspect
 import os
 import pwd
 import sys
@@ -19,13 +18,8 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from bot.objects import Object, cdir
-from bot.runtime import Broker, Reactor, Storage
-from bot.runtime import Censor, Cfg, Commands, Default, Errors, Event
-from bot.runtime import debug, forever, parse,  lsmod, scan
-
-
-from bot import modules
+from bot import Censor, Cfg, CLI, Commands, Errors, Event, Reactor, Storage
+from bot import cdir, command, debug, forever, parse,  lsmod, modules, scan
 
 
 if os.path.exists("mods"):
@@ -34,36 +28,16 @@ else:
     mods = None
 
 
-"defines"
-
-
 Cfg.name    = __file__.split(os.sep)[-1].lower()
 Storage.wd = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Storage.wd, f"{Cfg.name}.pid")
-Cfg.user    = getpass.getuser()
 
 
-"cli"
-
-
-class CLI(Reactor):
-
-    def __init__(self):
-        Reactor.__init__(self)
-        self.register("command", Commands.dispatch)
-
-    def announce(self, txt):
-        pass
-
-    def dispatch(self, evt):
-        Commands.dispatch(evt)
+class CLI(CLI):
 
     def dosay(self, channel, txt):
         print(txt.encode('utf-8', 'replace').decode())
         sys.stdout.flush()
-
-
-"console"
 
 
 class Console(CLI):
@@ -77,10 +51,7 @@ class Console(CLI):
         return evt
 
 
-"utilities"
-
-
-def daemon(pidfile, verbose=False):
+def daemon(pidfile, username=None, verbose=False):
     pid = os.fork()
     if pid != 0:
         os._exit(0)
@@ -102,10 +73,7 @@ def daemon(pidfile, verbose=False):
     cdir(os.path.dirname(pidfile))
     with open(pidfile, "w", encoding="utf-8") as fds:
         fds.write(str(os.getpid()))
-
-
-def privileges(username):
-    pwnam = pwd.getpwnam(username)
+    pwnam = pwd.getpwnam(getpass.getuser())
     os.setgid(pwnam.pw_gid)
     os.setuid(pwnam.pw_uid)
 
@@ -126,38 +94,33 @@ def wrap(func) -> None:
             termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, old)
 
 
-"runtime"
-
-
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     if "v" in Cfg.opts:
+        Censor.output = print
         dte = time.ctime(time.time()).replace("  ", " ")
-        print(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
+        debug(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
     if not Cfg.mod:
         Cfg.mod = ",".join((lsmod(modules.__path__[0])))
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile, "v" in Cfg.opts)
-        privileges(Cfg.user)
         for mod in scan(modules, Cfg.mod):
             if "init" in dir(mod):
                 mod.init()
         forever()
         return
-    Censor.output = print
     if "wd" in Cfg.sets:
         Storage.wd = Cfg.wd
-    for mod in scan(modules, Cfg.mod):
-        if "x" not in Cfg.opts and "init" in dir(mod):
-            mod.init()
-    for mod in scan(mods, Cfg.mod):
-        if "x" not in Cfg.opts and "init" in dir(mod):
-            mod.init()
+    mds = scan(modules) + scan(mods)
     if "c" in Cfg.opts:
+        for mod in mds:
+            if "x" not in Cfg.opts and "init" in dir(mod):
+                mod.init()
         csl = Console()
         csl.start()
         forever()
         return
+    command(Cfg.otxt)
     cli = CLI()
     evn = Event()
     evn.orig = object.__repr__(cli)

@@ -1,7 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0112,C0115,C0116,W0105,R0902,R0903,E0402,C0411,W0622,W0102
-# pylint: disable=C0413
+# pylint: disable=C,R,W0105,E0402,W0622,W0102
 
 
 """a clean namespace
@@ -37,9 +36,6 @@ import json
 import _thread
 
 
-"defines"
-
-
 def __dir__():
     return (
             'Default',
@@ -62,9 +58,6 @@ def __dir__():
 lock = _thread.allocate_lock()
 
 
-"object"
-
-
 class Object:
 
 
@@ -85,9 +78,6 @@ class Object:
         return str(self.__dict__)
 
 
-"default"
-
-
 class Default(Object):
 
     __slots__ = ("__default__",)
@@ -98,9 +88,6 @@ class Default(Object):
 
     def __getattr__(self, key):
         return self.__dict__.get(key, self.__default__)
-
-
-"decoding"
 
 
 class ObjectDecoder(json.JSONDecoder):
@@ -140,9 +127,6 @@ def read(obj, pth) -> None:
     with lock:
         with open(pth, 'r', encoding='utf-8') as ofile:
             update(obj, load(ofile))
-
-
-"encoding"
 
 
 class ObjectEncoder(json.JSONEncoder):
@@ -198,9 +182,6 @@ def write(obj, pth) -> None:
             dump(obj, ofile)
 
 
-"utilities"
-
-
 def cdir(pth) -> None:
     pth = pathlib.Path(pth)
     os.makedirs(pth, exist_ok=True)
@@ -212,9 +193,6 @@ def spl(txt) -> []:
     except (TypeError, ValueError):
         res = txt
     return [x for x in res if x]
-
-
-"methods"
 
 
 def construct(obj, *args, **kwargs) -> None:

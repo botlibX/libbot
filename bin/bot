@@ -96,23 +96,23 @@ def wrap(func) -> None:
 
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
-    if "v" in Cfg.opts:
-        Censor.output = print
-        dte = time.ctime(time.time()).replace("  ", " ")
-        debug(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
     if not Cfg.mod:
         Cfg.mod = ",".join((lsmod(modules.__path__[0])))
+    mds = scan(modules) + scan(mods)
     if "d" in Cfg.opts:
         daemon(Cfg.pidfile, "v" in Cfg.opts)
-        for mod in scan(modules, Cfg.mod):
+        for mod in mds:
             if "init" in dir(mod):
                 mod.init()
         forever()
         return
     if "wd" in Cfg.sets:
         Storage.wd = Cfg.wd
-    mds = scan(modules) + scan(mods)
     if "c" in Cfg.opts:
+        if "x" not in Cfg.opts:
+            Censor.output = print
+            dte = time.ctime(time.time()).replace("  ", " ")
+            debug(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
         for mod in mds:
             if "x" not in Cfg.opts and "init" in dir(mod):
                 mod.init()

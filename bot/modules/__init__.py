@@ -6,4 +6,4 @@
 "preloading"
 
 
-from . import cmd, fnd, irc, log, mbx, mod, rss, shp, sts, tdo, thr, udp, wsh
+from . import cmd, err, fnd, irc, log, mbx, mod, rss, shp, tdo, thr, udp, wsh

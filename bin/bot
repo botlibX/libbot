@@ -148,10 +148,10 @@ def main():
     if "wd" in Cfg.sets:
         Storage.wd = Cfg.wd
     for mod in scan(modules, Cfg.mod):
-        if "i" in Cfg.opts and "init" in dir(mod):
+        if "x" not in Cfg.opts and "init" in dir(mod):
             mod.init()
     for mod in scan(mods, Cfg.mod):
-        if "i" in Cfg.opts and "init" in dir(mod):
+        if "x" not in Cfg.opts and "init" in dir(mod):
             mod.init()
     if "c" in Cfg.opts:
         csl = Console()

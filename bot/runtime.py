@@ -1,8 +1,8 @@
 # This file is placed in the Public Domain.
 #
 # pylint: disable=C0115,C0116,C0209,C0413,W0201,R0903,W0212,E0402
-# pylint: disable=W0105,R1710,W0718,W0702,E1102,R0902
-
+# pylint: disable=W0105,R1710,W0718,W0702,E1102,R0902,C0112,W0246
+# pylint: disable=W4902,W0621
 
 "runtime"
 
@@ -297,15 +297,11 @@ class Thread(threading.Thread):
 
     def __repr__(self) -> str:
         ""
-        return super().__repr__(self)
+        return super().__repr__()
 
     def getName(self) -> str:
         ""
-        return super().getName(self)
-
-    def ident(self) -> int:
-        ""
-        return super().ident(self)
+        return super().getName()
 
     def isDaemon(self) -> bool:
         ""
@@ -314,15 +310,11 @@ class Thread(threading.Thread):
     def is_alive(self) -> bool:
         ""
         return super().is_alive()
-        
+
     def join(self, timeout=None) -> type:
         ""
         super().join(timeout)
         return self._result
-
-    def native_id(self) -> int:
-        ""
-        return super().native_id()
 
     def run(self) -> None:
         ""
@@ -331,7 +323,6 @@ class Thread(threading.Thread):
             self._result = func(*args)
         except Exception as exc:
             Errors.add(exc)
-
 
     def setDaemon(self, daemonic) -> bool:
         ""
@@ -343,7 +334,7 @@ class Thread(threading.Thread):
 
     def start(self) -> None:
         ""
-        return super().start(self)
+        return super().start()
 
 
 "timer"

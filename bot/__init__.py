@@ -8,6 +8,3 @@
 
 from .defines import *
 from .defines import __dir__
-
-
-__all__ = __dir__()

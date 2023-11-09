@@ -277,6 +277,7 @@ class CLI(Reactor):
 class Thread(threading.Thread):
 
     def __init__(self, func, thrname, *args, daemon=True, **kwargs):
+        ""
         super().__init__(None, self.run, thrname, (), {}, daemon=daemon)
         self._result   = None
         self.name      = thrname or name(func)
@@ -286,22 +287,63 @@ class Thread(threading.Thread):
         self.queue.put_nowait((func, args))
 
     def __iter__(self):
+        ""
         return self
 
     def __next__(self):
+        ""
         for k in dir(self):
             yield k
 
+    def __repr__(self) -> str:
+        ""
+        return super().__repr__(self)
+
+    def getName(self) -> str:
+        ""
+        return super().getName(self)
+
+    def ident(self) -> int:
+        ""
+        return super().ident(self)
+
+    def isDaemon(self) -> bool:
+        ""
+        return super().isDaemon()
+
+    def is_alive(self) -> bool:
+        ""
+        return super().is_alive()
+        
     def join(self, timeout=None) -> type:
+        ""
         super().join(timeout)
         return self._result
 
+    def native_id(self) -> int:
+        ""
+        return super().native_id()
+
     def run(self) -> None:
+        ""
         func, args = self.queue.get()
         try:
             self._result = func(*args)
         except Exception as exc:
             Errors.add(exc)
+
+
+    def setDaemon(self, daemonic) -> bool:
+        ""
+        return super().setDaemon(daemonic)
+
+    def setName(self, name) -> str:
+        ""
+        return super().setName(name)
+
+    def start(self) -> None:
+        ""
+        return super().start(self)
 
 
 "timer"
@@ -310,6 +352,7 @@ class Thread(threading.Thread):
 class Timer(Object):
 
     def __init__(self, sleep, func, *args, thrname=None):
+        ""
         Object.__init__(self)
         self.args  = args
         self.func  = func
@@ -319,10 +362,12 @@ class Timer(Object):
         self.timer = None
 
     def run(self) -> None:
+        ""
         self.state["latest"] = time.time()
         launch(self.func, *self.args)
 
     def start(self) -> None:
+        ""
         timer = threading.Timer(self.sleep, self.run)
         timer.name   = self.name
         timer.daemon = True
@@ -335,6 +380,7 @@ class Timer(Object):
         self.timer   = timer
 
     def stop(self) -> None:
+        ""
         if self.timer:
             self.timer.cancel()
 
@@ -345,6 +391,7 @@ class Timer(Object):
 class Repeater(Timer):
 
     def run(self) -> Thread:
+        ""
         thr = launch(self.start)
         super().run()
         return thr

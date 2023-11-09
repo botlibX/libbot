@@ -67,16 +67,21 @@ lock = _thread.allocate_lock()
 
 class Object:
 
+
     def __iter__(self):
+        ""
         return iter(self.__dict__)
 
     def __len__(self):
+        ""
         return len(self.__dict__)
 
     def __repr__(self):
+        ""
         return dumps(self)
 
     def __str__(self):
+        ""
         return str(self.__dict__)
 
 

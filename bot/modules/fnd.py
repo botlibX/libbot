@@ -9,8 +9,8 @@
 import time
 
 
-from ..objects import fmt, keys
-from ..storage import Storage, find, fntime, laps
+from ..disk   import Storage, find, fntime, laps
+from ..object import fmt, keys
 
 
 "command"

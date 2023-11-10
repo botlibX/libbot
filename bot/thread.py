@@ -10,6 +10,7 @@ import queue
 import threading
 import time
 import types
+import _thread
 
 
 class Thread(threading.Thread):

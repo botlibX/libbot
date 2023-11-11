@@ -9,11 +9,8 @@
 import time
 
 
-from ..disk   import Storage, find, fntime, laps
-from ..object import fmt, keys
-
-
-"command"
+from bot import Storage, find, fntime, laps
+from bot import fmt, keys
 
 
 def fnd(event):

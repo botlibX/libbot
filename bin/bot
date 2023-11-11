@@ -110,8 +110,9 @@ def main():
     if "c" in Cfg.opts:
         if "x" not in Cfg.opts:
             Censor.output = print
+        if "v" in Cfg.opts:
             dte = time.ctime(time.time()).replace("  ", " ")
-            debug(f"{Cfg.name.upper()} started {dte} {Cfg.opts.upper()}")
+            print(f"{Cfg.name.upper()} {Cfg.opts.upper()} started {dte} ")
         for mod in mds:
             if "x" not in Cfg.opts and "init" in dir(mod):
                 mod.init()

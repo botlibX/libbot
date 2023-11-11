@@ -9,11 +9,8 @@
 import time
 
 
-from ..disk   import find, fntime, laps, sync
-from ..object import Object
-
-
-"log"
+from bot import find, fntime, laps, sync
+from bot import Object
 
 
 class Log(Object):
@@ -21,9 +18,6 @@ class Log(Object):
     def __init__(self):
         super().__init__()
         self.txt = ''
-
-
-"command"
 
 
 def log(event):

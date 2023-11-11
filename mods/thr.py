@@ -10,17 +10,11 @@ import threading
 import time
 
 
-from ..disk   import laps
-from ..object import Object, update
-
-
-"defines"
+from bot import laps
+from bot import Object, update
 
 
 STARTTIME = time.time()
-
-
-"command"
 
 
 def thr(event):

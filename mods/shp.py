@@ -1,58 +1,52 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,W0612,E0602,E0402
+# pylint: disable=C0115,C0116,W0612,E0402,W0105
 
 
-"wish list"
+"shops"
 
 
 import time
 
 
-from ..disk   import find, fntime, sync
-from ..object import Object
+from bot import find, fntime, laps, sync
+from bot import Object
 
 
-"wishes"
-
-
-class Wish(Object):
+class Shop(Object):
 
     def __init__(self):
-        Object.__init__(self)
+        super().__init__()
         self.txt = ''
 
-    def gettxt(self):
-        return self.txt
+    def size(self):
+        return len(self.__dict__)
 
-    def settxt(self, txt):
-        self.txt = txt
-
-
-"commands"
+    def length(self):
+        return len(self.__dict__)
 
 
-def ful(event):
+def got(event):
     if not event.args:
         return
     selector = {'txt': event.args[0]}
-    for fnm, obj in find('wish', selector):
+    for fnm, obj in find('shop', selector):
         obj.__deleted__ = True
         sync(obj)
-        event.reply('done')
+        event.reply('ok')
 
 
-def wsh(event):
+def shp(event):
     if not event.rest:
         nmr = 0
-        for fnm, obj in find('wish'):
+        for fnm, obj in find('shop'):
             lap = laps(time.time()-fntime(obj.__oid__))
             event.reply(f'{nmr} {obj.txt} {lap}')
             nmr += 1
         if not nmr:
-            event.reply("no wishes")
+            event.reply("no shops")
         return
-    obj = Wish()
+    obj = Shop()
     obj.txt = event.rest
     sync(obj)
     event.reply('ok')

@@ -9,11 +9,8 @@
 import time
 
 
-from ..disk import find, fntime, laps, sync
-from ..object import Object
-
-
-"todo"
+from bot import find, fntime, laps, sync
+from bot import Object
 
 
 class Todo(Object):
@@ -21,9 +18,6 @@ class Todo(Object):
     def __init__(self):
         Object.__init__(self)
         self.txt = ''
-
-
-"commands"
 
 
 def dne(event):

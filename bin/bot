@@ -33,7 +33,7 @@ Storage.wd = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Storage.wd, f"{Cfg.name}.pid")
 
 
-class CLI(CLI):
+class CLI(CLI, Commands):
 
     def dosay(self, channel, txt):
         print(txt.encode('utf-8', 'replace').decode())
@@ -93,6 +93,23 @@ def wrap(func) -> None:
             termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, old)
 
 
+def cpy(event):
+    if not event.args:
+        event.reply("cpy <modulename>")
+        return
+    modname = event.args[0]
+    shutil.copyfile(f"mods/f{modname}.py", f"bot/modules/{modname}.py")
+    event.reply(f"copied {modname}")
+
+
+def rmv(event):
+    if not event.args:
+        event.reply("cpy <modulename>")
+        return
+    modname = event.args[0]
+    os.unlink(f"bot/modules/{modname}.py")
+    event.reply(f"removed {modname}")
+
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     if not Cfg.mod:
@@ -122,6 +139,8 @@ def main():
         return
     command(Cfg.otxt)
     cli = CLI()
+    cli.add(cpy)
+    cli.add(rmv)
     evn = Event()
     evn.orig = object.__repr__(cli)
     evn.txt = Cfg.otxt

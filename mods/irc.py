@@ -22,7 +22,7 @@ from bot import Broker, Censor, Cfg, Commands, Default, Event, Object, Reactor
 from bot import debug, edit, find, fmt, keys, last, launch, sync
 
 
-NAME = Cfg.name or __file__.split(os.sep)[-3].lower()
+NAME = Cfg.name
 
 
 Censor.words = ["PING", "PONG", "PRIVMSG"]

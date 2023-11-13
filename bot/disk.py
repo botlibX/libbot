@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0112,C0115,C0116,W0105,R0903,E0402,C0209,R1710,C0413,C0103
+# pylint: disable=C,R,W0105,E0402
 
 
 "storage"
@@ -14,7 +14,8 @@ import time
 import _thread
 
 
-from .object import Object, Default, dump, fqn, load, search, update
+from .object import Object, Default, dump, fqn, items, load, update
+from .parse  import spl
 
 
 lock = _thread.allocate_lock()
@@ -228,6 +229,22 @@ def read(obj, pth) -> None:
     with lock:
         with open(pth, 'r', encoding='utf-8') as ofile:
             update(obj, load(ofile))
+
+
+def search(obj, selector) -> bool:
+    res = False
+    for key, value in items(selector):
+        if key not in obj:
+            res = False
+            break
+        for vval in spl(str(value)):
+            val = getattr(obj, key, None)
+            if str(vval).lower() in str(val).lower():
+                res = True
+            else:
+                res = False
+                break
+    return res
 
 
 def sync(obj, pth=None) -> str:

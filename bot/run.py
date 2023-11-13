@@ -16,7 +16,7 @@ import _thread
 from .disk   import Storage
 from .error  import Errors
 from .object import Default, Object
-from .parse  import parse
+from .parse  import parse, spl
 from .thread import launch
 
 
@@ -234,11 +234,3 @@ def scan(pkg, mnames, init=False) -> []:
         if init and "init" in dir(module):
             module._thr = launch(module.init)
     return res
-
-
-def spl(txt) -> []:
-    try:
-        res = txt.split(',')
-    except (TypeError, ValueError):
-        res = txt
-    return [x for x in res if x]

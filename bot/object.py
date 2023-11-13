@@ -43,11 +43,9 @@ def __dir__():
             'ident',
             'items',
             'keys',
-            'read',
             'search',
             'update',
             'values',
-            'write'
            )
 
 
@@ -116,12 +114,6 @@ def loads(string, *args, **kw) -> Object:
     return json.loads(string, *args, **kw)
 
 
-def read(obj, pth) -> None:
-    with lock:
-        with open(pth, 'r', encoding='utf-8') as ofile:
-            update(obj, load(ofile))
-
-
 class ObjectEncoder(json.JSONEncoder):
 
     def default(self, o) -> str:
@@ -166,14 +158,6 @@ def dump(*args, **kw) -> None:
 def dumps(*args, **kw) -> str:
     kw["cls"] = ObjectEncoder
     return json.dumps(*args, **kw)
-
-
-def spl(txt) -> []:
-    try:
-        res = txt.split(',')
-    except (TypeError, ValueError):
-        res = txt
-    return [x for x in res if x]
 
 
 def construct(obj, *args, **kwargs) -> None:
@@ -249,22 +233,6 @@ def keys(obj) -> []:
     if isinstance(obj, type({})):
         return obj.keys()
     return list(obj.__dict__.keys())
-
-
-def search(obj, selector) -> bool:
-    res = False
-    for key, value in items(selector):
-        if key not in obj:
-            res = False
-            break
-        for vval in spl(str(value)):
-            val = getattr(obj, key, None)
-            if str(vval).lower() in str(val).lower():
-                res = True
-            else:
-                res = False
-                break
-    return res
 
 
 def update(obj, data, empty=True) -> None:

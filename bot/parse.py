@@ -1,12 +1,19 @@
 # This file is placed in the Public Domain.
 #
-#
+# pylint: disable=C,R
 
 
 "parsing"
 
 
 from .object import Default
+
+
+def __dir__():
+    return (
+        'parse',
+        'spl'
+   )
 
 
 def parse(obj, txt=None) -> None:
@@ -59,3 +66,11 @@ def parse(obj, txt=None) -> None:
         obj.txt  = obj.cmd + " " + obj.rest
     else:
         obj.txt = obj.cmd or ""
+
+
+def spl(txt) -> []:
+    try:
+        res = txt.split(',')
+    except (TypeError, ValueError):
+        res = txt
+    return [x for x in res if x]

@@ -17,10 +17,7 @@ sys.path.insert(0, os.getcwd())
 
 
 from bot import CLI, Commands, Default, Errors, Event, Storage
-from bot import command, forever, parse,  lsmod, scan
-
-
-import bot.modules as mods
+from bot import command, forever, parse,  lsmod, modules, scan
 
 
 Cfg = Default()
@@ -67,10 +64,8 @@ def main():
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
         print(f"{Cfg.name.upper()} started {Cfg.opts.upper()} started {dte}")
-    if os.path.exists("mods"):
-        import mods
-        Cfg.mod = ",".join((lsmod(mods.__path__[0])))
-        scan(mods, Cfg.mod)
+    Cfg.mod = ",".join((lsmod(modules.__path__[0])))
+    scan(modules, Cfg.mod)
     if 'c' in Cfg.opts:
         csl = Console()
         csl.start()

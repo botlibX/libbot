@@ -118,6 +118,7 @@ class Commands(Object):
         parse(evt)
         func = getattr(Commands.cmds, evt.cmd, None)
         if not func:
+            evt.ready()
             return
         try:
             func(evt)

@@ -64,12 +64,15 @@ def main():
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
         print(f"{Cfg.name.upper()} started {Cfg.opts.upper()} started {dte}")
-    Cfg.mod = ",".join((lsmod(modules.__path__[0])))
-    scan(modules, Cfg.mod)
+    if not Cfg.mod:
+        Cfg.mod = ",".join((lsmod(modules.__path__[0])))
     if 'c' in Cfg.opts:
+        scan(modules, Cfg.mod, "x" not in Cfg.opts)
         csl = Console()
         csl.start()
         forever()
+        return
+    scan(modules, Cfg.mod)
     cli = CLI()
     command(Cfg.otxt, cli)
 

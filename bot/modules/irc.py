@@ -19,7 +19,7 @@ import _thread
 
 
 from bot.disk   import find, last, sync
-from bot.error  import Censor, debug
+from bot.error  import Censor, Errors, debug
 from bot.object import Default, Object, edit, fmt, keys
 from bot.run    import Broker, Commands, Event, Reactor
 from bot.thread import launch

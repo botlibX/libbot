@@ -1,7 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,E0402,E0602,C0411,C0412,C0413,W0404,W0105,R0903
-# pylint: disable=R0915,R0912,E1102,W0612
+# pylint: disable=C,R
 
 
 "internet relay chat"
@@ -18,10 +17,10 @@ import time
 import _thread
 
 
-from bot.disk   import find, last, sync
+from bot.disk   import find, fntime, laps, last, sync
 from bot.error  import Censor, Errors, debug
 from bot.object import Default, Object, edit, fmt, keys
-from bot.run    import Broker, Commands, Event, Reactor
+from bot.run    import Broker, Commands, Event, Reactor, command
 from bot.thread import launch
 
 
@@ -653,7 +652,7 @@ def dlt(event):
         return
     selector = {'user': event.args[0]}
     nrs = 0
-    for fnm, obj in find('user', selector):
+    for _fnm, obj in find('user', selector):
         nrs += 1
         obj.__deleted__ = True
         sync(obj)

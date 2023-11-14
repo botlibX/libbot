@@ -74,7 +74,8 @@ class Broker(Object):
     @staticmethod
     def announce(txt) -> None:
         for obj in Broker.objs:
-            obj.announce(txt)
+            if "announce" in obj:
+                obj.announce(txt)
 
     @staticmethod
     def byorig(orig) -> Object:

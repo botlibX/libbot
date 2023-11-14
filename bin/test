@@ -16,20 +16,33 @@ sys.path.insert(0, os.getcwd())
 import bot
 
 
+cli = bot.CLI()
+
+
 for name in dir(bot):
     obj = getattr(bot, name)
     members = inspect.getmembers(obj)
     for name, obj in members:
         if name.startswith("_"):
             continue
-        print(name)
-        try:
-            obj()
-        except TypeError as ex:
-            
-            obj(
-        except Exception as ex:
-            bot.Errors.add(ex)
+        if "__code__" in dir(obj):
+            args = []
+            for name in obj.__code__.co_varnames:
+                if name == "obj":
+                    args.append(bot.Object())
+                elif name == "orig":
+                    args.append(object.__repr__(cli))
+                elif name == "txt":
+                    args.append("yooo!")
+            print(name, dir(obj.__code__))
+            for name in dir(obj.__code__):
+                item = getattr(obj.__code__, name)
+                print(name, item)
+            try:
+                obj(*args)
+            except TypeError as ex:
+                bot.Errors.add(ex)
        
+
 bot.Errors.show()
  

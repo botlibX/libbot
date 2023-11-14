@@ -3,7 +3,7 @@
 # pylint: disable=E0603,E0402,W0401,W0614
 
 
-"specification"
+"specifications"
 
 
 from .disk   import *

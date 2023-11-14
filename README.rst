@@ -144,7 +144,7 @@ here is a list of the most basic commands::
 SYSTEMD
 =======
 
-save the following it in /etc/systems/system/libbot.service and
+save the following it in /etc/systems/system/botd.service and
 replace "<user>" with the user running pipx::
 
  [Unit]
@@ -157,7 +157,7 @@ replace "<user>" with the user running pipx::
  User=<user>
  Group=<user>
  WorkingDirectory=/home/<user>/.bot
- ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/bot -d
+ ExecStart=/home/<user>/.local/pipx/venvs/libbot/bin/botd
  RemainAfterExit=yes
 
  [Install]
@@ -165,7 +165,7 @@ replace "<user>" with the user running pipx::
 
 then run this::
 
- sudo systemctl enable libbot --now
+ sudo systemctl enable botd --now
 
 
 FILES
@@ -175,6 +175,7 @@ FILES
 
  ~/.bot
  ~/.local/bin/bot
+ ~/.local/bin/botd
  ~/.local/pipx/venvs/libbot/
 
 

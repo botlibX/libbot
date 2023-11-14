@@ -1,10 +1,5 @@
-README
-######
-
-"while king commits genocide" - https://genocide.rtfd.io
-
 NAME
-~~~~
+####
 
 ::
 
@@ -75,12 +70,6 @@ list of modules::
  bsc,err,flt,irc,log,mod,rss,shp,sts,tdo,
  thr,udp
 
-starting services like irc or rss requires
-an extra option::
-
- $ bot -ci
- >
-
 to start the bot as daemon::
 
  $ bot -d
@@ -88,7 +77,7 @@ to start the bot as daemon::
 
 add -v if you want to have verbose logging::
 
- $ bot -cvi
+ $ bot -cv
  BOT started Wed Nov 8 15:38:56 2023 CVI
  >
 

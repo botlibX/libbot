@@ -37,7 +37,8 @@ packages = [
 ]
 zip-safe=true
 script-files = [
-    "bin/bot",
+    'bin/bot',
+    'bin/botd'
 ]
 
 

@@ -26,7 +26,7 @@ from bot.run    import Broker, Commands, Event, Reactor
 from bot.thread import launch
 
 
-NAME = sys.argv[0].rsplit(os.sep, maxsplit=1)[-1]
+NAME = "bot"
 
 
 Censor.words = ["PING", "PONG", "PRIVMSG"]

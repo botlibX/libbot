@@ -26,11 +26,13 @@ def __dir__():
         'Censor',
         'Cfg',
         'Commands',
+        'Config',
         'Errors',
         'Event',
         'Reactor',
         'command',
         'forever',
+        'isop',
         'scan'
     )
 
@@ -218,6 +220,13 @@ def forever():
             time.sleep(1.0)
         except:
             _thread.interrupt_main()
+
+
+def isop(txt):
+    for char in txt:
+        if char in cfg.opts:
+            return True
+    return False
 
 
 def scan(pkg, mnames, init=False, wait=False) -> []:

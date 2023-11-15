@@ -17,12 +17,12 @@ sys.path.insert(0, os.getcwd())
 
 
 from bot import Censor, CLI, Commands, Default, Errors, Event, Storage
-from bot import command, forever, parse,  lsmod, modules, scan
+from bot import command, forever, parse, lsmod, modules, scan
 
 
-Cfg = Default()
-Cfg.name = __file__.rsplit(os.sep, maxsplit=1)[-1].lower()
-Storage.wd = os.path.expanduser(f"~/.{Cfg.name}")
+cfg = Default()
+cfg.name = __file__.rsplit(os.sep, maxsplit=1)[-1].lower()
+Storage.wd = os.path.expanduser(f"~/.{cfg.name}")
 
 
 class CLI(CLI):
@@ -43,6 +43,12 @@ class Console(CLI):
         return evt
 
 
+def isop(txt):
+    for char in txt:
+        if char in cfg.opts:
+            return True
+    return False
+
 def wrap(func) -> None:
     old = None
     try:
@@ -60,20 +66,23 @@ def wrap(func) -> None:
 
 
 def main():
-    parse(Cfg, " ".join(sys.argv[1:]))
-    if "v" in Cfg.opts:
+    parse(cfg, " ".join(sys.argv[1:]))
+    if isop("v"):
         Censor.output = print
         dte = time.ctime(time.time()).replace("  ", " ")
-        print(f"{Cfg.name.upper()} started {Cfg.opts.upper()} started {dte}")
-    Cfg.mod = ",".join((lsmod(modules.__path__[0])))
-    if 'c' in Cfg.opts:
-        scan(modules, Cfg.mod, True, True)
+        print(f"{cfg.name.upper()} started {cfg.opts.upper()} started {dte}")
+    cfg.mod = ",".join((lsmod(modules.__path__[0])))
+    if isop("c"):
+        scan(modules, cfg.mod, True, isop("w"))
         csl = Console()
+        if isop("t"):
+            csl.threaded = True
         csl.start()
         forever()
-    scan(modules, Cfg.mod)
+        return
+    scan(modules, cfg.mod)
     cli = CLI()
-    command(Cfg.otxt, cli)
+    command(cfg.otxt, cli)
 
 
 if __name__ == "__main__":

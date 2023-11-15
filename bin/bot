@@ -16,7 +16,7 @@ import time
 sys.path.insert(0, os.getcwd())
 
 
-from bot import CLI, Commands, Default, Errors, Event, Storage
+from bot import Censor, CLI, Commands, Default, Errors, Event, Storage
 from bot import command, forever, parse,  lsmod, modules, scan
 
 
@@ -62,20 +62,21 @@ def wrap(func) -> None:
 def main():
     parse(Cfg, " ".join(sys.argv[1:]))
     if "v" in Cfg.opts:
+        Censor.output = print
         dte = time.ctime(time.time()).replace("  ", " ")
         print(f"{Cfg.name.upper()} started {Cfg.opts.upper()} started {dte}")
     Cfg.mod = ",".join((lsmod(modules.__path__[0])))
     if 'c' in Cfg.opts:
-        scan(modules, Cfg.mod, True)
+        scan(modules, Cfg.mod, True, True)
         csl = Console()
         csl.start()
         forever()
     scan(modules, Cfg.mod)
     cli = CLI()
     command(Cfg.otxt, cli)
-    Errors.show()
 
 
 if __name__ == "__main__":
     wrap(main)
+    Errors.show()
         

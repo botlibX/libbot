@@ -14,7 +14,7 @@ import _thread
 
 
 from .disk   import Storage
-from .error  import Errors
+from .error  import Errors, debug
 from .object import Default, Object
 from .parse  import parse, spl
 from .thread import launch
@@ -30,7 +30,6 @@ def __dir__():
         'Event',
         'Reactor',
         'command',
-        'debug',
         'forever',
         'scan'
     )
@@ -74,7 +73,7 @@ class Broker(Object):
     @staticmethod
     def announce(txt) -> None:
         for obj in Broker.objs:
-            if "announce" in obj:
+            if "announce" in dir(obj):
                 obj.announce(txt)
 
     @staticmethod
@@ -147,7 +146,7 @@ class Reactor(Object):
         self.cbs      = Object()
         self.queue    = queue.Queue()
         self.stopped  = threading.Event()
-        self.threaded = False
+        self.threaded = True
         Broker.add(self)
 
     def dispatch(self, evt) -> None:
@@ -221,7 +220,7 @@ def forever():
             _thread.interrupt_main()
 
 
-def scan(pkg, mnames, init=False) -> []:
+def scan(pkg, mnames, init=False, wait=False) -> []:
     res = []
     if not pkg:
         return res
@@ -234,4 +233,9 @@ def scan(pkg, mnames, init=False) -> []:
         res.append(module)
         if init and "init" in dir(module):
             module._thr = launch(module.init)
+    if wait:
+        for mod in res:
+            if "_thr" not in dir(mod):
+                continue
+            mod._thr.join()
     return res

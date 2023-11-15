@@ -14,6 +14,7 @@ import time
 import _thread
 
 
+from .error  import debug
 from .object import Object, Default, dump, fqn, items, load, update
 from .parse  import spl
 

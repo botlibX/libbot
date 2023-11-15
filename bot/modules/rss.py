@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0115,C0116,W0105,E0402,C0411,R0903,W0201,W0612
+# pylint: disable=C,R,W0612,W0201
 
 
 "rich site syndicate"
@@ -18,10 +18,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot.disk   import find, fntime, laps, last, sync
-from bot.object import Default, Object, fmt, update
-from bot.run    import Broker
-from bot.thread import Repeater, launch
+from bot import Broker, Default, Object, Repeater
+from bot import debug, find, fmt, fntime, laps, last, launch, sync, update
 
 
 def init():

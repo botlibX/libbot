@@ -156,6 +156,7 @@ then run this::
 
  sudo systemctl enable botd --now
 
+ default channel/server is #bot on localhost
 
 
 FILES

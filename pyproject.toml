@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "the python3 bot namespace"
-version = "54"
+version = "55"
 authors = [
     {name = "libbot",email = "libbotx@gmail.com"},
 ]

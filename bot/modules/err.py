@@ -13,7 +13,6 @@ DEBUG = False
 
 
 def err(event):
-    print(event)
     nmr = 0
     for bot in Broker.objs:
         if 'state' in dir(bot):

@@ -16,6 +16,9 @@ import termios
 import time
 
 
+sys.path.insert(0, os.getcwd())
+
+
 from bot import Censor, CLI, Commands, Default, Errors, Event, Storage
 from bot import cdir, command, forever, parse, lsmod, modules, scan
 
@@ -25,7 +28,7 @@ cfg.mod = ",".join((lsmod(modules.__path__[0])))
 cfg.name    = "bot"
 Storage.wd  = os.path.expanduser(f"~/.{cfg.name}")
 cfg.pidfile = os.path.join(Storage.wd, f"{cfg.name}.pid")
-cfg.version = "55"
+cfg.version = "56"
 cfg.user    = getpass.getuser()
 
 

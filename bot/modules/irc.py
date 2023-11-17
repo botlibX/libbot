@@ -17,11 +17,9 @@ import time
 import _thread
 
 
-from bot.disk   import find, fntime, laps, last, sync
-from bot.error  import Censor, Errors, debug
-from bot.object import Default, Object, edit, fmt, keys
-from bot.run    import Broker, Commands, Event, Reactor, command
-from bot.thread import launch
+from .. import Broker, Censor, Commands, Default, Errors, Event, Object, Reactor
+from .. import debug, edit, find, fmt, fntime, keys, laps, last, sync
+from .. import command, launch
 
 
 NAME = "bot"
@@ -100,7 +98,7 @@ class Output(Cache):
         self.dostop = threading.Event()
         self.oqueue = queue.Queue()
 
-    def dosay(self, channel, txt):
+    def say(self, channel, txt):
         raise NotImplementedError
 
     def gettxt(self, channel):
@@ -134,7 +132,7 @@ class Output(Cache):
             if len(txtlist) > 3:
                 Output.extend(channel, txtlist)
                 length = len(txtlist)
-                self.dosay(
+                self.say(
                              channel,
                              f"use !mre to show more (+{length})"
                             )
@@ -142,7 +140,7 @@ class Output(Cache):
             _nr = -1
             for txt in txtlist:
                 _nr += 1
-                self.dosay(channel, txt)
+                self.say(channel, txt)
 
 
 class NoUser(Exception):
@@ -313,7 +311,7 @@ class IRC(Reactor, Output):
             time.sleep(self.cfg.sleep)
         self.logon(server, nck)
 
-    def dosay(self, channel, txt):
+    def say(self, channel, txt):
         self.events.joined.wait()
         txt = str(txt).replace('\n', '')
         txt = txt.replace('  ', ' ')
@@ -493,7 +491,7 @@ class IRC(Reactor, Output):
         self.events.joined.clear()
         self.doconnect(self.cfg.server, self.cfg.nick, int(self.cfg.port))
 
-    def say(self, channel, txt):
+    def output(self, channel, txt):
         self.oput(channel, txt)
 
     def some(self):

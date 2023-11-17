@@ -3,14 +3,14 @@
 # pylint: disable=C,R,W0212,E0402,W0105 W0718,W0702,E1102,W0246
 
 
-"errors"
+"exceptions"
 
 
 import io
 import traceback
 
 
-from .object import Object
+from .objects import Object
 
 
 class Censor(Object):
@@ -29,6 +29,7 @@ class Censor(Object):
 class Errors(Object):
 
     errors = []
+    shown  = []
 
     @staticmethod
     def add(exc) -> None:
@@ -52,14 +53,12 @@ class Errors(Object):
     @staticmethod
     def handle(exc) -> None:
         if Censor.output:
-            Censor.output(Errors.format(exc))
+            txt = str(Errors.format(exc))
+            if txt not in Errors.shown:
+                Censor.output(txt)
+                Errors.shown.append(txt)
 
     @staticmethod
     def show() -> None:
         for exc in Errors.errors:
             Errors.handle(exc)
-
-
-def debug(txt):
-    if Censor.output and not Censor.skip(txt):
-        Censor.output(txt)

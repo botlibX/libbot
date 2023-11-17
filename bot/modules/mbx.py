@@ -11,7 +11,7 @@ import mailbox
 import os
 
 
-from bot import Object, fqn, sync, update
+from .. import Object, fqn, sync, update
 
 
 bdmonths = [

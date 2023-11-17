@@ -18,8 +18,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot import Broker, Default, Object, Repeater
-from bot import debug, find, fmt, fntime, laps, last, launch, sync, update
+from .. import Broker, Default, Object, Repeater
+from .. import find, fmt, fntime, laps, last, launch, sync, update
 
 
 def init():

@@ -12,7 +12,7 @@ import sys
 import time
 
 
-from bot import Broker, Object, last, launch
+from .. import Broker, Object, last, launch
 
 
 def init():

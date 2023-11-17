@@ -12,7 +12,7 @@ import time
 import types
 
 
-from .error import Errors
+from .excepts import Errors
 
 
 class Thread(threading.Thread):
@@ -50,6 +50,7 @@ class Thread(threading.Thread):
             Errors.add(exc)
             if args:
                 args[0].ready()
+
 
 class Timer:
 

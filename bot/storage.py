@@ -14,9 +14,7 @@ import time
 import _thread
 
 
-from .error  import debug
-from .object import Object, Default, dump, fqn, items, load, update
-from .parse  import spl
+from .objects import Object, Default, dump, fqn, items, load, update
 
 
 lock = _thread.allocate_lock()
@@ -201,6 +199,14 @@ def lsmod(path) -> []:
         if fnm in ["__main__.py", "__init__.py"]:
             continue
         yield fnm[:-3]
+
+
+def spl(txt) -> []:
+    try:
+        res = txt.split(',')
+    except (TypeError, ValueError):
+        res = txt
+    return [x for x in res if x]
 
 
 def strip(pth, nmr=3) -> str:

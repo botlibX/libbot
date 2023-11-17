@@ -166,7 +166,6 @@ FILES
 
  ~/.bot
  ~/.local/bin/bot
- ~/.local/bin/botd
  ~/.local/pipx/venvs/libbot/
 
 

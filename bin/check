@@ -1,0 +1,4 @@
+grep -R "print(" bot
+grep -R importlib bot
+grep -R sys bot
+grep -R __import__ bot

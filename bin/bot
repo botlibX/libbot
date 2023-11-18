@@ -110,6 +110,7 @@ def ver(event):
 
 Commands.add(ver)
 
+
 def main():
     parse(cfg, " ".join(sys.argv[1:]))
     if isop("v"):

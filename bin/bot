@@ -105,7 +105,7 @@ def wrap(func) -> None:
 
 
 def ver(event):
-    event.reply(f"{cfg.name} {cfg.version}")
+    event.reply(f"{cfg.name.upper()} {cfg.version}")
 
 
 Commands.add(ver)

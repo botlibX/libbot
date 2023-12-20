@@ -20,7 +20,7 @@ sys.path.insert(0, os.getcwd())
 
 from bot import Commands, Default, Errors, Event, Object, Reactor, Storage
 from bot import modules, spl
-from bot import command, debug, forever, launch, parse, scan
+from bot import cmnd, debug, forever, launch, parse, scan
 
 
 Cfg = Default()
@@ -90,7 +90,7 @@ def main():
         forever()
         return
     scan(modules, Cfg.mod)
-    command(Cfg.otxt)
+    cmnd(Cfg.otxt)
 
 
 if __name__ == "__main__":

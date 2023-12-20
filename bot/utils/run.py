@@ -12,17 +12,15 @@ from ..command import Commands
 from ..errors  import Errors
 from ..event   import Event
 from ..object  import Object
+from .parse import parse
 from ..storage import Storage
 from ..thread  import Thread
 from ..utility import name, spl
 
 
-from .parse import parse
-
-
 def __dir__():
     return (
-        'command',
+        'cmnd',
         'debug',
         'forever',
         'launch',
@@ -30,7 +28,7 @@ def __dir__():
     )
 
 
-def command(txt):
+def cmnd(txt):
     evn = Event()
     evn.txt = txt
     parse(evn)

@@ -6,7 +6,7 @@
 "Skull, Bones and Number (OTP-CR-117/19)"
 
 
-from . import broker, default, errors, event, object, reactor
+from . import broker, command, default, errors, event, object, reactor
 from . import storage, thread, timer, utility
 
 
@@ -30,6 +30,7 @@ from .utils import *
 def __utils__():
     return (
         'NoDate',
+        'cmnd',
         'fetch',
         'today',
         'get_day',
@@ -71,7 +72,6 @@ def __dir__():
         'Thread',
         'Timer',
         'cfg',
-        'command',
         'construct',
         'debug',
         'dump',

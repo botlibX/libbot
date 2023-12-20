@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "libbot"
 description = "the python3 bot namespace"
-version = "56"
+version = "60"
 authors = [
     {name = "libbot",email = "libbotx@gmail.com"},
 ]
@@ -33,11 +33,13 @@ classifiers = [
 [tool.setuptools]
 packages = [
     'bot',
-    'bot.modules'
+    'bot.modules',
+    'bot.utils'
 ]
 zip-safe=true
 script-files = [
     'bin/bot',
+    'bin/botd'
 ]
 
 

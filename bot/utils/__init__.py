@@ -19,6 +19,7 @@ def __dir__():
     return (
         'NoDate',
         'today',
+        'cmnd',
         'debug',
         'fetch',
         'get_day',

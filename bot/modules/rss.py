@@ -1,6 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,R,W0612,W0201
+# pylint: disable=C,R,W0612,W0201,E0611
 
 
 "rich site syndicate"
@@ -18,8 +18,9 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from .. import Broker, Default, Object, Repeater
-from .. import find, fmt, fntime, laps, last, launch, sync, update
+from bot import Broker, Default, Object, Repeater
+from bot import fmt, fntime, update
+from bot import debug, find, laps, last, launch, sync
 
 
 def init():
@@ -109,7 +110,9 @@ class Fetcher(Object):
             txt = f'[{feedname}] '
         for obj in res:
             txt2 = txt + self.display(obj)
-            Broker.announce(txt2.rstrip())
+            for bot in Broker.objs:
+                if "announce" in dir(bot):
+                    bot.announce(txt2.rstrip())
         return counter
 
     def run(self):
@@ -223,7 +226,7 @@ def dpl(event):
 
 def nme(event):
     if len(event.args) != 2:
-        event.reply('name <stringinurl> <name>')
+        event.reply('nme <stringinurl> <name>')
         return
     selector = {'rss': event.args[0]}
     for fnm, feed in find('rss', selector):
@@ -241,7 +244,7 @@ def rem(event):
     for fnm, feed in find('rss', selector):
         if feed:
             feed.__deleted__ = True
-            sync(feed)
+            sync(feed, fnm)
     event.reply('ok')
 
 

@@ -3,15 +3,14 @@
 # pylint: disable=C,R,E1102
 
 
-"exceptions"
+"errors"
 
 
 import io
 import traceback
 
 
-from .censors import Censor
-from .objects import Object
+from .object import Object
 
 
 def __dir__():
@@ -26,6 +25,8 @@ __all__ = __dir__()
 class Errors(Object):
 
     errors = []
+    filter = []
+    output = None
     shown  = []
 
     @staticmethod
@@ -49,13 +50,18 @@ class Errors(Object):
 
     @staticmethod
     def handle(exc) -> None:
-        if Censor.output:
+        if Errors.output:
             txt = str(Errors.format(exc))
-            if txt not in Errors.shown:
-                Censor.output(txt)
-                Errors.shown.append(txt)
+            Errors.output(txt)
 
     @staticmethod
     def show() -> None:
         for exc in Errors.errors:
             Errors.handle(exc)
+
+    @staticmethod
+    def skip(txt) -> bool:
+        for skp in Errors.filter:
+            if skp in str(txt):
+                return True
+        return False

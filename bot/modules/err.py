@@ -1,15 +1,12 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C0116,W0105,E0402
+# pylint: disable=C0116,W0105,E0402,E0611
 
 
 "status of bots"
 
 
-from .. import Broker, Errors
-
-
-DEBUG = False
+from bot import Broker, Errors
 
 
 def err(event):
@@ -18,12 +15,8 @@ def err(event):
         if 'state' in dir(bot):
             event.reply(str(bot.state))
             nmr += 1
-    if not nmr:
-        event.reply("no status")
-    if not Errors.errors:
-        event.reply("no errors")
-    if not DEBUG:
-        for exc in Errors.errors:
-            txt = Errors.format(exc)
-            for line in txt.split():
-                event.reply(line)
+    event.reply(f"status: {nmr} errors: {len(Errors.errors)}")
+    for exc in Errors.errors:
+        txt = Errors.format(exc)
+        for line in txt.split():
+            event.reply(line)

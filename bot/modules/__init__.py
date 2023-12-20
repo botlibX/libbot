@@ -6,4 +6,25 @@
 "preimport"
 
 
-from . import cmd, err, irc, log, mod, req, rss, shp, tdo, thr
+from . import cmd, dbg, err, fnd, irc, log, mod, mre, pwd, rss, tdo, thr, tmr
+
+
+def __dir__():
+    return (
+        'cmd',
+        'dbg',
+        'err',
+        'fnd',
+        'irc',
+        'log',
+        'mod',
+        'mre',
+        'pwd',
+        'rss',
+        'tdo',
+        'thr',
+        'tmr'
+    )
+
+
+__all__ = __dir__()

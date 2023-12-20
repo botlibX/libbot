@@ -6,12 +6,13 @@
 "broker"
 
 
-from .objects import Object
+from .object import Object
 
 
 def __dir__():
     return (
         'Broker',
+        'byorig',
     )
 
 
@@ -27,12 +28,6 @@ class Broker(Object):
         Broker.objs.append(obj)
 
     @staticmethod
-    def announce(txt) -> None:
-        for obj in Broker.objs:
-            if "announce" in dir(obj):
-                obj.announce(txt)
-
-    @staticmethod
     def byorig(orig) -> Object:
         for obj in Broker.objs:
             if object.__repr__(obj) == orig:
@@ -40,15 +35,15 @@ class Broker(Object):
         return None
 
     @staticmethod
-    def remove(obj) -> None:
-        try:
-            Broker.objs.remove(obj)
-        except ValueError:
-            pass
+    def first():
+        if Broker.objs:
+            return Broker.objs[0]
 
     @staticmethod
-    def say(orig, channel, txt) -> None:
-        bot = Broker.byorig(orig)
-        if not bot:
-            return
-        bot.say(channel, txt)
+    def remove(obj):
+        if obj in Broker.objs:
+            Broker.objs.remove(obj)
+
+
+def byorig(orig):
+    return Broker.byorig(orig)

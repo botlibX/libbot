@@ -10,29 +10,24 @@ import queue
 import threading
 import time
 import types
-import _thread
 
 
-from .excepts import Errors
+from .errors  import Errors
+from .utility import name
 
 
 def __dir__():
     return (
         'Thread',
-        'forever',
-        'launch',
-        'lock',
-        'name'
     )
 
 
 __all__ = __dir__()
 
 
-lock = _thread.allocate_lock()
-
-
 class Thread(threading.Thread):
+
+    debug = False
 
     def __init__(self, func, thrname, *args, daemon=True, **kwargs):
         ""
@@ -64,36 +59,8 @@ class Thread(threading.Thread):
         try:
             self._result = func(*args)
         except Exception as exc:
+            if Thread.debug:
+                raise
             Errors.add(exc)
-            if args:
+            if args and "ready" in dir(args[0]):
                 args[0].ready()
-
-
-def forever():
-    while 1:
-        try:
-            time.sleep(1.0)
-        except:
-            _thread.interrupt_main()
-
-
-def launch(func, *args, **kwargs) -> Thread:
-    nme = kwargs.get("name", name(func))
-    thread = Thread(func, nme, *args, **kwargs)
-    thread.start()
-    return thread
-
-
-def name(obj) -> str:
-    typ = type(obj)
-    if isinstance(typ, types.ModuleType):
-        return obj.__name__
-    if '__self__' in dir(obj):
-        return f'{obj.__self__.__class__.__name__}.{obj.__name__}'
-    if '__class__' in dir(obj) and '__name__' in dir(obj):
-        return f'{obj.__class__.__name__}.{obj.__name__}'
-    if '__class__' in dir(obj):
-        return f"{obj.__class__.__module__}.{obj.__class__.__name__}"
-    if '__name__' in dir(obj):
-        return f'{obj.__class__.__name__}.{obj.__name__}'
-    return None

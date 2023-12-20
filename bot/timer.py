@@ -3,30 +3,39 @@
 # pylint: disable=C,R,W0718
 
 
-"repeaters"
+"timer"
 
 
+import re
 import threading
 import time
 
 
-from .threads import Thread, launch
+from .object import Object
+
+
+from .utils.run import launch
 
 
 def __dir__():
     return (
-        'Repeater',
-        'Timer'
+        'Timer',
     )
 
 
 __all__ = __dir__()
-    
 
-class Timer:
+
+class NoDate(Exception):
+
+    pass
+
+
+class Timer(Object):
 
     def __init__(self, sleep, func, *args, thrname=None):
         ""
+        Object.__init__(self)
         self.args  = args
         self.func  = func
         self.sleep = sleep
@@ -56,12 +65,3 @@ class Timer:
         ""
         if self.timer:
             self.timer.cancel()
-
-
-class Repeater(Timer):
-
-    def run(self) -> Thread:
-        ""
-        thr = launch(self.start)
-        super().run()
-        return thr

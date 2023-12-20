@@ -3,31 +3,32 @@
 # pylint: disable=C,R,W0212,W0702,W0718,E1102
 
 
-"messages"
+"message"
 
 
 import threading
 
 
-from .brokers import Broker
-from .objects import Default
+from .broker  import Broker
+from .default import Default
 
 
 def __dir__():
     return (
-        'Message',
+        'Event',
     )
 
 
 __all__ = __dir__()
         
 
-class Message(Default):
+class Event(Default):
 
     def __init__(self):
         Default.__init__(self)
         self._ready  = threading.Event()
         self._thrs   = []
+        self.done    = False
         self.orig    = None
         self.result  = []
         self.txt     = ""
@@ -40,7 +41,9 @@ class Message(Default):
 
     def show(self) -> None:
         for txt in self.result:
-            Broker.say(self.orig, self.channel, txt)
+            bot = Broker.byorig(self.orig) or Broker.first()
+            if bot:
+                bot.say(self.channel, txt)
 
     def wait(self):
         for thr in self._thrs:

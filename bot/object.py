@@ -7,11 +7,15 @@
 
 
 import json
+import os
+import _thread
+
+
+from .utility import cdir
 
 
 def __dir__():
     return (
-            'Default',
             'Object',
             'construct',
             'edit',
@@ -19,12 +23,17 @@ def __dir__():
             'fqn',
             'items',
             'keys',
+            'read',
             'update',
             'values',
+            'write'
            )
 
 
 __all__ = __dir__()
+
+
+lock = _thread.allocate_lock()
 
 
 class Object:
@@ -47,18 +56,6 @@ class Object:
         return str(self.__dict__)
 
 
-class Default(Object):
-
-    __slots__ = ("__default__",)
-
-    def __init__(self):
-        Object.__init__(self)
-        self.__default__ = ""
-
-    def __getattr__(self, key):
-        return self.__dict__.get(key, self.__default__)
-
-
 class ObjectDecoder(json.JSONDecoder):
 
     def decode(self, s, _w=None):
@@ -75,7 +72,7 @@ def hook(objdict, typ=None) -> Object:
     if typ:
         obj = typ()
     else:
-        obj = Default()
+        obj = Object()
     construct(obj, objdict)
     return obj
 
@@ -90,6 +87,12 @@ def loads(string, *args, **kw) -> Object:
     kw["cls"] = ObjectDecoder
     kw["object_hook"] = hook
     return json.loads(string, *args, **kw)
+
+
+def read(obj, pth) -> None:
+    with lock:
+        with open(pth, 'r', encoding='utf-8') as ofile:
+            update(obj, load(ofile))
 
 
 class ObjectEncoder(json.JSONEncoder):
@@ -136,6 +139,13 @@ def dump(*args, **kw) -> None:
 def dumps(*args, **kw) -> str:
     kw["cls"] = ObjectEncoder
     return json.dumps(*args, **kw)
+
+
+def write(obj, pth) -> None:
+    with lock:
+        cdir(os.path.dirname(pth))
+        with open(pth, 'w', encoding='utf-8') as ofile:
+            dump(obj, ofile)
 
 
 def construct(obj, *args, **kwargs) -> None:

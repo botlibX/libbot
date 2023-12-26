@@ -33,8 +33,7 @@ classifiers = [
 [tool.setuptools]
 packages = [
     'bot',
-    'bot.modules',
-    'bot.utils'
+    'bot.mods',
 ]
 zip-safe=true
 script-files = [

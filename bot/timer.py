@@ -6,15 +6,12 @@
 "timer"
 
 
-import re
 import threading
 import time
 
 
 from .object import Object
-
-
-from .utils.run import launch
+from .thread import launch
 
 
 def __dir__():
@@ -26,15 +23,9 @@ def __dir__():
 __all__ = __dir__()
 
 
-class NoDate(Exception):
-
-    pass
-
-
 class Timer(Object):
 
     def __init__(self, sleep, func, *args, thrname=None):
-        ""
         Object.__init__(self)
         self.args  = args
         self.func  = func
@@ -44,12 +35,10 @@ class Timer(Object):
         self.timer = None
 
     def run(self) -> None:
-        ""
         self.state["latest"] = time.time()
         launch(self.func, *self.args)
 
     def start(self) -> None:
-        ""
         timer = threading.Timer(self.sleep, self.run)
         timer.name   = self.name
         timer.daemon = True
@@ -62,6 +51,5 @@ class Timer(Object):
         self.timer   = timer
 
     def stop(self) -> None:
-        ""
         if self.timer:
             self.timer.cancel()

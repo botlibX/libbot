@@ -6,17 +6,18 @@
 "status of bots"
 
 
-from bot import Broker, Errors
+from bot.group  import Group
+from bot.error  import Error
 
 
 def err(event):
     nmr = 0
-    for bot in Broker.objs:
+    for bot in Group.objs:
         if 'state' in dir(bot):
             event.reply(str(bot.state))
             nmr += 1
-    event.reply(f"status: {nmr} errors: {len(Errors.errors)}")
-    for exc in Errors.errors:
-        txt = Errors.format(exc)
+    event.reply(f"status: {nmr} errors: {len(Error.errors)}")
+    for exc in Error.errors:
+        txt = Error.format(exc)
         for line in txt.split():
             event.reply(line)

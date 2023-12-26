@@ -1,18 +1,19 @@
 # This file is placed in the Public Domain.
 #
-#
+# pylint: disable=C,R,W0612.W0702
 
 
 "timer"
 
 
-import datetime
 import time
 
 
-from bot import Broker, Default, Event, Timer, construct, update
-from bot import NoDate, today, now, to_time, to_day, get_day, get_hour
-from bot import find, laps, launch, sync
+from bot import Event, Group, Timer
+from bot import find, laps, launch, update, write
+
+
+from bot.parse import NoDate, today, to_day, get_day, get_hour
 
 
 def init():
@@ -21,12 +22,12 @@ def init():
             continue
         diff = float(obj.time) - time.time()
         if diff > 0:
-            bot = Broker.first()
+            bot = Group.first()
             evt = Event()
             update(evt, obj)
             evt.orig = object.__repr__(bot)
-            tmr = Timer(diff, evt.show)
-            launch(tmr.start)
+            timer = Timer(diff, evt.show)
+            launch(timer.start)
 
 
 def tmr(event):
@@ -46,11 +47,11 @@ def tmr(event):
     line = ""
     for word in event.args:
         if word.startswith("+"):
-             try:
-                 seconds = int(word[1:])
-             except:
-                 event.reply("%s is not an integer" % seconds)
-                 return
+            try:
+                seconds = int(word[1:])
+            except:
+                event.reply("%s is not an integer" % seconds)
+                return
         else:
             line += word + " "
     if seconds:
@@ -73,5 +74,5 @@ def tmr(event):
     event.result.append(event.rest)
     timer = Timer(diff, event.show)
     update(timer, event)
-    sync(timer)
+    write(timer)
     launch(timer.start)

@@ -7,52 +7,45 @@
 
 
 import json
-import os
-import _thread
-
-
-from .utility import cdir
 
 
 def __dir__():
     return (
             'Object',
             'construct',
+            'dump',
+            'dumps',
             'edit',
             'fmt',
             'fqn',
             'items',
             'keys',
-            'read',
+            'load',
+            'loads',
             'update',
             'values',
-            'write'
            )
 
 
 __all__ = __dir__()
 
 
-lock = _thread.allocate_lock()
-
-
 class Object:
 
 
+    def __contains__(self, key):
+        return key in dir(self)
+
     def __iter__(self):
-        ""
         return iter(self.__dict__)
 
     def __len__(self):
-        ""
         return len(self.__dict__)
 
     def __repr__(self):
-        ""
         return dumps(self)
 
     def __str__(self):
-        ""
         return str(self.__dict__)
 
 
@@ -87,12 +80,6 @@ def loads(string, *args, **kw) -> Object:
     kw["cls"] = ObjectDecoder
     kw["object_hook"] = hook
     return json.loads(string, *args, **kw)
-
-
-def read(obj, pth) -> None:
-    with lock:
-        with open(pth, 'r', encoding='utf-8') as ofile:
-            update(obj, load(ofile))
 
 
 class ObjectEncoder(json.JSONEncoder):
@@ -141,11 +128,7 @@ def dumps(*args, **kw) -> str:
     return json.dumps(*args, **kw)
 
 
-def write(obj, pth) -> None:
-    with lock:
-        cdir(os.path.dirname(pth))
-        with open(pth, 'w', encoding='utf-8') as ofile:
-            dump(obj, ofile)
+"methods"
 
 
 def construct(obj, *args, **kwargs) -> None:
@@ -190,6 +173,8 @@ def fmt(obj, args=None, skip=None, plain=False) -> str:
         skip = []
     txt = ""
     for key in args:
+        if key.startswith("__"):
+            continue
         if key in skip:
             continue
         value = getattr(obj, key, None)

@@ -18,9 +18,9 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlencode
 
 
-from bot import Broker, Default, Object, Repeater
+from bot import Default, Group, Object, Repeat
 from bot import fmt, fntime, update
-from bot import debug, find, laps, last, launch, sync
+from bot import find, laps, last, launch, write
 
 
 def init():
@@ -100,17 +100,17 @@ class Fetcher(Object):
                     Fetcher.seen.urls.append(uurl)
                 counter += 1
                 if self.dosave:
-                    sync(fed)
+                    write(fed)
                 res.append(fed)
         if res:
-            sync(Fetcher.seen, Fetcher.seenfn)
+            write(Fetcher.seen, Fetcher.seenfn)
         txt = ''
         feedname = getattr(feed, 'name', None)
         if feedname:
             txt = f'[{feedname}] '
         for obj in res:
             txt2 = txt + self.display(obj)
-            for bot in Broker.objs:
+            for bot in Group.objs:
                 if "announce" in dir(bot):
                     bot.announce(txt2.rstrip())
         return counter
@@ -124,7 +124,7 @@ class Fetcher(Object):
     def start(self, repeat=True):
         Fetcher.seenfn = last(Fetcher.seen)
         if repeat:
-            repeater = Repeater(300.0, self.run)
+            repeater = Repeat(300.0, self.run)
             repeater.start()
 
 
@@ -220,7 +220,7 @@ def dpl(event):
     for fnm, feed in find('rss', {'rss': event.args[0]}):
         if feed:
             update(feed, setter)
-            sync(feed)
+            write(feed)
     event.reply('ok')
 
 
@@ -232,7 +232,7 @@ def nme(event):
     for fnm, feed in find('rss', selector):
         if feed:
             feed.name = event.args[1]
-            sync(feed)
+            write(feed)
     event.reply('ok')
 
 
@@ -244,7 +244,7 @@ def rem(event):
     for fnm, feed in find('rss', selector):
         if feed:
             feed.__deleted__ = True
-            sync(feed, fnm)
+            write(feed, fnm)
     event.reply('ok')
 
 
@@ -269,5 +269,5 @@ def rss(event):
             return
     feed = Rss()
     feed.rss = event.args[0]
-    sync(feed)
+    write(feed)
     event.reply('ok')

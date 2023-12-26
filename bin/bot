@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,W0611,E0102
+# pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,E0102,W0611
 
 
-"main"
+"24/7 feed fetcher"
 
 
-import inspect
+import getpass
 import os
 import readline
 import sys
@@ -15,84 +15,80 @@ import termios
 import time
 
 
-sys.path.insert(0, os.getcwd())
+from bot import Client, Default, Error, Event, Storage
+from bot import cmnd, debug, forever, parse_command, scan
 
 
-from bot import Commands, Default, Errors, Event, Object, Reactor, Storage
-from bot import modules, spl
-from bot import cmnd, debug, forever, launch, parse, scan
+if os.path.exists("mods"):
+    import mods
+else:
+    mods = None
 
 
-Cfg = Default()
-Cfg.mod  = "cmd,dbg,err,fnd,log,mod,mre,pwd,tdo,thr,ver"
-Cfg.name = "bot"
-Cfg.version = "60"
-Cfg.wd = os.path.expanduser(f"~/.{Cfg.name}")
-Errors.output = print
-Storage.wd = Cfg.wd
+Cfg         = Default()
+Cfg.mod     = "cmd,err,mre,pwd,thr"
+Cfg.name    = "rssbot"
+Cfg.version = "508"
+Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
+Cfg.pidfile = os.path.join(Cfg.wd, f"{Cfg.name}.pid")
+Cfg.user    = getpass.getuser()
 
 
-class Console(Reactor):
+Error.output = print
+Storage.wd   = Cfg.wd
 
-    def __init__(self):
-        Reactor.__init__(self)
-        self.register("command", Commands.handle)
+
+class Console(Client):
 
     def announce(self, txt):
-        self.say("", txt)
+        if "v" in Cfg.opts:
+            self.say("", txt)
 
     def poll(self) -> Event:
         evt = Event()
         evt.orig = object.__repr__(self)
         evt.txt = input("> ")
         evt.type = "command"
-        parse(evt)
         return evt
 
     def say(self, channel, txt):
         txt = txt.encode('utf-8', 'replace').decode()
-        sys.stdout.write(txt)
-        sys.stdout.write("\n")
-        sys.stdout.flush()
+        print(txt)
 
 
 def wrap(func) -> None:
-    old = None
+    old2 = None
     try:
-        old = termios.tcgetattr(sys.stdin.fileno())
+        old2 = termios.tcgetattr(sys.stdin.fileno())
     except termios.error:
         pass
     try:
         func()
-    except (EOFError, KeyboardInterrupt):
-        sys.stdout.write("\n")
-        sys.stdout.flush()
+    except (KeyboardInterrupt, EOFError):
+        print("")
     finally:
-        if old:
-            termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, old)
+        if old2:
+            termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, old2)
 
 
 def main():
-    parse(Cfg, " ".join(sys.argv[1:]))
+    Storage.skel()
+    parse_command(Cfg, " ".join(sys.argv[1:]))
+    if "a" in Cfg.opts and mods:
+        Cfg.mod = ",".join(mods.__dir__())
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
         debug(f"{Cfg.name.upper()} started {Cfg.opts.upper()} started {dte}")
     csl = Console()
     if "c" in Cfg.opts:
-        mods = scan(modules, Cfg.mod, Cfg.hasmods)
-        if "w" in Cfg.opts:
-            for mod in mods:
-                if "_thr_" in dir(mod):
-                    mod._thr.join()
-        if "t" in Cfg.opts:
-            csl.threaded = True
+        scan(mods, Cfg.mod, True, True)
         csl.start()
         forever()
-        return
-    scan(modules, Cfg.mod)
-    cmnd(Cfg.otxt)
+    if Cfg.otxt:
+        scan(mods, Cfg.mod)
+        return cmnd(Cfg.otxt)
 
 
 if __name__ == "__main__":
     wrap(main)
-    Errors.show()
+    Error.show()

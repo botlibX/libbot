@@ -3,27 +3,25 @@
 # pylint: disable=C,R,W0718
 
 
-"repeater"
+"repeating"
 
 
-from .thread import Thread
+from .thread import Thread, launch
 from .timer  import Timer
-from .utils import launch
 
 
 def __dir__():
     return (
-        'Repeater',
+        'Repeat',
     )
 
 
 __all__ = __dir__()
-    
 
-class Repeater(Timer):
+
+class Repeat(Timer):
 
     def run(self) -> Thread:
-        ""
         thr = launch(self.start)
         super().run()
         return thr

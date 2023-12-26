@@ -27,8 +27,8 @@ else:
 
 Cfg         = Default()
 Cfg.mod     = "cmd,err,mre,pwd,thr"
-Cfg.name    = "rssbot"
-Cfg.version = "508"
+Cfg.name    = "bot"
+Cfg.version = "60"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Cfg.wd, f"{Cfg.name}.pid")
 Cfg.user    = getpass.getuser()

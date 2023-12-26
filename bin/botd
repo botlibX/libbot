@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,E0102
+# pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,E0102,E0611
 
 
 "the python3 bot namespace"
@@ -13,14 +13,15 @@ import pwd
 import sys
 
 
-from bot import Default, Storage
-from bot import cdir, forever, scan
+from bot import Default, Storage, cdir
+from bot import forever, scan
 
 
 if os.path.exists("mods"):
     import mods
 else:
     mods = None
+
 
 Cfg         = Default()
 Cfg.mod     = "cmd,irc,rss"

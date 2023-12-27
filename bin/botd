@@ -14,13 +14,7 @@ import sys
 
 
 from bot import Default, Storage, cdir
-from bot import forever, scan
-
-
-if os.path.exists("mods"):
-    import mods
-else:
-    mods = None
+from bot import forever, modules, scan
 
 
 Cfg         = Default()
@@ -32,6 +26,12 @@ Cfg.pidfile = os.path.join(Cfg.wd, f"{Cfg.name}.pid")
 Cfg.user    = getpass.getuser()
 Storage.wd  = Cfg.wd
 
+
+if os.path.exists(Storage.mods()):
+    sys.path.insert(0, Storage.mods())
+    import mods
+else:
+    mods = None
 
 def daemon(pidfile, verbose=False):
     pid = os.fork()
@@ -67,6 +67,7 @@ def main():
     Storage.skel()
     daemon(Cfg.pidfile)
     privileges(Cfg.user)
+    scan(modules, Cfg.mod, True, True)
     scan(mods, Cfg.mod, True, True)
     forever()
 

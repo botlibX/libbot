@@ -69,6 +69,11 @@ class Storage(Object):
                     res = fnm
         return res
 
+
+    @staticmethod
+    def mods(pth="") -> str:
+        return os.path.join(Storage.wd, "mods", pth)
+
     @staticmethod
     def skel():
         cdir(os.path.join(Storage.wd, "store", ""))

@@ -46,7 +46,7 @@ class Event(Default):
                 bot.say(self.channel, txt)
 
     def wait(self):
+        self._ready.wait()
         if self._thr:
             self._thr.join()
-        self._ready.wait()
         return self.result

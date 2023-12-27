@@ -41,7 +41,7 @@ class Email(Object):
         self.text = ""
 
 
-Persist.add(Email)
+Storage.add(Email)
 
 
 def to_date(date):

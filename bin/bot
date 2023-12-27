@@ -16,7 +16,7 @@ import time
 
 
 from bot import Client, Default, Error, Event, Storage
-from bot import cmnd, debug, forever, parse_command, scan
+from bot import cmnd, debug, forever, modules, parse_command, scan
 
 
 if os.path.exists("mods"):
@@ -26,7 +26,7 @@ else:
 
 
 Cfg         = Default()
-Cfg.mod     = "cmd,err,mre,pwd,thr"
+Cfg.mod     = "cmd,err,mod,mre,pwd,thr"
 Cfg.name    = "bot"
 Cfg.version = "60"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
@@ -41,8 +41,11 @@ Storage.wd   = Cfg.wd
 class Console(Client):
 
     def announce(self, txt):
-        if "v" in Cfg.opts:
-            self.say("", txt)
+        pass
+
+    def callback(self, evt):
+        Client.callback(self, evt)
+        evt.wait()
 
     def poll(self) -> Event:
         evt = Event()
@@ -74,17 +77,20 @@ def wrap(func) -> None:
 def main():
     Storage.skel()
     parse_command(Cfg, " ".join(sys.argv[1:]))
-    if "a" in Cfg.opts and mods:
-        Cfg.mod = ",".join(mods.__dir__())
+    if "a" in Cfg.opts:
+        Cfg.mod = ",".join(modules.__dir__())
+        Cfg.mod += "," + ",".join(mods.__dir__())
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
         debug(f"{Cfg.name.upper()} started {Cfg.opts.upper()} started {dte}")
     csl = Console()
     if "c" in Cfg.opts:
+        scan(modules, Cfg.mod, True, True)
         scan(mods, Cfg.mod, True, True)
         csl.start()
         forever()
     if Cfg.otxt:
+        scan(modules, Cfg.mod)
         scan(mods, Cfg.mod)
         return cmnd(Cfg.otxt)
 

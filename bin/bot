@@ -24,7 +24,7 @@ from bot import modules
 
 
 Cfg         = Default()
-Cfg.mod     = "cmd,err,mod,mre,pwd,thr"
+Cfg.mod     = "cmd,err,irc,mod,mre,pwd,rss,thr"
 Cfg.name    = "bot"
 Cfg.version = "10"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
@@ -82,7 +82,7 @@ def main():
     parse_command(Cfg, " ".join(sys.argv[1:]))
     if "a" in Cfg.opts:
         Cfg.mod = ",".join(modules.__dir__())
-        if mods:
+        if "m" in Cfg.opts:
             Cfg.mod += "," +  ",".join(mods.__dir__())
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
@@ -90,12 +90,14 @@ def main():
     csl = Console()
     if "c" in Cfg.opts:
         scan(modules, Cfg.mod, True, True)
-        scan(mods, Cfg.mod, True, True)
+        if "m" in Cfg.opts:
+            scan(mods, Cfg.mod, True, True)
         csl.start()
         forever()
     if Cfg.otxt:
-        scan(modules, Cfg.mod, True, True)
-        scan(mods, Cfg.mod)
+        scan(modules, Cfg.mod)
+        if "m" in Cfg.opts:
+            scan(mods, Cfg.mod)
         return cmnd(Cfg.otxt)
 
 

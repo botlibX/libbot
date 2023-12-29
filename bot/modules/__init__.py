@@ -3,27 +3,19 @@
 #
 
 
-"preimport"
+"pre-import"
 
 
 import sys
 
 
-def getmain(name):
-    return getattr(sys.modules["__main__"], name, None)
-
-
-from . import cmd, dbg, err, fnd, irc, log, mod, mre, pwd, rss, tdo, thr, tmr
-from . import mdl, req, rst, udp
+from . import cmd, err, irc, log, mod, mre, pwd, rss, tdo, thr, tmr
 
 
 def __dir__():
     return (
         'cmd',
-        'dbg',
         'err',
-        'fnd',
-        'getmain',
         'irc',
         'log',
         'mod',
@@ -33,10 +25,6 @@ def __dir__():
         'tdo',
         'thr',
         'tmr',
-        'mdl',
-        'req',
-        'rst',
-        'udp'
     )
 
 

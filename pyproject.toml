@@ -15,6 +15,10 @@ authors = [
 ]
 readme = "README.rst"
 license = {text="Public Domain"}
+dependencies = [
+    "libobj",
+    "libprg"
+]
 classifiers = [ 
     'Development Status :: 3 - Alpha',
     'License :: Public Domain',
@@ -34,6 +38,10 @@ classifiers = [
 packages = [
     'bot',
     'bot.modules'
+]
+script-files = [
+    'bin/bot',
+    'bin/botd'
 ]
 zip-safe=true
 

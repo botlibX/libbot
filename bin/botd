@@ -1,37 +1,51 @@
 #!/usr/bin/env python3
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,E0102,E0611
+# pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,E0102,W0611,W0718,W0125
 
 
-"the python3 bot namespace"
+"runtime"
 
 
 import getpass
 import os
 import pwd
 import sys
+import termios
+import time
 
 
-from bot import Default, Storage, cdir
-from bot import forever, modules, scan
+sys.path.insert(0, os.getcwd())
+
+
+from obj import Default, Object
+from prg import Client, Error, Event, Storage
+from prg import cmnd, debug, forever, parse_command, scan, spl
+from bot import modules
+
+
+from prg.storage import cdir
 
 
 Cfg         = Default()
-Cfg.mod     = "cmd,irc,rss"
+Cfg.mod     = "cmd,err,irc,log,mod,mre,pwd,rss,thr"
 Cfg.name    = "bot"
-Cfg.version = "60"
+Cfg.version = "10"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Cfg.wd, f"{Cfg.name}.pid")
 Cfg.user    = getpass.getuser()
+
+
 Storage.wd  = Cfg.wd
+moddir      = os.path.join(Storage.wd, "mods")
 
 
-if os.path.exists(Storage.mods()):
-    sys.path.insert(0, Storage.mods())
+if os.path.exists(moddir):
+    sys.path.insert(0, os.path.dirname(moddir))
     import mods
 else:
     mods = None
+
 
 def daemon(pidfile, verbose=False):
     pid = os.fork()
@@ -68,7 +82,8 @@ def main():
     daemon(Cfg.pidfile)
     privileges(Cfg.user)
     scan(modules, Cfg.mod, True, True)
-    scan(mods, Cfg.mod, True, True)
+    if mods:
+        scan(mods, Cfg.mod, True, True)
     forever()
 
 
